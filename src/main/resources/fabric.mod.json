@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "classicaddon",
+  "version": "${version}",
+  "name": "True Classic",
+  "description": "The Classic mode that some people deserve. No Armor Weight, to speak of.",
+  "authors": [
+    "Me!"
+  ],
+  "contact": {
+    "homepage": "https://github.com/Tetro48/True-Clsasic",
+    "sources": "https://github.com/Tetro48/True-Classic"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/classicaddon/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.tetro48.classicaddon.ClassicAddonMod"
+    ],
+    "btw:addon": [
+      "btw.community.classicaddon.ClassicAddon"
+    ]
+  },
+  "custom": {
+    "btw:addon_prefix": "EX"
+  },
+  "mixins": [
+    "classicaddon.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.19",
+    "minecraft": "1.6.4"
+  }
+}
