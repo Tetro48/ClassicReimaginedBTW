@@ -15,6 +15,7 @@
     "EntityPigMixin",
     "EntityPlayerMPMixin",
     "EntitySheepMixin",
+    "EntitySpiderMixin",
     "ItemMixin",
     "KilnRecipeListMixin",
     "SawRecipeListMixin",
