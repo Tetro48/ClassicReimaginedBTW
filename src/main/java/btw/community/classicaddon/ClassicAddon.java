@@ -2,6 +2,7 @@ package btw.community.classicaddon;
 
 import btw.AddonHandler;
 import btw.BTWAddon;
+import net.minecraft.src.Item;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.Minecraft;
 
