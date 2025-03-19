@@ -1,10 +1,8 @@
-package net.tetro48.classicaddon.mixin;
+package net.tetro48.classicaddon.mixin.items;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 import btw.item.BTWItems;
 

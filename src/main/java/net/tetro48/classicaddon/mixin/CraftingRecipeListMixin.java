@@ -105,6 +105,11 @@ public class CraftingRecipeListMixin {
                 new Object[]{
                         "##",
                         "##", '#', Block.planks});
+        //inefficient manual (vanilla) method
+        RecipeManager.addRecipe(new ItemStack(Block.sandStone, 1),
+                new Object[]{
+                        "##",
+                        "##", '#', Block.sand});
         RecipeManager.removeVanillaRecipe(new ItemStack(BTWItems.wickerWeaving, 1, 299), new Object[]{"##", "##", '#', Item.reed});
         RecipeManager.addRecipe(new ItemStack(BTWItems.wickerPane, 1, 299), new Object[]{"##", "##", '#', Item.reed});
     }

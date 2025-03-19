@@ -1,4 +1,4 @@
-package net.tetro48.classicaddon.mixin;
+package net.tetro48.classicaddon.mixin.blocks;
 
 import btw.block.BTWBlocks;
 import net.minecraft.src.Material;

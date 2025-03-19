@@ -4,14 +4,9 @@
   "package": "net.tetro48.classicaddon.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "ArmorItemMixin",
-    "BTWBlocksMixin",
-    "BTWItemsMixin",
     "CocoaBeanItemMixin",
     "CraftingRecipeListMixin",
     "FoodStatsMixin",
-    "ItemFoodMixin",
-    "ItemMixin",
     "KilnRecipeListMixin",
     "PistonPackingRecipeListMixin",
     "PlayerStatusEffectsMixin",
@@ -21,6 +16,7 @@
     "blocks.BlockDirtMixin",
     "blocks.BlockGrassMixin",
     "blocks.BlockWorkbenchMixin",
+    "blocks.BTWBlocksMixin",
     "blocks.DirtSlabBlockMixin",
     "blocks.GrassSlabBlockMixin",
     "blocks.LooseDirtBlockMixin",
@@ -32,7 +28,17 @@
     "entity.EntityPigMixin",
     "entity.EntityPlayerMPMixin",
     "entity.EntitySheepMixin",
-    "entity.EntitySpiderMixin"
+    "entity.EntitySpiderMixin",
+    "items.ArmorItemMixin",
+    "items.BoneItemMixin",
+    "items.BTWItemsMixin",
+    "items.CuredFoodItemMixin",
+    "items.DoorItemMixin",
+    "items.EnumToolMaterialMixin",
+    "items.ItemDoorMixin",
+    "items.ItemFishingRodMixin",
+    "items.ItemFoodMixin",
+    "items.ItemMixin"
   ],
   "client": [
     "GuiCreateWorldMixin"

@@ -19,7 +19,6 @@ public class GrassSlabBlockMixin extends Block {
         super(iBlockID, material);
     }
 
-
     @Inject(method = "idDropped", at = @At("RETURN"), cancellable = true)
     public void changeDirtDrop(CallbackInfoReturnable<Integer> cir) {
         cir.setReturnValue(BTWBlocks.dirtSlab.blockID);

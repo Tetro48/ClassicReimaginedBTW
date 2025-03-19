@@ -1,4 +1,4 @@
-package net.tetro48.classicaddon.mixin;
+package net.tetro48.classicaddon.mixin.items;
 
 import net.minecraft.src.Item;
 import org.spongepowered.asm.mixin.Mixin;
@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 public class ItemMixin {
     @ModifyArg(method = "<clinit>", at = @At(ordinal = 0, value = "INVOKE", target = "Lbtw/item/items/PickaxeItem;<init>(ILnet/minecraft/src/EnumToolMaterial;I)V"), index = 2)
     private static int changeWoodPickDurability(int par1) {
-        return 4;
+        return 59;
     }
     @ModifyArg(method = "<clinit>", at = @At(ordinal = 0, value = "INVOKE", target = "Lnet/minecraft/src/ItemFood;<init>(IIFZ)V"), index = 1)
     private static int changeApple(int par1) {
