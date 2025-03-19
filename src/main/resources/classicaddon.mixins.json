@@ -12,6 +12,7 @@
     "PlayerStatusEffectsMixin",
     "SawRecipeListMixin",
     "SmeltingRecipeListMixin",
+    "blocks.BlockCakeMixin",
     "blocks.BlockClayMixin",
     "blocks.BlockDirtMixin",
     "blocks.BlockGrassMixin",
