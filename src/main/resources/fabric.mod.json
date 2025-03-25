@@ -5,7 +5,7 @@
   "name": "True Classic",
   "description": "The Classic mode that some people deserve. No Armor Weight, to speak of.",
   "authors": [
-    "Me!"
+    "Tetro48"
   ],
   "contact": {
     "homepage": "https://github.com/Tetro48/True-Clsasic",
@@ -23,7 +23,7 @@
     ]
   },
   "custom": {
-    "btw:addon_prefix": "EX"
+    "btw:addon_prefix": "TC"
   },
   "mixins": [
     "classicaddon.mixins.json"

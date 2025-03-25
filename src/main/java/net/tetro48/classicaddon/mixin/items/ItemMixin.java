@@ -57,7 +57,7 @@ public abstract class ItemMixin {
     }
     @ModifyArg(method = "<clinit>", at = @At(ordinal = 2, value = "INVOKE", target = "Lbtw/item/items/SeedFoodItem;<init>(IIFI)V"), index = 1)
     private static int changeRawCarrot(int par1) {
-        return 6;
+        return 9;
     }
     @ModifyArg(method = "<clinit>", at = @At(ordinal = 8, value = "INVOKE", target = "Lnet/minecraft/src/ItemFood;<init>(IIFZ)V"), index = 1)
     private static int changeBakedPotato(int par1) {
@@ -69,7 +69,7 @@ public abstract class ItemMixin {
     }
     @ModifyArg(method = "<clinit>", at = @At(ordinal = 10, value = "INVOKE", target = "Lnet/minecraft/src/ItemFood;<init>(IIFZ)V"), index = 1)
     private static int changeGoldenCarrot(int par1) {
-        return 3;
+        return 5;
     }
     @ModifyArg(method = "<clinit>", at = @At(ordinal = 11, value = "INVOKE", target = "Lnet/minecraft/src/ItemFood;<init>(IIFZ)V"), index = 1)
     private static int changePumpkinPie(int par1) {
@@ -82,5 +82,13 @@ public abstract class ItemMixin {
     @ModifyArg(method = "<clinit>", at = @At(ordinal = 0, value = "INVOKE", target = "Lbtw/item/items/SeedFoodItem;<init>(IIFI)V"), index = 1)
     private static int changePumpkinSeeds(int par1) {
         return 2;
+    }
+    @ModifyArg(method = "<clinit>", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/ItemAppleGold;<init>(IIFZ)V"), index = 1)
+    private static int changeGoldenApple(int par1) {
+        return 4;
+    }
+    @ModifyArg(method = "<clinit>", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/ItemAppleGold;<init>(IIFZ)V"), index = 2)
+    private static float changeGoldenAppleSaturation(float f) {
+        return 0.5f;
     }
 }

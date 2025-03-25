@@ -22,4 +22,8 @@ public abstract class PlayerStatusEffectsMixin {
     private static void stopFatEffect(int level, float effectivenessMultiplier, String name, CallbackInfoReturnable<StatusEffectBuilder> cir) {
         cir.setReturnValue(createExhaustionEffect(level, BTWStatusCategory.FAT, effectivenessMultiplier, name).setEvaluator((player) -> false));
     }
+    @Inject(method = "createHealthEffect", at = @At("RETURN"), cancellable = true, remap = false)
+    private static void stopHealthEffect(int level, float effectivenessMultiplier, String name, CallbackInfoReturnable<StatusEffectBuilder> cir) {
+        cir.setReturnValue(createExhaustionEffect(level, BTWStatusCategory.FAT, effectivenessMultiplier, name).setEvaluator((player) -> false));
+    }
 }

@@ -10,20 +10,28 @@ import org.spongepowered.asm.mixin.injection.*;
 @Mixin(KilnRecipeList.class)
 public abstract class KilnRecipeListMixin {
 
-    @Redirect(method = "addRecipes", at = @At(value = "NEW", target = "(Lnet/minecraft/src/Item;)Lnet/minecraft/src/ItemStack;", ordinal = 0))
-    private static ItemStack modifyGoldChunkRecipe(Item par1Item) {
+    @ModifyArg(method = "addRecipes", index = 0, at = @At(value = "INVOKE", ordinal = 0, target = "Lbtw/crafting/recipe/RecipeManager;addKilnRecipe(Lnet/minecraft/src/ItemStack;Lnet/minecraft/src/Block;B)V"))
+    private static ItemStack modifyGoldChunkRecipe(ItemStack outputStack) {
         return new ItemStack(Item.ingotGold);
     }
-    @Redirect(method = "addRecipes", at = @At(value = "NEW", target = "(Lnet/minecraft/src/Item;)Lnet/minecraft/src/ItemStack;", ordinal = 1))
-    private static ItemStack modifyGoldChunkBlockRecipe(Item par1Item) {
+    @ModifyArg(method = "addRecipes", index = 0, at = @At(value = "INVOKE", ordinal = 1, target = "Lbtw/crafting/recipe/RecipeManager;addKilnRecipe(Lnet/minecraft/src/ItemStack;Lnet/minecraft/src/Block;B)V"))
+    private static ItemStack modifyGoldChunkBlockRecipe(ItemStack outputStack) {
         return new ItemStack(Block.blockGold);
     }
-    @Redirect(method = "addRecipes", at = @At(value = "NEW", target = "(Lnet/minecraft/src/Item;)Lnet/minecraft/src/ItemStack;", ordinal = 3))
-    private static ItemStack modifyIronChunkRecipe(Item par1Item) {
+    @ModifyArg(method = "addRecipes", index = 0, at = @At(value = "INVOKE", ordinal = 2, target = "Lbtw/crafting/recipe/RecipeManager;addKilnRecipe(Lnet/minecraft/src/ItemStack;Lnet/minecraft/src/Block;B)V"))
+    private static ItemStack modifyGoldOreRecipe(ItemStack outputStack) {
+        return new ItemStack(Item.ingotGold);
+    }
+    @ModifyArg(method = "addRecipes", index = 0, at = @At(value = "INVOKE", ordinal = 3, target = "Lbtw/crafting/recipe/RecipeManager;addKilnRecipe(Lnet/minecraft/src/ItemStack;Lnet/minecraft/src/Block;B)V"))
+    private static ItemStack modifyIronChunkRecipe(ItemStack outputStack) {
         return new ItemStack(Item.ingotIron);
     }
-    @Redirect(method = "addRecipes", at = @At(value = "NEW", target = "(Lnet/minecraft/src/Item;)Lnet/minecraft/src/ItemStack;", ordinal = 4))
-    private static ItemStack modifyIronChunkBlockRecipe(Item par1Item) {
+    @ModifyArg(method = "addRecipes", index = 0, at = @At(value = "INVOKE", ordinal = 4, target = "Lbtw/crafting/recipe/RecipeManager;addKilnRecipe(Lnet/minecraft/src/ItemStack;Lnet/minecraft/src/Block;B)V"))
+    private static ItemStack modifyIronChunkBlockRecipe(ItemStack outputStack) {
         return new ItemStack(Block.blockIron);
+    }
+    @ModifyArg(method = "addRecipes", index = 0, at = @At(value = "INVOKE", ordinal = 5, target = "Lbtw/crafting/recipe/RecipeManager;addKilnRecipe(Lnet/minecraft/src/ItemStack;Lnet/minecraft/src/Block;B)V"))
+    private static ItemStack modifyIronOreRecipe(ItemStack outputStack) {
+        return new ItemStack(Item.ingotIron);
     }
 }
