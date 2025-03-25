@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.*;
 
 @Mixin(KilnRecipeList.class)
-public class KilnRecipeListMixin {
+public abstract class KilnRecipeListMixin {
 
     @Redirect(method = "addRecipes", at = @At(value = "NEW", target = "(Lnet/minecraft/src/Item;)Lnet/minecraft/src/ItemStack;", ordinal = 0))
     private static ItemStack modifyGoldChunkRecipe(Item par1Item) {

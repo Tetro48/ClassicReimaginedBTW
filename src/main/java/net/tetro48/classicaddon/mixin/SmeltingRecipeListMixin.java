@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(SmeltingRecipeList.class)
-public class SmeltingRecipeListMixin {
+public abstract class SmeltingRecipeListMixin {
 
     @Inject(method = "addSmeltingRecipes", at = @At("TAIL"), remap = false)
     private static void modifySmeltingRecipes(CallbackInfo ci) {

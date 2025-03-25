@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LooseSparseGrassSlabBlock.class)
-public class LooseSparseGrassSlabBlockMixin extends Block {
+public abstract class LooseSparseGrassSlabBlockMixin extends Block {
     protected LooseSparseGrassSlabBlockMixin(int iBlockID, Material material) {
         super(iBlockID, material);
     }

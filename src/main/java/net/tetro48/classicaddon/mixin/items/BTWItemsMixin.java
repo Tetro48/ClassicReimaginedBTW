@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import btw.item.BTWItems;
 
 @Mixin(BTWItems.class)
-public class BTWItemsMixin {
+public abstract class BTWItemsMixin {
     @ModifyArg(method = "instantiateModItems", at = @At(ordinal = 0, value = "INVOKE", target = "Lbtw/item/items/FoodItem;<init>(IIFZLjava/lang/String;)V"), index = 1)
     private static int changeDonut(int par1) {
         return 2;

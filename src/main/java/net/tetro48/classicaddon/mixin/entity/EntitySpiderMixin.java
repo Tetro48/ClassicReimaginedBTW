@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EntitySpider.class)
-public class EntitySpiderMixin {
+public abstract class EntitySpiderMixin {
 
     @Inject(method = "findPlayerToAttack", at = @At("RETURN"), cancellable = true)
     protected void noHuntingChickens(CallbackInfoReturnable<Entity> cir) {

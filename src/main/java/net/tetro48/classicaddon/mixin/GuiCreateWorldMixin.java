@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(GuiCreateWorld.class)
-public class GuiCreateWorldMixin {
+public abstract class GuiCreateWorldMixin {
     @Shadow private int difficultyID;
     @Shadow private GuiButton buttonDifficultyLevel;
 

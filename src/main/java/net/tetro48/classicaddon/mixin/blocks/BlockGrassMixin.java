@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BlockGrass.class)
-public class BlockGrassMixin extends Block {
+public abstract class BlockGrassMixin extends Block {
     protected BlockGrassMixin(int iBlockID, Material material) {
         super(iBlockID, material);
     }

@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(SawRecipeList.class)
-public class SawRecipeListMixin {
+public abstract class SawRecipeListMixin {
 
     @ModifyArg(method = "addRecipes", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/ItemStack;<init>(Lnet/minecraft/src/Block;II)V", ordinal = 0), index = 1)
     private static int modifySawOakPlankOutput(int par2) {

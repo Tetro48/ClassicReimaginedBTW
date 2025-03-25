@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ItemFood.class)
-public class ItemFoodMixin extends Item {
+public abstract class ItemFoodMixin extends Item {
     public ItemFoodMixin(int par1) {
         super(par1);
     }

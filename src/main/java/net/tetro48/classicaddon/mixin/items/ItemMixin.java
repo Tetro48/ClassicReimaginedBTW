@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(Item.class)
-public class ItemMixin {
+public abstract class ItemMixin {
     @ModifyArg(method = "<clinit>", at = @At(ordinal = 0, value = "INVOKE", target = "Lbtw/item/items/PickaxeItem;<init>(ILnet/minecraft/src/EnumToolMaterial;I)V"), index = 2)
     private static int changeWoodPickDurability(int par1) {
         return 59;

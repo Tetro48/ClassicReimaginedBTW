@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BlockDirt.class)
-public class BlockDirtMixin extends FullBlock {
+public abstract class BlockDirtMixin extends FullBlock {
     protected BlockDirtMixin(int iBlockID, Material material) {
         super(iBlockID, material);
     }

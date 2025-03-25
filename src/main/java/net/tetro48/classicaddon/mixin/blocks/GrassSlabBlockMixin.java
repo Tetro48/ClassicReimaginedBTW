@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(GrassSlabBlock.class)
-public class GrassSlabBlockMixin extends Block {
+public abstract class GrassSlabBlockMixin extends Block {
 
     protected GrassSlabBlockMixin(int iBlockID, Material material) {
         super(iBlockID, material);

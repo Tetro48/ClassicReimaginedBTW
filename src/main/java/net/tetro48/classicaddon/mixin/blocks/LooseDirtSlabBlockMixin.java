@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.Random;
 
 @Mixin(LooseDirtSlabBlock.class)
-public class LooseDirtSlabBlockMixin extends Block {
+public abstract class LooseDirtSlabBlockMixin extends Block {
 
     protected LooseDirtSlabBlockMixin(int iBlockID, Material material) {
         super(iBlockID, material);

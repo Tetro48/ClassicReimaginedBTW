@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(BTWBlocks.class)
-public class BTWBlocksMixin {
+public abstract class BTWBlocksMixin {
     @Redirect(method = "<clinit>", at = @At(ordinal = 1, value = "INVOKE", target = "Lnet/minecraft/src/Material;setRequiresTool()Lnet/minecraft/src/Material;"))
     private static Material notRequireAxeOnLog(Material instance) {
 

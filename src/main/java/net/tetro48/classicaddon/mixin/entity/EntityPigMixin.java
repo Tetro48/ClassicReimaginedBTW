@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EntityPig.class)
-public class EntityPigMixin {
+public abstract class EntityPigMixin {
     @Inject(method = "isValidZombieSecondaryTarget", at = @At("RETURN"), cancellable = true)
     public void zombieNoEatAnimal(EntityZombie zombie, CallbackInfoReturnable<Boolean> cir) {
         cir.setReturnValue(false);

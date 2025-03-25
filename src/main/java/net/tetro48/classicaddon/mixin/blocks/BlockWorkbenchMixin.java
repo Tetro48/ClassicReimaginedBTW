@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BlockWorkbench.class)
-public class BlockWorkbenchMixin extends Block {
+public abstract class BlockWorkbenchMixin extends Block {
     protected BlockWorkbenchMixin(int par1, Material par2Material) {
         super(par1, par2Material);
     }

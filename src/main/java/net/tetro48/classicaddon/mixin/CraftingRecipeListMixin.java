@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(CraftingRecipeList.class)
-public class CraftingRecipeListMixin {
+public abstract class CraftingRecipeListMixin {
 
     @Inject(method = "addLogChoppingRecipes", at = @At("HEAD"), remap = false, cancellable = true)
     private static void changeLogChoppingRecipes(CallbackInfo ci) {

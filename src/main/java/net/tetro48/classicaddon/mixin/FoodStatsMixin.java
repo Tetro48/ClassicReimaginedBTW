@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(FoodStats.class)
-public class FoodStatsMixin {
+public abstract class FoodStatsMixin {
     @Shadow private float foodSaturationLevel;
 
     @Shadow private int foodLevel;

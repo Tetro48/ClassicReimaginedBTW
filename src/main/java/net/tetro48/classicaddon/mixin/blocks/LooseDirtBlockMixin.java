@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(LooseDirtBlock.class)
-public class LooseDirtBlockMixin extends Block {
+public abstract class LooseDirtBlockMixin extends Block {
 
     protected LooseDirtBlockMixin(int iBlockID, Material material) {
         super(iBlockID, material);
