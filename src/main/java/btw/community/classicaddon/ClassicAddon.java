@@ -15,6 +15,7 @@ public class ClassicAddon extends BTWAddon {
     public static int planksWithStoneAxe;
     public static int planksWithIronAxes;
     public static int planksWithSaw;
+    public static boolean cursedDifficultyMode;
 
     public ClassicAddon() {
         super();
@@ -26,6 +27,7 @@ public class ClassicAddon extends BTWAddon {
         planksWithStoneAxe = Integer.parseInt(propertyValues.get("PlanksWithStoneAxe"));
         planksWithIronAxes = Integer.parseInt(propertyValues.get("PlanksWithIronAxes"));
         planksWithSaw = Integer.parseInt(propertyValues.get("PlanksWithSaw"));
+        cursedDifficultyMode = Boolean.parseBoolean(propertyValues.get("CursedDifficultyMode"));
     }
     @Override
     public void preInitialize() {
@@ -33,6 +35,7 @@ public class ClassicAddon extends BTWAddon {
         this.registerProperty("PlanksWithStoneAxe", "3", "The amount of planks you get with stone axe.");
         this.registerProperty("PlanksWithIronAxes", "4", "The amount of planks you get with iron or better axe.");
         this.registerProperty("PlanksWithSaw", "6", "The amount of planks you get from sawing planks");
+        this.registerProperty("CursedDifficultyMode", "False", "Allow changing BTW difficulty, but marking it cursed");
     }
     @Override
     public void initialize() {

@@ -23,8 +23,8 @@ public abstract class BlockDirtMixin extends FullBlock {
         cir.setReturnValue(Block.dirt.blockID);
     }
     @Redirect(method = "dropComponentItemsOnBadBreak", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/BlockDirt;dropItemsIndividually(Lnet/minecraft/src/World;IIIIIIF)V"))
-    public void changeDirtDropOnBadBreak(BlockDirt instance, World world, int i, int j, int k, int id, int amount, int iMetadata, float fChanceOfDrop) {
-        this.dropBlockAsItem(world, i, j, k, instance.blockID, 1);
+    public void changeDirtDropOnBadBreak(BlockDirt instance, World world, int i, int j, int k, int id, int amount, int iDamageDropped, float fChanceOfDrop, World world2, int x, int y, int z, int iMetadata) {
+        this.dropItemsIndividually(world, i, j, k, instance.blockID, 1, iMetadata, fChanceOfDrop);
     }
     @Inject(method = "onNeighborDirtDugWithImproperTool", at = @At("HEAD"), cancellable = true)
     protected void noConvertDirt(World world, int i, int j, int k, int iToFacing, CallbackInfo ci) {

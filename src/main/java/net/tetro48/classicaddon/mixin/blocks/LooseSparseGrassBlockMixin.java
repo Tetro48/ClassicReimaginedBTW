@@ -21,7 +21,7 @@ public abstract class LooseSparseGrassBlockMixin extends Block {
         cir.setReturnValue(Block.dirt.blockID);
     }
     @Redirect(method = "dropComponentItemsOnBadBreak", at = @At(value = "INVOKE", target = "Lbtw/block/blocks/LooseSparseGrassBlock;dropItemsIndividually(Lnet/minecraft/src/World;IIIIIIF)V"))
-    public void changeDirtDropOnBadBreak(LooseSparseGrassBlock instance, World world, int i, int j, int k, int id, int amount, int iMetadata, float fChanceOfDrop) {
-        this.dropBlockAsItem(world, i, j, k, Block.dirt.blockID, 1);
+    public void changeDirtDropOnBadBreak(LooseSparseGrassBlock instance, World world, int i, int j, int k, int id, int amount, int iDamageDropped, float fChanceOfDrop, World world2, int x, int y, int z, int iMetadata) {
+        this.dropItemsIndividually(world, i, j, k, instance.blockID, 1, iMetadata, fChanceOfDrop);
     }
 }

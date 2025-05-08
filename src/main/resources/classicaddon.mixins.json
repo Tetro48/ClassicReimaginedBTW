@@ -4,8 +4,10 @@
   "package": "net.tetro48.classicaddon.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "ClassicDifficultyMixin",
     "CraftingRecipeListMixin",
     "CrucibleRecipeListMixin",
+    "EmiFoodRecipeMixin",
     "FoodStatsMixin",
     "KilnRecipeListMixin",
     "PistonPackingRecipeListMixin",
@@ -17,7 +19,11 @@
     "blocks.BlockClayMixin",
     "blocks.BlockDirtMixin",
     "blocks.BlockGrassMixin",
+    "blocks.BlockGravelMixin",
+    "blocks.BlockLogMixin",
+    "blocks.BlockSandMixin",
     "blocks.BlockSandStoneMixin",
+    "blocks.BlockStoneMixin",
     "blocks.BlockWorkbenchMixin",
     "blocks.BTWBlocksMixin",
     "blocks.CobblestoneBlockMixin",
@@ -28,6 +34,7 @@
     "blocks.LooseSparseGrassBlockMixin",
     "blocks.LooseSparseGrassSlabBlockMixin",
     "blocks.PotatoBlockMixin",
+    "blocks.SandAndGravelSlabBlockMixin",
     "entity.EntityCowMixin",
     "entity.EntityHorseMixin",
     "entity.EntityPigMixin",
@@ -49,7 +56,8 @@
   ],
   "client": [
     "GuiCreateWorldMixin",
-    "GuiIngameMixin"
+    "GuiIngameMixin",
+    "GuiOptionsMixin"
   ],
   "injectors": {
     "defaultRequire": 1
