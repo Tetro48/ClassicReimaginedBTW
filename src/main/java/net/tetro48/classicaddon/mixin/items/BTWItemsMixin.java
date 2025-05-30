@@ -116,6 +116,10 @@ public abstract class BTWItemsMixin {
     private static int changeChickenSoup(int par1) {
         return 9;
     }
+    @ModifyArg(method = "instantiateModItems", at = @At(ordinal = 0, value = "INVOKE", target = "Lbtw/item/items/SoupItem;<init>(IIFZLjava/lang/String;)V"), index = 2)
+    private static float changeChickenSoupSaturation(float fSaturationModifier) {
+        return 1.5f;
+    }
     @ModifyArg(method = "instantiateModItems", at = @At(ordinal = 1, value = "INVOKE", target = "Lbtw/item/items/SoupItem;<init>(IIFZLjava/lang/String;)V"), index = 1)
     private static int changeChowder(int par1) {
         return 5;

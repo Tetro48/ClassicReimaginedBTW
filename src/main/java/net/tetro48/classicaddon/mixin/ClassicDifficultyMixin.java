@@ -10,6 +10,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class ClassicDifficultyMixin {
 	@Inject(method = "getNoToolBlockHardnessMultiplier", at = @At("RETURN"), cancellable = true, remap = false)
 	public void fasterSpeed(CallbackInfoReturnable<Float> cir) {
-		cir.setReturnValue(0.15f);
+		cir.setReturnValue(0.16f);
 	}
 }

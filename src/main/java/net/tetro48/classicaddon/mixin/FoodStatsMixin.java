@@ -41,17 +41,10 @@ public abstract class FoodStatsMixin {
     @Inject(method = "onUpdate", at = @At("RETURN"))
     public void introduceVanillaHealMechanic(EntityPlayer player, CallbackInfo ci) {
         boolean bl = player.worldObj.getGameRules().getGameRuleBooleanValue("naturalRegeneration");
-        if (bl && this.foodSaturationLevel > 0.0F && player.shouldHeal() && this.foodLevel >= 60) {
-            if (this.foodTimer >= 10) {
-                float f = Math.min(this.foodSaturationLevel, 6.0F);
-                player.heal(f / 6.0F);
-                this.addExhaustion(f);
-                this.foodTimer = 0;
-            }
-        } else if (bl && this.foodLevel >= 54 && player.shouldHeal()) {
+        if (bl && this.foodLevel >= 54 && player.shouldHeal()) {
             if (this.foodTimer >= 80) {
                 player.heal(1.0F);
-                this.addExhaustion(6.0F);
+                this.addExhaustion(3.0F);
                 this.foodTimer = 0;
             }
         }
