@@ -13,6 +13,6 @@ public abstract class BlockCakeMixin {
     }
     @ModifyArg(method = "eatCakeSliceLocal", index = 1, at = @At(value = "INVOKE", target = "Lnet/minecraft/src/FoodStats;addStats(IF)V"))
     public float changeFatMultiplier(float original) {
-        return 0.5f;
+        return 1.0f;
     }
 }
