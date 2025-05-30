@@ -7,15 +7,15 @@ import net.minecraft.src.MathHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(FoodStats.class)
 public abstract class FoodStatsMixin {
+    @Unique private final static float ONE_AND_ONE_THIRD = 4f/3f;
+
     @Shadow private float foodSaturationLevel;
 
     @Shadow private int foodLevel;
@@ -34,7 +34,11 @@ public abstract class FoodStatsMixin {
     }
     @Redirect(method = "onUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/GameRules;getGameRuleBooleanValue(Ljava/lang/String;)Z", ordinal = 0))
     public boolean turnOffBTWHeal(GameRules instance, String par1Str) {
-        return this.foodLevel > 54;
+        return this.foodLevel >= 54;
+    }
+    @ModifyConstant(method = "onUpdate", constant = @Constant(floatValue = 1.33F))
+    private float increasePrecision(float constant) {
+        return ONE_AND_ONE_THIRD;
     }
     @Inject(method = "onUpdate", at = @At("RETURN"))
     public void introduceVanillaHealMechanic(EntityPlayer player, CallbackInfo ci) {
@@ -56,7 +60,6 @@ public abstract class FoodStatsMixin {
     }
     @Inject(method = "addStats(IF)V", cancellable = true, at = @At(value = "FIELD", target = "Lnet/minecraft/src/FoodStats;foodLevel:I", ordinal = 3))
     public void addFatRegardless(int iFoodGain, float fFatMultiplier, CallbackInfo ci) {
-        System.out.println("Math.min(this.foodSaturationLevel + (float)iFoodGain * fFatMultiplier / 3.0F, this.foodLevel / 3f) = " + Math.min(this.foodSaturationLevel + (float)iFoodGain * fFatMultiplier / 3.0F, this.foodLevel / 3f));
         this.foodSaturationLevel = Math.min(this.foodSaturationLevel + (float)iFoodGain * fFatMultiplier / 3.0F, this.foodLevel / 3f);
         ci.cancel();
     }

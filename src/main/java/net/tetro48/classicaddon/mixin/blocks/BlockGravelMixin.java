@@ -14,6 +14,6 @@ public abstract class BlockGravelMixin extends Block {
 
     @Redirect(method = "dropComponentItemsOnBadBreak", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/BlockGravel;dropItemsIndividually(Lnet/minecraft/src/World;IIIIIIF)V"))
     public void changeDropOnBadBreak(BlockGravel instance, World world, int i, int j, int k, int id, int amount, int iDamageDropped, float fChanceOfDrop, World world2, int x, int y, int z, int iMetadata) {
-        this.dropItemsIndividually(world, i, j, k, instance.blockID, 1, iMetadata, fChanceOfDrop);
+        this.dropItemsIndividually(world, i, j, k, idDropped(iMetadata, world.rand, 0), 1, iMetadata, fChanceOfDrop);
     }
 }

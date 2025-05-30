@@ -25,6 +25,6 @@ public abstract class GrassSlabBlockMixin extends Block {
     }
     @Redirect(method = "dropComponentItemsOnBadBreak", at = @At(value = "INVOKE", target = "Lbtw/block/blocks/GrassSlabBlock;dropItemsIndividually(Lnet/minecraft/src/World;IIIIIIF)V"))
     public void changeDirtDropOnBadBreak(GrassSlabBlock instance, World world, int i, int j, int k, int id, int amount, int iDamageDropped, float fChanceOfDrop, World world2, int x, int y, int z, int iMetadata) {
-        this.dropItemsIndividually(world, i, j, k, instance.blockID, 1, iMetadata, fChanceOfDrop);
+        this.dropItemsIndividually(world, i, j, k, BTWBlocks.dirtSlab.blockID, 1, iMetadata, fChanceOfDrop);
     }
 }
