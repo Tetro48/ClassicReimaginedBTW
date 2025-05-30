@@ -1,7 +1,6 @@
 package net.tetro48.classicaddon.mixin.blocks;
 
 import btw.block.blocks.OreBlock;
-import btw.block.blocks.OreBlockStaged;
 import net.minecraft.src.IBlockAccess;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
