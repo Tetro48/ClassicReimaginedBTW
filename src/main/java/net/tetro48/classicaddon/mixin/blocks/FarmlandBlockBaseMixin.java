@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(FarmlandBlockBase.class)
-public class FarmlandBlockBaseMixin extends Block {
+public abstract class FarmlandBlockBaseMixin extends Block {
 	protected FarmlandBlockBaseMixin(int par1, Material par2Material) {
 		super(par1, par2Material);
 	}

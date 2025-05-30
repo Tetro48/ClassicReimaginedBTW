@@ -15,9 +15,6 @@
   "icon": "assets/classicaddon/icon.png",
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "net.tetro48.classicaddon.ClassicAddonMod"
-    ],
     "btw:addon": [
       "btw.community.classicaddon.ClassicAddon"
     ]

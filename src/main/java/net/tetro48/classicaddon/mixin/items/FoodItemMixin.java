@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(FoodItem.class)
-public class FoodItemMixin {
+public abstract class FoodItemMixin {
 	@ModifyArg(method = "setStandardFoodPoisoningEffect", at = @At(value = "INVOKE", target = "Lbtw/item/items/FoodItem;setPotionEffect(IIIF)Lnet/minecraft/src/ItemFood;"), index = 1)
 	private int lowerFoodPoisoningLength(int par1) {
 		return 30;
