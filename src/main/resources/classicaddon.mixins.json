@@ -41,6 +41,7 @@
     "blocks.RoughStoneBlockMixin",
     "blocks.SandAndGravelSlabBlockMixin",
     "entity.EntityCowMixin",
+    "entity.EntityFishHookMixin",
     "entity.EntityHorseMixin",
     "entity.EntityPigMixin",
     "entity.EntityPlayerMixin",
