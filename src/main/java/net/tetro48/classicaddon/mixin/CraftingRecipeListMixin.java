@@ -120,6 +120,9 @@ public abstract class CraftingRecipeListMixin {
         RecipeManager.addShapelessRecipe(new ItemStack(Item.book, 1),
                 new Object[] {
                         Item.paper, Item.paper, Item.paper, Item.leather});
+        RecipeManager.addShapelessRecipe(new ItemStack(Item.book, 1),
+                new Object[] {
+                        Item.paper, Item.paper, Item.paper, BTWItems.cutLeather});
         RecipeManager.addRecipe(new ItemStack(BTWBlocks.chest, 1),
                 new Object[]{
                         "###",
