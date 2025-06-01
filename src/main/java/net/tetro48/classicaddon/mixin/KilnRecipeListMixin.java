@@ -34,4 +34,12 @@ public abstract class KilnRecipeListMixin {
     private static ItemStack modifyIronOreRecipe(ItemStack outputStack) {
         return new ItemStack(Item.ingotIron);
     }
+    @ModifyArg(method = "addRecipes", index = 2, at = @At(value = "INVOKE", ordinal = 6, target = "Lbtw/crafting/recipe/RecipeManager;addKilnRecipe(Lnet/minecraft/src/ItemStack;Lnet/minecraft/src/Block;B)V"))
+    private static byte makeCharcoalFromBloodWoodFaster(byte cookTimeMultiplier) {
+        return 1;
+    }
+    @ModifyArg(method = "addRecipes", index = 2, at = @At(value = "INVOKE", ordinal = 7, target = "Lbtw/crafting/recipe/RecipeManager;addKilnRecipe(Lnet/minecraft/src/ItemStack;Lnet/minecraft/src/Block;B)V"))
+    private static byte makeCharcoalFromLogsFaster(byte cookTimeMultiplier) {
+        return 1;
+    }
 }

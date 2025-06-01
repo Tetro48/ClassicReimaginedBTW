@@ -1,5 +1,6 @@
 package net.tetro48.classicaddon.mixin;
 
+import btw.block.BTWBlocks;
 import btw.crafting.recipe.SmeltingRecipeList;
 import btw.item.BTWItems;
 import net.minecraft.src.Block;
@@ -24,6 +25,8 @@ public abstract class SmeltingRecipeListMixin {
         FurnaceRecipes.smelting().addSmelting(BTWItems.unfiredNetherBrick.itemID, new ItemStack(BTWItems.netherBrick), 0.0F);
         FurnaceRecipes.smelting().addSmelting(BTWItems.unfiredCrudeBrick.itemID, new ItemStack(Item.brick), 0.0F);
         FurnaceRecipes.smelting().addSmelting(BTWItems.ironOreChunk.itemID, new ItemStack(Item.ingotIron), 0.0F, 1);
+        FurnaceRecipes.smelting().addSmelting(Block.wood.blockID, new ItemStack(Item.coal, 1, 1), 0.0F, 2);
+        FurnaceRecipes.smelting().addSmelting(BTWBlocks.bloodWoodLog.blockID, new ItemStack(Item.coal, 1, 1), 0.0F, 2);
         FurnaceRecipes.smelting().addSmelting(BTWItems.goldOreChunk.itemID, new ItemStack(Item.ingotGold), 0.0F, 1);
     }
 }

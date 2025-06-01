@@ -63,6 +63,10 @@ public abstract class CraftingRecipeListMixin {
 
     @Unique
     private static void addMortarRecipe(ItemStack input, ItemStack output) {
+        addMortarRecipe(input, output, true);
+    }
+    @Unique
+    private static void addMortarRecipe(ItemStack input, ItemStack output, boolean canIronChisel) {
         RecipeManager.addShapelessRecipe(output,
                 new Object[] {
                         input, Item.clay});
@@ -72,6 +76,18 @@ public abstract class CraftingRecipeListMixin {
         RecipeManager.addShapelessRecipe(output,
                 new Object[] {
                         input, Item.slimeBall});
+        addUnmortarRecipe(output, input, canIronChisel);
+    }
+    @Unique
+    private static void addUnmortarRecipe(ItemStack input, ItemStack output, boolean canIronChisel) {
+        RecipeManager.addShapelessRecipe(output,
+                new Object[] {
+                        input, new ItemStack(BTWItems.diamondChisel, 1, 32767)});
+        if (canIronChisel) {
+            RecipeManager.addShapelessRecipe(output,
+                    new Object[]{
+                            input, new ItemStack(BTWItems.ironChisel, 1, 32767)});
+        }
     }
     @ModifyArg(method = "addTorchRecipes", index = 1, at = @At(ordinal = 0, value = "INVOKE", target = "Lnet/minecraft/src/ItemStack;<init>(Lnet/minecraft/src/Block;I)V"))
     private static int modifyNethercoalTorchAmount(int par2) {
@@ -100,17 +116,17 @@ public abstract class CraftingRecipeListMixin {
                         " B ",
                         "###", '#', Block.cobblestone, 'B', Item.blazeRod});
         for (int i = 0; i < 3; i++) {
-            addMortarRecipe(new ItemStack(BTWBlocks.looseCobblestone, 1, i<<2), new ItemStack(Block.cobblestone, 1, i));
-            addMortarRecipe(new ItemStack(BTWBlocks.looseCobblestoneSlab, 1, i<<2), new ItemStack(BTWBlocks.cobblestoneSlab, 1, i));
-            addMortarRecipe(new ItemStack(BTWBlocks.looseStoneBrick, 1, i<<2), new ItemStack(Block.stoneBrick, 1, i<<2));
-            addMortarRecipe(new ItemStack(BTWBlocks.looseStoneBrickSlab, 1, i<<2), new ItemStack(BTWBlocks.stoneBrickSlab, 1, i));
+            addMortarRecipe(new ItemStack(BTWBlocks.looseCobblestone, 1, i<<2), new ItemStack(Block.cobblestone, 1, i), i<2);
+            addMortarRecipe(new ItemStack(BTWBlocks.looseCobblestoneSlab, 1, i<<2), new ItemStack(BTWBlocks.cobblestoneSlab, 1, i), i<2);
+            addMortarRecipe(new ItemStack(BTWBlocks.looseStoneBrick, 1, i<<2), new ItemStack(Block.stoneBrick, 1, i<<2), i<2);
+            addMortarRecipe(new ItemStack(BTWBlocks.looseStoneBrickSlab, 1, i<<2), new ItemStack(BTWBlocks.stoneBrickSlab, 1, i), i<2);
         }
         addMortarRecipe(new ItemStack(BTWBlocks.looseCobblestoneStairs, 1), new ItemStack(Block.stairsCobblestone, 1));
         addMortarRecipe(new ItemStack(BTWBlocks.looseCobbledDeepslateStairs, 1), new ItemStack(BTWBlocks.midStrataCobblestoneStairs, 1));
-        addMortarRecipe(new ItemStack(BTWBlocks.looseCobbledBlackstoneStairs, 1), new ItemStack(BTWBlocks.deepStrataCobblestoneStairs, 1));
+        addMortarRecipe(new ItemStack(BTWBlocks.looseCobbledBlackstoneStairs, 1), new ItemStack(BTWBlocks.deepStrataCobblestoneStairs, 1), false);
         addMortarRecipe(new ItemStack(BTWBlocks.looseStoneBrickStairs, 1), new ItemStack(Block.stairsStoneBrick, 1));
         addMortarRecipe(new ItemStack(BTWBlocks.looseDeepslateBrickStairs, 1), new ItemStack(BTWBlocks.midStrataStoneBrickStairs, 1));
-        addMortarRecipe(new ItemStack(BTWBlocks.looseBlackstoneBrickStairs, 1), new ItemStack(BTWBlocks.deepStrataStoneBrickStairs, 1));
+        addMortarRecipe(new ItemStack(BTWBlocks.looseBlackstoneBrickStairs, 1), new ItemStack(BTWBlocks.deepStrataStoneBrickStairs, 1), false);
         addMortarRecipe(new ItemStack(BTWBlocks.looseBrick, 1), new ItemStack(Block.brick, 1));
         addMortarRecipe(new ItemStack(BTWBlocks.looseBrickStairs, 1), new ItemStack(Block.stairsBrick, 1));
         addMortarRecipe(new ItemStack(BTWBlocks.looseBrickSlab, 1), new ItemStack(Block.stoneSingleSlab, 1, 4));

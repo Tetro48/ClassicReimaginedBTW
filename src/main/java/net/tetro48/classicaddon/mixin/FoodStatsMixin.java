@@ -1,5 +1,6 @@
 package net.tetro48.classicaddon.mixin;
 
+import btw.community.classicaddon.ClassicAddon;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.FoodStats;
 import net.minecraft.src.GameRules;
@@ -41,10 +42,17 @@ public abstract class FoodStatsMixin {
     @Inject(method = "onUpdate", at = @At("RETURN"))
     public void introduceVanillaHealMechanic(EntityPlayer player, CallbackInfo ci) {
         boolean bl = player.worldObj.getGameRules().getGameRuleBooleanValue("naturalRegeneration");
-        if (bl && this.foodLevel >= 54 && player.shouldHeal()) {
+        if (bl && this.foodSaturationLevel > 0.0F && player.shouldHeal() && this.foodLevel >= 60 && ClassicAddon.quickHealToggle) {
+            if (this.foodTimer >= ClassicAddon.quickHealTicks) {
+                float f = Math.min(Math.max(0.5F, this.foodSaturationLevel), 6.0F);
+                player.heal(f / 6.0F);
+                this.addExhaustion(f);
+                this.foodTimer = 0;
+            }
+        } else if (bl && this.foodLevel >= 54 && player.shouldHeal()) {
             if (this.foodTimer >= 80) {
                 player.heal(1.0F);
-                this.addExhaustion(3.0F);
+                this.addExhaustion(ClassicAddon.quickHealToggle ? 6.0F : 3.0F);
                 this.foodTimer = 0;
             }
         }
