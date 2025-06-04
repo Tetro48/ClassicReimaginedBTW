@@ -64,6 +64,7 @@ public abstract class CrucibleRecipeListMixin {
         CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 19), new ItemStack[]{new ItemStack(Item.helmetChain, 1, 32767)});
         CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 31), new ItemStack[]{new ItemStack(Item.plateChain, 1, 32767)});
         CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(Item.ingotIron, 1), new ItemStack[]{new ItemStack(BTWBlocks.pulley, 1)});
+        CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 3), new ItemStack[]{new ItemStack(BTWItems.ironChisel, 1, 32767)});
 
         //adds tweaked recipes
         RecipeManager.addStokedCrucibleRecipe(new ItemStack(Item.goldNugget, 8), new ItemStack[]{new ItemStack(BTWItems.ocularOfEnder)});
@@ -76,5 +77,6 @@ public abstract class CrucibleRecipeListMixin {
         RecipeManager.addStokedCrucibleRecipe(new ItemStack(BTWItems.ironNugget, 20), new ItemStack[]{new ItemStack(Item.helmetChain, 1, 32767)});
         RecipeManager.addStokedCrucibleRecipe(new ItemStack(BTWItems.ironNugget, 32), new ItemStack[]{new ItemStack(Item.plateChain, 1, 32767)});
         RecipeManager.addStokedCrucibleRecipe(new ItemStack[]{new ItemStack(Item.ingotIron, 2), new ItemStack(Item.goldNugget, 3)}, new ItemStack[]{new ItemStack(BTWBlocks.pulley, 1)});
+        RecipeManager.addStokedCrucibleRecipe(new ItemStack(BTWItems.ironNugget, 4), new ItemStack[]{new ItemStack(BTWItems.ironChisel, 1, 32767)});
     }
 }
