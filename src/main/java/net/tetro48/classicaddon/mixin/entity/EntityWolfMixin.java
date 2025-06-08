@@ -19,7 +19,7 @@ public abstract class EntityWolfMixin {
 
 	@Redirect(method = "updateShitState", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/EntityWolf;isFullyFed()Z"))
 	private boolean modifyShitState(EntityWolf instance) {
-		if (!ClassicAddon.animageddonToggle) return instance.isFullyFed();
+		if (ClassicAddon.animageddonToggle) return instance.isFullyFed();
 		return isWolfFed;
 	}
 
