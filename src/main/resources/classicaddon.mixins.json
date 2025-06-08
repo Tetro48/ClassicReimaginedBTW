@@ -80,6 +80,7 @@
     "GuiCreateWorldMixin",
     "GuiIngameMenuMixin",
     "GuiIngameMixin",
+    "GuiMultiplayerMixin",
     "GuiOptionsMixin"
   ],
   "injectors": {
