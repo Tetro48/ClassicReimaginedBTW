@@ -13,6 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class EntitySheepMixin extends EntityAnimal {
     @Shadow private int woolAccumulationCount;
 
+    @Shadow public abstract boolean getSheared();
+
     public EntitySheepMixin(World par1World) {
         super(par1World);
     }
@@ -25,8 +27,13 @@ public abstract class EntitySheepMixin extends EntityAnimal {
     private void changeBreedingItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
         cir.setReturnValue(stack.itemID == BTWItems.wheat.itemID);
     }
+    @Override
     public void onGrazeBlock(int i, int j, int k) {
         super.onGrazeBlock(i, j, k);
         if (!ClassicAddon.animageddonToggle) woolAccumulationCount = 24000;
+    }
+    @Override
+    public boolean isHungryEnoughToGraze() {
+        return getSheared();
     }
 }
