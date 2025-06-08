@@ -1,13 +1,11 @@
-package net.tetro48.classicaddon.mixin;
+package net.tetro48.classicaddon.mixin.client;
 
 import btw.client.gui.LockButton;
 import btw.community.classicaddon.ClassicAddon;
 import btw.world.util.difficulty.Difficulties;
-import btw.world.util.difficulty.Difficulty;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiCreateWorld;
-import net.minecraft.src.GuiScreen;
 import net.minecraft.src.I18n;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

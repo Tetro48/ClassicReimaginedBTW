@@ -1,4 +1,4 @@
-package net.tetro48.classicaddon.mixin;
+package net.tetro48.classicaddon.mixin.client;
 
 import btw.world.util.difficulty.Difficulties;
 import btw.world.util.difficulty.Difficulty;
@@ -11,7 +11,6 @@ import net.minecraft.src.I18n;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 

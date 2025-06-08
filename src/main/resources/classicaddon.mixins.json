@@ -77,11 +77,11 @@
     "items.ItemMixin"
   ],
   "client": [
-    "GuiCreateWorldMixin",
-    "GuiIngameMenuMixin",
-    "GuiIngameMixin",
-    "GuiMultiplayerMixin",
-    "GuiOptionsMixin"
+    "client.GuiCreateWorldMixin",
+    "client.GuiIngameMenuMixin",
+    "client.GuiIngameMixin",
+    "client.GuiMultiplayerMixin",
+    "client.GuiOptionsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

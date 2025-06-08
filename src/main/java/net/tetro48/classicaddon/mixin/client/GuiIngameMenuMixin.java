@@ -1,4 +1,4 @@
-package net.tetro48.classicaddon.mixin;
+package net.tetro48.classicaddon.mixin.client;
 
 import btw.community.classicaddon.ClassicAddon;
 import net.minecraft.src.GuiButton;
