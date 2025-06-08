@@ -15,6 +15,7 @@ public class ClassicAddon extends BTWAddon {
     public static int planksWithSaw;
     public static boolean quickHealToggle;
     public static int quickHealTicks;
+    public static boolean animageddonToggle;
     public static boolean cursedDifficultyMode;
 
     public static boolean isServerRunningThisAddon = false;
@@ -38,6 +39,7 @@ public class ClassicAddon extends BTWAddon {
         quickHealToggle = Boolean.parseBoolean(propertyValues.get("QuickHealToggle"));
         quickHealTicks = Integer.parseInt(propertyValues.get("QuickHealTicks"));
         cursedDifficultyMode = Boolean.parseBoolean(propertyValues.get("CursedDifficultyMode"));
+        animageddonToggle = Boolean.parseBoolean(propertyValues.get("AnimageddonToggle"));
     }
     @Override
     public void preInitialize() {
@@ -48,6 +50,7 @@ public class ClassicAddon extends BTWAddon {
         this.registerProperty("QuickHealToggle", "False", "This is a toggle for vMC 1.9+ regeneration system. False (Off) by default.");
         this.registerProperty("QuickHealTicks", "40", "How quickly the regen occurs. 20 ticks = 1 second. 10 ticks is vanilla, 40 ticks is Tetro48's suggested value.");
         this.registerProperty("CursedDifficultyMode", "False", "Allow changing BTW difficulty, but marking it cursed");
+        this.registerProperty("AnimageddonToggle", "False", "A toggle for BTW Animageddon. Turning this off will disable animal hunger, makes sheep's wool insta-grow when grazing one grass, wolves need to be fed once to shit.");
     }
     @Override
     public void initialize() {

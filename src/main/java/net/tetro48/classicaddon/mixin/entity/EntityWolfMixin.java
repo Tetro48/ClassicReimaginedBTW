@@ -1,5 +1,6 @@
 package net.tetro48.classicaddon.mixin.entity;
 
+import btw.community.classicaddon.ClassicAddon;
 import net.minecraft.src.EntityWolf;
 import net.minecraft.src.Item;
 import net.minecraft.src.NBTTagCompound;
@@ -18,6 +19,7 @@ public abstract class EntityWolfMixin {
 
 	@Redirect(method = "updateShitState", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/EntityWolf;isFullyFed()Z"))
 	private boolean modifyShitState(EntityWolf instance) {
+		if (!ClassicAddon.animageddonToggle) return instance.isFullyFed();
 		return isWolfFed;
 	}
 
@@ -42,6 +44,6 @@ public abstract class EntityWolfMixin {
 	}
 	@Inject(method = "isHungryEnoughToEatFood", at = @At("RETURN"), cancellable = true)
 	private void canWolfEat(CallbackInfoReturnable<Boolean> cir) {
-		cir.setReturnValue(!isWolfFed);
+		if (!ClassicAddon.animageddonToggle) cir.setReturnValue(!isWolfFed);
 	}
 }

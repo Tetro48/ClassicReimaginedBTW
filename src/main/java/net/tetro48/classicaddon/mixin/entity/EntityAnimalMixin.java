@@ -1,5 +1,6 @@
 package net.tetro48.classicaddon.mixin.entity;
 
+import btw.community.classicaddon.ClassicAddon;
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.EntityAnimal;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,13 +19,15 @@ public abstract class EntityAnimalMixin {
 
 	@Inject(method = "updateHungerState", at = @At("RETURN"))
 	private void stopGettingHungry(CallbackInfo ci) {
-		if (hungerCountdown < 24000) {
-			resetHungerCountdown();
+		if (!ClassicAddon.animageddonToggle) {
+			if (hungerCountdown < 24000) {
+				resetHungerCountdown();
+			}
+			setHungerLevel(0);
 		}
-		setHungerLevel(0);
 	}
 	@Inject(method = "panicNearbyAnimals", at = @At("HEAD"), cancellable = true)
 	private void noPanickingNearbyAnimals(DamageSource damageSource, CallbackInfo ci) {
-		ci.cancel();
+		if (!ClassicAddon.animageddonToggle) ci.cancel();
 	}
 }

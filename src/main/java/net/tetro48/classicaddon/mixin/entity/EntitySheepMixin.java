@@ -1,5 +1,6 @@
 package net.tetro48.classicaddon.mixin.entity;
 
+import btw.community.classicaddon.ClassicAddon;
 import btw.item.BTWItems;
 import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,6 +27,6 @@ public abstract class EntitySheepMixin extends EntityAnimal {
     }
     public void onGrazeBlock(int i, int j, int k) {
         super.onGrazeBlock(i, j, k);
-        woolAccumulationCount = 24000;
+        if (!ClassicAddon.animageddonToggle) woolAccumulationCount = 24000;
     }
 }
