@@ -16,8 +16,8 @@ public abstract class HoeItemMixin extends ToolItem {
 		super(iItemID, iBaseEntityDamage, par3EnumToolMaterial);
 	}
 
-	@Inject(method = "applyStandardEfficiencyModifiers", at = @At("RETURN"), remap = false)
-	private void undoModifiers(CallbackInfo ci) {
-		super.applyStandardEfficiencyModifiers();
+	@Inject(method = "<init>", at = @At("RETURN"))
+	private void undoModifiers(int itemID, EnumToolMaterial material, CallbackInfo ci) {
+		efficiencyOnProperMaterial = material.getEfficiencyOnProperMaterial();
 	}
 }
