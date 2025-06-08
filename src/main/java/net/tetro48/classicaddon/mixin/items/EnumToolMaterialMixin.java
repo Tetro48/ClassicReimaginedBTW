@@ -15,6 +15,10 @@ public abstract class EnumToolMaterialMixin {
     private static int changeStoneDurability(int original) {
         return 131;
     }
+    @ModifyArg(method = "<clinit>", index = 3, at = @At(value = "INVOKE", ordinal = 2, target = "Lnet/minecraft/src/EnumToolMaterial;<init>(Ljava/lang/String;IIIFFIII)V"))
+    private static int changeIronDurability(int par2) {
+        return 250;
+    }
     @ModifyArg(method = "<clinit>", index = 4, at = @At(value = "INVOKE", ordinal = 0, target = "Lnet/minecraft/src/EnumToolMaterial;<init>(Ljava/lang/String;IIIFFIII)V"))
     private static float changeWoodEfficiency(float par5) {
         return 2f;
