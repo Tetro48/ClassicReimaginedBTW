@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(EntityFishHook.class)
-public class EntityFishHookMixin {
+public abstract class EntityFishHookMixin {
 	@Shadow private int ticksCatchable;
 
 	@ModifyArg(method = "onUpdate", at = @At(value = "INVOKE", target = "Ljava/util/Random;nextInt(I)I", ordinal = 1))
