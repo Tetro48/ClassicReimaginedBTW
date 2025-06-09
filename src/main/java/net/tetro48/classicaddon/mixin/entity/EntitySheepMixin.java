@@ -17,7 +17,7 @@ public abstract class EntitySheepMixin extends EntityAnimal {
 
     @Shadow public abstract boolean getSheared();
 
-    @Unique private int ticksSinceGraze = 0;
+    @Unique private int ticksUntilGraze = 0;
 
     public EntitySheepMixin(World par1World) {
         super(par1World);
@@ -33,12 +33,12 @@ public abstract class EntitySheepMixin extends EntityAnimal {
     }
     @Inject(method = "onLivingUpdate", at = @At("HEAD"))
     private void tick(CallbackInfo ci) {
-        ticksSinceGraze++;
+        ticksUntilGraze--;
     }
     @Override
     public void onGrazeBlock(int i, int j, int k) {
         super.onGrazeBlock(i, j, k);
-        ticksSinceGraze = 0;
+        ticksUntilGraze = rand.nextInt(600) + 200;
         if (!ClassicAddon.animageddonToggle) woolAccumulationCount = 24000;
     }
     @Override
@@ -46,6 +46,6 @@ public abstract class EntitySheepMixin extends EntityAnimal {
         if (ClassicAddon.animageddonToggle) {
             return super.isHungryEnoughToGraze();
         }
-        return ticksSinceGraze > 400;
+        return ticksUntilGraze <= 0;
     }
 }
