@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(RoughStoneBlock.class)
-public class RoughStoneBlockMixin {
+public abstract class RoughStoneBlockMixin {
 	@Inject(method = "getHarvestToolLevel", at = @At("RETURN"), cancellable = true)
 	public void makeItMineableByAnyPickaxe(IBlockAccess blockAccess, int i, int j, int k, CallbackInfoReturnable<Integer> cir) {
 		cir.setReturnValue(0);
