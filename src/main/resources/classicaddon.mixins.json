@@ -47,6 +47,8 @@
     "blocks.LooseSparseGrassSlabBlockMixin",
     "blocks.NetherBrickBlockMixin",
     "blocks.NetherBrickStairsBlockMixin",
+    "blocks.NetherrackBlockFallingMixin",
+    "blocks.NetherrackBlockMixin",
     "blocks.OreBlockMixin",
     "blocks.PotatoBlockMixin",
     "blocks.RoughStoneBlockMixin",
