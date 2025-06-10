@@ -15,8 +15,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class EntitySheepMixin extends EntityAnimal {
     @Shadow private int woolAccumulationCount;
 
-    @Shadow public abstract boolean getSheared();
-
     @Unique private int ticksUntilGraze = 0;
 
     public EntitySheepMixin(World par1World) {
