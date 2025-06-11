@@ -39,7 +39,7 @@ public abstract class EntitySheepMixin extends EntityAnimal {
     public void onGrazeBlock(int i, int j, int k) {
         super.onGrazeBlock(i, j, k);
         ticksUntilGraze = rand.nextInt(600) + 200;
-        if (!ClassicAddon.animageddonToggle) woolAccumulationCount = 24000;
+        if (!ClassicAddon.animageddonToggle && !getSheared()) woolAccumulationCount = 24000;
     }
     @Override
     public boolean isHungryEnoughToGraze() {
