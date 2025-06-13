@@ -2,6 +2,7 @@ package btw.community.classicaddon;
 
 import btw.AddonHandler;
 import btw.BTWAddon;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.*;
 
 import java.util.Map;
@@ -17,6 +18,8 @@ public class ClassicAddon extends BTWAddon {
     public static int quickHealTicks;
     public static boolean animageddonToggle;
     public static boolean cursedDifficultyMode;
+    public static boolean gloomToggle;
+    public static int visualNewMoonBrightnessLevel = 0;
 
     public static boolean isServerRunningThisAddon = false;
 
@@ -40,6 +43,10 @@ public class ClassicAddon extends BTWAddon {
         quickHealTicks = Integer.parseInt(propertyValues.get("QuickHealTicks"));
         cursedDifficultyMode = Boolean.parseBoolean(propertyValues.get("CursedDifficultyMode"));
         animageddonToggle = Boolean.parseBoolean(propertyValues.get("AnimageddonToggle"));
+        gloomToggle = Boolean.parseBoolean(propertyValues.get("GloomToggle"));
+        if (!MinecraftServer.getIsServer()) {
+            visualNewMoonBrightnessLevel = Integer.parseInt(propertyValues.get("VisualNewMoonBrightnessLevel"));
+        }
     }
     @Override
     public void preInitialize() {
@@ -50,7 +57,14 @@ public class ClassicAddon extends BTWAddon {
         this.registerProperty("QuickHealToggle", "False", "This is a toggle for vMC 1.9+ regeneration system. False (Off) by default.");
         this.registerProperty("QuickHealTicks", "40", "How quickly the regen occurs. 20 ticks = 1 second. 10 ticks is vanilla, 40 ticks is Tetro48's suggested value.");
         this.registerProperty("CursedDifficultyMode", "False", "Allow changing BTW difficulty, but marking it cursed");
+        this.registerProperty("GloomToggle", "False", "This toggles gloom effect.");
+        this.registerPropertyClientOnly("VisualNewMoonBrightnessLevel", "0", "This is purely a visual setting... and \n# 0: Pitch black. 1: A tiny bit of light");
         this.registerProperty("AnimageddonToggle", "False", "A toggle for BTW Animageddon. Turning this off will disable animal hunger, makes sheep's wool insta-grow when grazing one grass, wolves need to be fed once to shit.");
+    }
+    public void registerPropertyClientOnly(String propertyName, String defaultValue, String comment) {
+        if (!MinecraftServer.getIsServer()) {
+            this.registerProperty(propertyName, defaultValue, comment);
+        }
     }
     @Override
     public void initialize() {

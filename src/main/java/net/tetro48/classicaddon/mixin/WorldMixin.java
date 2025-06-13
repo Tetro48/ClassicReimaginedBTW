@@ -12,9 +12,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(World.class)
 public abstract class WorldMixin {
 	@Shadow private static double[] moonBrightnessByPhase;
+	@Shadow public boolean isRemote;
+
 	@Inject(method = "tick", at = @At("HEAD"))
 	private void newMoonShenanigans(CallbackInfo ci) {
-		if (ClassicAddon.isServerRunningThisAddon || MinecraftServer.getIsServer()) moonBrightnessByPhase[4] = 0.25d;
+		if (ClassicAddon.isServerRunningThisAddon && ClassicAddon.visualNewMoonBrightnessLevel == 1) moonBrightnessByPhase[4] = 0.25d;
 		else moonBrightnessByPhase[4] = 0d;
 	}
 }
