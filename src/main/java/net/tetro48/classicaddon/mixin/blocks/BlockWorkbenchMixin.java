@@ -3,6 +3,7 @@ package net.tetro48.classicaddon.mixin.blocks;
 import btw.block.util.Flammability;
 import net.minecraft.src.Block;
 import net.minecraft.src.BlockWorkbench;
+import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.Material;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,5 +25,6 @@ public abstract class BlockWorkbenchMixin extends Block {
         this.setStepSound(soundWoodFootstep);
         this.setHardness(1.25F);
         this.setResistance(3.33F);
+        this.setCreativeTab(CreativeTabs.tabDecorations);
     }
 }
