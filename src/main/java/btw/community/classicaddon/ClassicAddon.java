@@ -58,7 +58,7 @@ public class ClassicAddon extends BTWAddon {
         this.registerProperty("QuickHealTicks", "40", "How quickly the regen occurs. 20 ticks = 1 second. 10 ticks is vanilla, 40 ticks is Tetro48's suggested value.");
         this.registerProperty("CursedDifficultyMode", "False", "Allow changing BTW difficulty, but marking it cursed");
         this.registerProperty("GloomToggle", "False", "This toggles gloom effect.");
-        this.registerPropertyClientOnly("VisualNewMoonBrightnessLevel", "0", "This is purely a visual setting... and \n# 0: Pitch black. 1: A tiny bit of light");
+        this.registerPropertyClientOnly("VisualNewMoonBrightnessLevel", "0", "This is purely a visual setting... \n# 0: Pitch black. 1: A tiny bit of light");
         this.registerProperty("AnimageddonToggle", "False", "A toggle for BTW Animageddon. Turning this off will disable animal hunger, makes sheep's wool insta-grow when grazing one grass, wolves need to be fed once to shit.");
     }
     public void registerPropertyClientOnly(String propertyName, String defaultValue, String comment) {
