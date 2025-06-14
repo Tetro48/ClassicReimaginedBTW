@@ -79,6 +79,7 @@
     "items.EnumToolMaterialMixin",
     "items.FoodItemMixin",
     "items.HoeItemMixin",
+    "items.ItemBookMixin",
     "items.ItemDoorMixin",
     "items.ItemEnchantedBookMixin",
     "items.ItemFishingRodMixin",
