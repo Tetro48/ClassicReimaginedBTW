@@ -1,6 +1,11 @@
 classicAddon.selectWorld.cursedDifficulty=Cursed %s
+classicAddon.serverCheck.doesServerHaveTC1=Checking for signs that this server is running True Classic...
+classicAddon.serverCheck.doesServerHaveTC2=If this server is running an old version of TC, this won't work.
+classicAddon.serverCheck.kickTimer=If the server does not respond that it has this addon within %ss, you'll get kicked.
 classicAddon.selectWorld.nmCompat.nightmare=Nightmare
 classicAddon.selectWorld.nmCompat.baddream=Dream
+
+disconnect.failedCheckForTC=Kicked by True Classic addon
 
 item.enchantedBook.name=Enchanted Book
 item.enchantedBook.languageUnfamiliar=This book is enchanted. Apply it to an item with an anvil!
