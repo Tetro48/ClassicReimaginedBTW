@@ -68,6 +68,7 @@
     "entity.EntitySpiderMixin",
     "entity.EntityWolfMixin",
     "entity.EntityZombieMixin",
+    "items.AnvilBlockItemMixin",
     "items.ArmorItemMixin",
     "items.BoneItemMixin",
     "items.BTWItemsMixin",

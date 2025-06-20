@@ -1,11 +1,13 @@
 package net.tetro48.classicaddon.mixin.blocks;
 
+import btw.block.BTWBlocks;
 import btw.block.blocks.AnvilBlock;
 import btw.world.util.WorldUtils;
 import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -22,11 +24,17 @@ public abstract class AnvilBlockMixin extends Block {
 	private void vanillaifyToughness(int iBlockID, CallbackInfo ci) {
 		this.setHardness(5.0F);
 		this.setResistance(400.0F);
+		this.setStepSound(Block.soundMetalFootstep);
 	}
 	@Redirect(method = "harvestBlock", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/World;playAuxSFX(IIIII)V"))
 	private void plsNoNoise(World instance, int par1, int par2, int par3, int par4, int par5) {
 
 	}
+	@Inject(method = "renderAsNormalBlock", at = @At("RETURN"), cancellable = true)
+	private void solid(CallbackInfoReturnable<Boolean> cir) {
+		cir.setReturnValue(true);
+	}
+
 	@Inject(method = "onBlockActivated", at = @At("HEAD"), cancellable = true)
 	private void vanillaAnvilFunctionality(World world, int i, int j, int k, EntityPlayer player, int iFacing, float fXClick, float fYClick, float fZClick, CallbackInfoReturnable<Boolean> cir){
 		if (!world.isRemote && !WorldUtils.doesBlockHaveLargeCenterHardpointToFacing(world, i, j + 1, k, 0) && player instanceof EntityPlayerMP) {
@@ -64,7 +72,7 @@ public abstract class AnvilBlockMixin extends Block {
 
 	public boolean onFinishedFalling(EntityFallingSand entity, float fFallDistance) {
 		boolean willAnvilBreak = fFallDistance > 40;
-		entity.playSound(willAnvilBreak ? "random.anvil_break" : "random.anvil_land", 0.5f, 1f + entity.rand.nextFloat() * 0.1f);
+		entity.playSound(willAnvilBreak ? "random.anvil_break" : "random.anvil_land", 0.5f, 0.9f + entity.rand.nextFloat() * 0.1f);
 		return !willAnvilBreak;
 	}
 
