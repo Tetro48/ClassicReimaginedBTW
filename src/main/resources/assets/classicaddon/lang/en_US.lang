@@ -9,3 +9,8 @@ disconnect.failedCheckForTC=Kicked by True Classic addon
 
 item.enchantedBook.name=Enchanted Book
 item.enchantedBook.languageUnfamiliar=This book is enchanted. Apply it to an item with an anvil!
+
+# EMI stuff
+
+btw.anvil.info=The Anvil can be placed anywhere, and it's used for either repair, or enchantment book application. Note: This bypasses the typical limit of Infernal Enchanters.
+classicAddon.workbench.info=Crafting table can be placed anywhere. This has vanilla hardness levels.

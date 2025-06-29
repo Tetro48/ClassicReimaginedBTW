@@ -8,7 +8,9 @@
     "ContainerRepairMixin",
     "CraftingRecipeListMixin",
     "CrucibleRecipeListMixin",
+    "EmiBTWPluginMixin",
     "EmiFoodRecipeMixin",
+    "EmiVanillaPluginMixin",
     "EnchantmentHelperMixin",
     "FoodStatsMixin",
     "KilnRecipeListMixin",
@@ -85,7 +87,8 @@
     "items.ItemEnchantedBookMixin",
     "items.ItemFishingRodMixin",
     "items.ItemFoodMixin",
-    "items.ItemMixin"
+    "items.ItemMixin",
+    "items.ShovelItemStoneMixin"
   ],
   "client": [
     "client.GuiCreateWorldMixin",

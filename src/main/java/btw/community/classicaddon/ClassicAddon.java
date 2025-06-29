@@ -2,10 +2,15 @@ package btw.community.classicaddon;
 
 import btw.AddonHandler;
 import btw.BTWAddon;
+import btw.BTWMod;
+import btw.item.BTWItems;
+import btw.item.items.ToolItem;
+import btw.world.util.difficulty.Difficulty;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.*;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class ClassicAddon extends BTWAddon {
     private static ClassicAddon instance;
@@ -72,5 +77,26 @@ public class ClassicAddon extends BTWAddon {
         registerPacketHandler("classicaddon|onJoin", (payload, entityPlayer) -> {
             isServerRunningThisAddon = true;
         });
+    }
+
+    @Override
+    public void initializeDifficultyCommon(Difficulty difficulty) {
+        super.initializeDifficultyCommon(difficulty);
+
+        if (difficulty.shouldIncreaseStoneToolSpeed()) {
+            if (Objects.equals(BTWMod.instance.getVersionString(), "3.0.0 Beta Snapshot 3a")){
+                ((ToolItem) Item.axeStone).applyStandardEfficiencyModifiers();
+                ((ToolItem) Item.pickaxeStone).applyStandardEfficiencyModifiers();
+                ((ToolItem) Item.shovelStone).applyStandardEfficiencyModifiers();
+                ((ToolItem) Item.hoeStone).applyStandardEfficiencyModifiers();
+                ((ToolItem) BTWItems.sharpStone).applyStandardEfficiencyModifiers();
+                return;
+            }
+            ((ToolItem) Item.axeStone).efficiencyOnProperMaterial = EnumToolMaterial.STONE.getEfficiencyOnProperMaterial();
+            ((ToolItem) Item.pickaxeStone).efficiencyOnProperMaterial = EnumToolMaterial.STONE.getEfficiencyOnProperMaterial();
+            ((ToolItem) Item.shovelStone).efficiencyOnProperMaterial = EnumToolMaterial.STONE.getEfficiencyOnProperMaterial();
+            ((ToolItem) Item.hoeStone).efficiencyOnProperMaterial = EnumToolMaterial.STONE.getEfficiencyOnProperMaterial();
+            ((ToolItem) BTWItems.sharpStone).efficiencyOnProperMaterial = EnumToolMaterial.STONE.getEfficiencyOnProperMaterial();
+        }
     }
 }

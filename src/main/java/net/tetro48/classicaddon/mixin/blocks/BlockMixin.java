@@ -12,8 +12,4 @@ public abstract class BlockMixin {
 	private static Block notHideFurnaceFromEMI(BlockFurnace instance) {
 		return instance;
 	}
-	@Redirect(method = "<clinit>", at = @At(value = "INVOKE", ordinal = 13, target = "Lnet/minecraft/src/Block;hideFromEMI()Lnet/minecraft/src/Block;"))
-	private static Block notHideWorkbenchFromEMI(Block instance) {
-		return instance;
-	}
 }
