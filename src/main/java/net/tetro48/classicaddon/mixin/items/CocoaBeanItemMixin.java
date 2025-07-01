@@ -7,8 +7,8 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(CocoaBeanItem.class)
 public abstract class CocoaBeanItemMixin {
-    @ModifyArg(method = "<init>", index = 1, at = @At(value = "INVOKE", target = "Lbtw/item/items/FoodItem;<init>(IIFZLjava/lang/String;)V"))
-    private static int changeFoodValue(int iItemID) {
-        return 3;
-    }
+	@ModifyArg(method = "<init>", index = 1, at = @At(value = "INVOKE", target = "Lbtw/item/items/FoodItem;<init>(IIFZLjava/lang/String;)V"))
+	private static int changeFoodValue(int iItemID) {
+		return 3;
+	}
 }

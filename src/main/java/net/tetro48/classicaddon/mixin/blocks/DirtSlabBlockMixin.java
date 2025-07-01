@@ -16,16 +16,16 @@ import java.util.Random;
 @Mixin(DirtSlabBlock.class)
 public abstract class DirtSlabBlockMixin extends Block {
 
-    protected DirtSlabBlockMixin(int iBlockID, Material material) {
-        super(iBlockID, material);
-    }
+	protected DirtSlabBlockMixin(int iBlockID, Material material) {
+		super(iBlockID, material);
+	}
 
-    @Inject(method = "idDropped", at = @At("RETURN"), cancellable = true)
-    public void changeDirtDrop(int iMetadata, Random random, int iFortuneModifier, CallbackInfoReturnable<Integer> cir) {
-        if (cir.getReturnValue() == BTWBlocks.looseDirtSlab.blockID) cir.setReturnValue(BTWBlocks.dirtSlab.blockID);
-    }
-    @Redirect(method = "dropComponentItemsOnBadBreak", at = @At(value = "INVOKE", target = "Lbtw/block/blocks/DirtSlabBlock;dropItemsIndividually(Lnet/minecraft/src/World;IIIIIIF)V"))
-    public void changeDirtDropOnBadBreak(DirtSlabBlock instance, World world, int i, int j, int k, int id, int amount, int iDamageDropped, float fChanceOfDrop, World world2, int x, int y, int z, int iMetadata) {
-        this.dropItemsIndividually(world, i, j, k, BTWBlocks.dirtSlab.blockID, 1, iMetadata, fChanceOfDrop);
-    }
+	@Inject(method = "idDropped", at = @At("RETURN"), cancellable = true)
+	public void changeDirtDrop(int iMetadata, Random random, int iFortuneModifier, CallbackInfoReturnable<Integer> cir) {
+		if (cir.getReturnValue() == BTWBlocks.looseDirtSlab.blockID) cir.setReturnValue(BTWBlocks.dirtSlab.blockID);
+	}
+	@Redirect(method = "dropComponentItemsOnBadBreak", at = @At(value = "INVOKE", target = "Lbtw/block/blocks/DirtSlabBlock;dropItemsIndividually(Lnet/minecraft/src/World;IIIIIIF)V"))
+	public void changeDirtDropOnBadBreak(DirtSlabBlock instance, World world, int i, int j, int k, int id, int amount, int iDamageDropped, float fChanceOfDrop, World world2, int x, int y, int z, int iMetadata) {
+		this.dropItemsIndividually(world, i, j, k, BTWBlocks.dirtSlab.blockID, 1, iMetadata, fChanceOfDrop);
+	}
 }

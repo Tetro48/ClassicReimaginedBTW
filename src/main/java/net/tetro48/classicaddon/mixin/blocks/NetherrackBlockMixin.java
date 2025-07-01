@@ -8,8 +8,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(NetherrackBlock.class)
 public abstract class NetherrackBlockMixin {
-    @Inject(method = "getEfficientToolLevel", at = @At("RETURN"), cancellable = true)
-    public void makeItMineableByAnyPickaxe(CallbackInfoReturnable<Integer> cir) {
-        cir.setReturnValue(0);
-    }
+	@Inject(method = "getEfficientToolLevel", at = @At("RETURN"), cancellable = true)
+	public void makeItMineableByAnyPickaxe(CallbackInfoReturnable<Integer> cir) {
+		cir.setReturnValue(0);
+	}
 }

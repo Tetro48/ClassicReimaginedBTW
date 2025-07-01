@@ -9,9 +9,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(EntitySpider.class)
 public abstract class EntitySpiderMixin {
 
-    @Inject(method = "findPlayerToAttack", at = @At("RETURN"), cancellable = true)
-    protected void noHuntingChickens(CallbackInfoReturnable<Entity> cir) {
-        if (cir.getReturnValue() instanceof EntityChicken)
-            cir.setReturnValue(null);
-    }
+	@Inject(method = "findPlayerToAttack", at = @At("RETURN"), cancellable = true)
+	protected void noHuntingChickens(CallbackInfoReturnable<Entity> cir) {
+		if (cir.getReturnValue() instanceof EntityChicken)
+			cir.setReturnValue(null);
+	}
 }

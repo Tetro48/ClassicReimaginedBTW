@@ -8,12 +8,12 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(BlockGravel.class)
 public abstract class BlockGravelMixin extends Block {
 
-    protected BlockGravelMixin(int iBlockID, Material material) {
-        super(iBlockID, material);
-    }
+	protected BlockGravelMixin(int iBlockID, Material material) {
+		super(iBlockID, material);
+	}
 
-    @Redirect(method = "dropComponentItemsOnBadBreak", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/BlockGravel;dropItemsIndividually(Lnet/minecraft/src/World;IIIIIIF)V"))
-    public void changeDropOnBadBreak(BlockGravel instance, World world, int i, int j, int k, int id, int amount, int iDamageDropped, float fChanceOfDrop, World world2, int x, int y, int z, int iMetadata) {
-        this.dropItemsIndividually(world, i, j, k, idDropped(iMetadata, world.rand, 0), 1, iMetadata, fChanceOfDrop);
-    }
+	@Redirect(method = "dropComponentItemsOnBadBreak", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/BlockGravel;dropItemsIndividually(Lnet/minecraft/src/World;IIIIIIF)V"))
+	public void changeDropOnBadBreak(BlockGravel instance, World world, int i, int j, int k, int id, int amount, int iDamageDropped, float fChanceOfDrop, World world2, int x, int y, int z, int iMetadata) {
+		this.dropItemsIndividually(world, i, j, k, idDropped(iMetadata, world.rand, 0), 1, iMetadata, fChanceOfDrop);
+	}
 }

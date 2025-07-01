@@ -12,12 +12,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EntityPig.class)
 public abstract class EntityPigMixin {
-    @Inject(method = "isValidZombieSecondaryTarget", at = @At("RETURN"), cancellable = true)
-    public void zombieNoEatAnimal(EntityZombie zombie, CallbackInfoReturnable<Boolean> cir) {
-        cir.setReturnValue(false);
-    }
-    @Inject(method = "isBreedingItem", at = @At("HEAD"), cancellable = true)
-    private void changeBreedingItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-        cir.setReturnValue(stack.itemID == BTWItems.carrot.itemID || stack.itemID == Item.potato.itemID);
-    }
+	@Inject(method = "isValidZombieSecondaryTarget", at = @At("RETURN"), cancellable = true)
+	public void zombieNoEatAnimal(EntityZombie zombie, CallbackInfoReturnable<Boolean> cir) {
+		cir.setReturnValue(false);
+	}
+	@Inject(method = "isBreedingItem", at = @At("HEAD"), cancellable = true)
+	private void changeBreedingItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+		cir.setReturnValue(stack.itemID == BTWItems.carrot.itemID || stack.itemID == Item.potato.itemID);
+	}
 }

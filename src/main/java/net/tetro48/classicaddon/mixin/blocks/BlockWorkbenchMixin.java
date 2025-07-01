@@ -12,19 +12,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BlockWorkbench.class)
 public abstract class BlockWorkbenchMixin extends Block {
-    protected BlockWorkbenchMixin(int par1, Material par2Material) {
-        super(par1, par2Material);
-    }
+	protected BlockWorkbenchMixin(int par1, Material par2Material) {
+		super(par1, par2Material);
+	}
 
-    @Inject(method = "<init>", at = @At(value = "TAIL"))
-    private void addStats(int par1, CallbackInfo ci) {
-        this.setAxesEffectiveOn();
-        this.setChiselsEffectiveOn();
-        this.setBuoyant();
-        this.setFireProperties(Flammability.PLANKS);
-        this.setStepSound(soundWoodFootstep);
-        this.setHardness(1.25F);
-        this.setResistance(3.33F);
-        this.setCreativeTab(CreativeTabs.tabDecorations);
-    }
+	@Inject(method = "<init>", at = @At(value = "TAIL"))
+	private void addStats(int par1, CallbackInfo ci) {
+		this.setAxesEffectiveOn();
+		this.setChiselsEffectiveOn();
+		this.setBuoyant();
+		this.setFireProperties(Flammability.PLANKS);
+		this.setStepSound(soundWoodFootstep);
+		this.setHardness(1.25F);
+		this.setResistance(3.33F);
+		this.setCreativeTab(CreativeTabs.tabDecorations);
+	}
 }

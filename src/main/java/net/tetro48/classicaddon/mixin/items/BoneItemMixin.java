@@ -9,12 +9,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BoneItem.class)
 public abstract class BoneItemMixin extends Item {
-    public BoneItemMixin(int par1) {
-        super(par1);
-    }
+	public BoneItemMixin(int par1) {
+		super(par1);
+	}
 
-    @Inject(method = "<init>", at = @At("TAIL"))
-    public void changeStackSize(CallbackInfo ci) {
-        this.maxStackSize = 64;
-    }
+	@Inject(method = "<init>", at = @At("TAIL"))
+	public void changeStackSize(CallbackInfo ci) {
+		this.maxStackSize = 64;
+	}
 }

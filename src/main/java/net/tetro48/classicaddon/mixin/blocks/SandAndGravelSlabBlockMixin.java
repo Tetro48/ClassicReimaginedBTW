@@ -13,12 +13,12 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(SandAndGravelSlabBlock.class)
 public abstract class SandAndGravelSlabBlockMixin extends FallingSlabBlock {
 
-    protected SandAndGravelSlabBlockMixin(int iBlockID, Material material) {
-        super(iBlockID, material);
-    }
+	protected SandAndGravelSlabBlockMixin(int iBlockID, Material material) {
+		super(iBlockID, material);
+	}
 
-    @Redirect(method = "dropComponentItemsOnBadBreak", at = @At(value = "INVOKE", target = "Lbtw/block/blocks/SandAndGravelSlabBlock;dropItemsIndividually(Lnet/minecraft/src/World;IIIIIIF)V"))
-    public void changeDropOnBadBreak(SandAndGravelSlabBlock instance, World world, int i, int j, int k, int id, int amount, int iDamageDropped, float fChanceOfDrop, World world2, int x, int y, int z, int iMetadata) {
-        this.dropItemsIndividually(world, i, j, k, instance.blockID, 1, iMetadata, fChanceOfDrop);
-    }
+	@Redirect(method = "dropComponentItemsOnBadBreak", at = @At(value = "INVOKE", target = "Lbtw/block/blocks/SandAndGravelSlabBlock;dropItemsIndividually(Lnet/minecraft/src/World;IIIIIIF)V"))
+	public void changeDropOnBadBreak(SandAndGravelSlabBlock instance, World world, int i, int j, int k, int id, int amount, int iDamageDropped, float fChanceOfDrop, World world2, int x, int y, int z, int iMetadata) {
+		this.dropItemsIndividually(world, i, j, k, instance.blockID, 1, iMetadata, fChanceOfDrop);
+	}
 }

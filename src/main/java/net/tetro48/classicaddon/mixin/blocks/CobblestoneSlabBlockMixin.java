@@ -16,23 +16,23 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(CobblestoneSlabBlock.class)
 public abstract class CobblestoneSlabBlockMixin extends Block {
 
-    @Shadow public abstract int getStrata(int iMetadata);
+	@Shadow public abstract int getStrata(int iMetadata);
 
-    protected CobblestoneSlabBlockMixin(int par1, Material par2Material) {
-        super(par1, par2Material);
-    }
+	protected CobblestoneSlabBlockMixin(int par1, Material par2Material) {
+		super(par1, par2Material);
+	}
 
-    @Override
-    public void onBlockDestroyedWithImproperTool(World world, EntityPlayer player, int i, int j, int k, int iMetadata) {}
-    @Inject(method = "idDropped", at = @At("RETURN"), cancellable = true)
-    public void makeItDropItself(CallbackInfoReturnable<Integer> cir) {
-        cir.setReturnValue(BTWBlocks.cobblestoneSlab.blockID);
-    }
-    public int damageDropped(int metadata) {
-        return this.getStrata(metadata) & 3;
-    }
-    @Inject(method = "getHarvestToolLevel", at = @At("RETURN"), cancellable = true)
-    public void makeItMineableByAnyPickaxe(IBlockAccess blockAccess, int i, int j, int k, CallbackInfoReturnable<Integer> cir) {
-        cir.setReturnValue(0);
-    }
+	@Override
+	public void onBlockDestroyedWithImproperTool(World world, EntityPlayer player, int i, int j, int k, int iMetadata) {}
+	@Inject(method = "idDropped", at = @At("RETURN"), cancellable = true)
+	public void makeItDropItself(CallbackInfoReturnable<Integer> cir) {
+		cir.setReturnValue(BTWBlocks.cobblestoneSlab.blockID);
+	}
+	public int damageDropped(int metadata) {
+		return this.getStrata(metadata) & 3;
+	}
+	@Inject(method = "getHarvestToolLevel", at = @At("RETURN"), cancellable = true)
+	public void makeItMineableByAnyPickaxe(IBlockAccess blockAccess, int i, int j, int k, CallbackInfoReturnable<Integer> cir) {
+		cir.setReturnValue(0);
+	}
 }

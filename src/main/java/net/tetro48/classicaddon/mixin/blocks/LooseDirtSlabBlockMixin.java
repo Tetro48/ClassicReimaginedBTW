@@ -17,12 +17,12 @@ import java.util.Random;
 @Mixin(LooseDirtSlabBlock.class)
 public abstract class LooseDirtSlabBlockMixin extends Block {
 
-    protected LooseDirtSlabBlockMixin(int iBlockID, Material material) {
-        super(iBlockID, material);
-    }
+	protected LooseDirtSlabBlockMixin(int iBlockID, Material material) {
+		super(iBlockID, material);
+	}
 
-    @Redirect(method = "dropComponentItemsOnBadBreak", at = @At(value = "INVOKE", target = "Lbtw/block/blocks/LooseDirtSlabBlock;dropItemsIndividually(Lnet/minecraft/src/World;IIIIIIF)V"))
-    public void changeDirtDropOnBadBreak(LooseDirtSlabBlock instance, World world, int i, int j, int k, int id, int amount, int iDamageDropped, float fChanceOfDrop, World world2, int x, int y, int z, int iMetadata) {
-        this.dropItemsIndividually(world, i, j, k, instance.blockID, 1, iMetadata, fChanceOfDrop);
-    }
+	@Redirect(method = "dropComponentItemsOnBadBreak", at = @At(value = "INVOKE", target = "Lbtw/block/blocks/LooseDirtSlabBlock;dropItemsIndividually(Lnet/minecraft/src/World;IIIIIIF)V"))
+	public void changeDirtDropOnBadBreak(LooseDirtSlabBlock instance, World world, int i, int j, int k, int id, int amount, int iDamageDropped, float fChanceOfDrop, World world2, int x, int y, int z, int iMetadata) {
+		this.dropItemsIndividually(world, i, j, k, instance.blockID, 1, iMetadata, fChanceOfDrop);
+	}
 }

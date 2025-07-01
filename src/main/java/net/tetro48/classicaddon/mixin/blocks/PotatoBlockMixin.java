@@ -8,8 +8,8 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @Mixin(PotatoBlock.class)
 public abstract class PotatoBlockMixin {
-    @ModifyConstant(method = "dropBlockAsItemWithChance", constant = @Constant(intValue = 3))
-    public int increasePotatoChance(int original) {
-        return 2;
-    }
+	@ModifyConstant(method = "dropBlockAsItemWithChance", constant = @Constant(intValue = 3))
+	public int increasePotatoChance(int original) {
+		return 2;
+	}
 }

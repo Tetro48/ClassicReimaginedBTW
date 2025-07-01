@@ -12,8 +12,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PistonPackingRecipeList.class)
 public abstract class PistonPackingRecipeListMixin {
-    @Inject(method = "addRecipes", at = @At("HEAD"), remap = false)
-    private static void addNewRecipes(CallbackInfo ci) {
-        RecipeManager.addPistonPackingRecipe(BTWBlocks.aestheticEarth, 6, new ItemStack(Block.dirt, 2));
-    }
+	@Inject(method = "addRecipes", at = @At("HEAD"), remap = false)
+	private static void addNewRecipes(CallbackInfo ci) {
+		RecipeManager.addPistonPackingRecipe(BTWBlocks.aestheticEarth, 6, new ItemStack(Block.dirt, 2));
+	}
 }

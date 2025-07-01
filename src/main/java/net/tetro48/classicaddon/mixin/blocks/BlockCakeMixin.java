@@ -7,12 +7,12 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(BlockCake.class)
 public abstract class BlockCakeMixin {
-    @ModifyArg(method = "eatCakeSliceLocal", index = 0, at = @At(value = "INVOKE", target = "Lnet/minecraft/src/FoodStats;addStats(IF)V"))
-    public int changeHungerUnits(int original) {
-        return 6;
-    }
-    @ModifyArg(method = "eatCakeSliceLocal", index = 1, at = @At(value = "INVOKE", target = "Lnet/minecraft/src/FoodStats;addStats(IF)V"))
-    public float changeFatMultiplier(float original) {
-        return 1.0f;
-    }
+	@ModifyArg(method = "eatCakeSliceLocal", index = 0, at = @At(value = "INVOKE", target = "Lnet/minecraft/src/FoodStats;addStats(IF)V"))
+	public int changeHungerUnits(int original) {
+		return 6;
+	}
+	@ModifyArg(method = "eatCakeSliceLocal", index = 1, at = @At(value = "INVOKE", target = "Lnet/minecraft/src/FoodStats;addStats(IF)V"))
+	public float changeFatMultiplier(float original) {
+		return 1.0f;
+	}
 }

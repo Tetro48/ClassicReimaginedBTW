@@ -14,20 +14,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BlockDirt.class)
 public abstract class BlockDirtMixin extends FullBlock {
-    protected BlockDirtMixin(int iBlockID, Material material) {
-        super(iBlockID, material);
-    }
+	protected BlockDirtMixin(int iBlockID, Material material) {
+		super(iBlockID, material);
+	}
 
-    @Inject(method = "idDropped", at = @At("RETURN"), cancellable = true)
-    public void changeDirtDrop(CallbackInfoReturnable<Integer> cir) {
-        cir.setReturnValue(Block.dirt.blockID);
-    }
-    @Redirect(method = "dropComponentItemsOnBadBreak", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/BlockDirt;dropItemsIndividually(Lnet/minecraft/src/World;IIIIIIF)V"))
-    public void changeDirtDropOnBadBreak(BlockDirt instance, World world, int i, int j, int k, int id, int amount, int iDamageDropped, float fChanceOfDrop, World world2, int x, int y, int z, int iMetadata) {
-        this.dropItemsIndividually(world, i, j, k, instance.blockID, 1, iMetadata, fChanceOfDrop);
-    }
-    @Inject(method = "onNeighborDirtDugWithImproperTool", at = @At("HEAD"), cancellable = true)
-    protected void noConvertDirt(World world, int i, int j, int k, int iToFacing, CallbackInfo ci) {
-        ci.cancel();
-    }
+	@Inject(method = "idDropped", at = @At("RETURN"), cancellable = true)
+	public void changeDirtDrop(CallbackInfoReturnable<Integer> cir) {
+		cir.setReturnValue(Block.dirt.blockID);
+	}
+	@Redirect(method = "dropComponentItemsOnBadBreak", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/BlockDirt;dropItemsIndividually(Lnet/minecraft/src/World;IIIIIIF)V"))
+	public void changeDirtDropOnBadBreak(BlockDirt instance, World world, int i, int j, int k, int id, int amount, int iDamageDropped, float fChanceOfDrop, World world2, int x, int y, int z, int iMetadata) {
+		this.dropItemsIndividually(world, i, j, k, instance.blockID, 1, iMetadata, fChanceOfDrop);
+	}
+	@Inject(method = "onNeighborDirtDugWithImproperTool", at = @At("HEAD"), cancellable = true)
+	protected void noConvertDirt(World world, int i, int j, int k, int iToFacing, CallbackInfo ci) {
+		ci.cancel();
+	}
 }

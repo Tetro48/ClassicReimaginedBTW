@@ -9,12 +9,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ItemFishingRod.class)
 public abstract class ItemFishingRodMixin extends Item {
-    public ItemFishingRodMixin(int par1) {
-        super(par1);
-    }
+	public ItemFishingRodMixin(int par1) {
+		super(par1);
+	}
 
-    @Inject(method = "<init>", at = @At("TAIL"))
-    public void changeDurability(CallbackInfo ci) {
-        this.setMaxDamage(64);
-    }
+	@Inject(method = "<init>", at = @At("TAIL"))
+	public void changeDurability(CallbackInfo ci) {
+		this.setMaxDamage(64);
+	}
 }

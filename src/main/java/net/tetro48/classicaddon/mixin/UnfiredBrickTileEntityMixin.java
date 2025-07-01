@@ -10,13 +10,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(UnfiredBrickTileEntity.class)
 public abstract class UnfiredBrickTileEntityMixin extends TileEntity {
-    @Shadow private int cookCounter;
-    @Shadow private boolean isCooking;
+	@Shadow private int cookCounter;
+	@Shadow private boolean isCooking;
 
-    @Inject(method = "updateCooking", at = @At(value = "FIELD", target = "Lbtw/block/tileentity/UnfiredBrickTileEntity;cookCounter:I", ordinal = 0), remap = false)
-    public void modifyCookingCode(CallbackInfo ci){
-        if (this.isCooking) {
-            cookCounter += 3;
-        }
-    }
+	@Inject(method = "updateCooking", at = @At(value = "FIELD", target = "Lbtw/block/tileentity/UnfiredBrickTileEntity;cookCounter:I", ordinal = 0), remap = false)
+	public void modifyCookingCode(CallbackInfo ci){
+		if (this.isCooking) {
+			cookCounter += 3;
+		}
+	}
 }

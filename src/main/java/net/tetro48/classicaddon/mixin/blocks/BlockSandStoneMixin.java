@@ -9,8 +9,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BlockSandStone.class)
 public abstract class BlockSandStoneMixin {
-    @Inject(method = "getHarvestToolLevel", at = @At("RETURN"), cancellable = true)
-    public void makeItMineableByAnyPickaxe(CallbackInfoReturnable<Integer> cir) {
-        cir.setReturnValue(0);
-    }
+	@Inject(method = "getHarvestToolLevel", at = @At("RETURN"), cancellable = true)
+	public void makeItMineableByAnyPickaxe(CallbackInfoReturnable<Integer> cir) {
+		cir.setReturnValue(0);
+	}
 }

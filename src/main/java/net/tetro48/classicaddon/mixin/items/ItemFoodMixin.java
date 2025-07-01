@@ -9,12 +9,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ItemFood.class)
 public abstract class ItemFoodMixin extends Item {
-    public ItemFoodMixin(int par1) {
-        super(par1);
-    }
+	public ItemFoodMixin(int par1) {
+		super(par1);
+	}
 
-    @Inject(method = "<init>(IIFZ)V", at = @At("TAIL"))
-    public void changeStackSize(CallbackInfo ci) {
-        this.maxStackSize = 64;
-    }
+	@Inject(method = "<init>(IIFZ)V", at = @At("TAIL"))
+	public void changeStackSize(CallbackInfo ci) {
+		this.maxStackSize = 64;
+	}
 }
