@@ -63,6 +63,7 @@
     "entity.EntityCowMixin",
     "entity.EntityFishHookMixin",
     "entity.EntityHorseMixin",
+    "entity.EntityMobMixin",
     "entity.EntityPigMixin",
     "entity.EntityPlayerMixin",
     "entity.EntityPlayerMPMixin",
