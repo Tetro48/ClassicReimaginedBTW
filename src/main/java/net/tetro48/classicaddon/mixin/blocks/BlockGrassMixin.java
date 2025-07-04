@@ -4,6 +4,7 @@ import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -23,7 +24,11 @@ public abstract class BlockGrassMixin extends Block {
 		this.dropItemsIndividually(world, i, j, k, Block.dirt.blockID, 1, iMetadata, fChanceOfDrop);
 	}
 	@Inject(method = "onNeighborDirtDugWithImproperTool", at = @At("HEAD"), cancellable = true)
-	protected void noConvertDirt(World world, int i, int j, int k, int iToFacing, CallbackInfo ci) {
+	protected void noConvertDirtWithImproperTool(World world, int i, int j, int k, int iToFacing, CallbackInfo ci) {
 		ci.cancel();
+	}
+	@ModifyArg(method = "convertBlock", index = 3, at = @At(value = "INVOKE", target = "Lnet/minecraft/src/World;setBlockWithNotify(IIII)Z"))
+	private int hoeConvertGrassToVanillaDirt(int i) {
+		return Block.dirt.blockID;
 	}
 }

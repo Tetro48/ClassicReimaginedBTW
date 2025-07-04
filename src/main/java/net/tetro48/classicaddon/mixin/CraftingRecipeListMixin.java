@@ -192,5 +192,15 @@ public abstract class CraftingRecipeListMixin {
 		if (!FabricLoader.getInstance().isModLoaded("craftableeyes")) {
 			RecipeManager.addShapelessRecipe(new ItemStack(Item.eyeOfEnder), new Object[]{new ItemStack(Item.enderPearl), new ItemStack(Item.blazePowder)});
 		}
+		RecipeManager.addShapelessRecipe(new ItemStack(Item.nameTag), new Object[] {
+			new ItemStack(Item.leather),
+			new ItemStack(Item.ingotIron)
+		});
+
+		RecipeManager.addShapelessRecipe(new ItemStack(Item.nameTag), new Object[] {
+			new ItemStack(BTWItems.cutLeather),
+			new ItemStack(Item.ingotIron)
+		});
+		RecipeManager.addShapelessRecipe(new ItemStack(BTWBlocks.planterWithSoil), new Object[]{new ItemStack(BTWBlocks.planter), new ItemStack(Block.dirt)});
 	}
 }

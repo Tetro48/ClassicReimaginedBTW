@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ShovelItemStone.class)
-public class ShovelItemStoneMixin extends ShovelItem {
+public abstract class ShovelItemStoneMixin extends ShovelItem {
 	public ShovelItemStoneMixin(int iItemID, EnumToolMaterial material) {
 		super(iItemID, material);
 	}

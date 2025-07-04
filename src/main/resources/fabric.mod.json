@@ -20,7 +20,10 @@
     ]
   },
   "custom": {
-    "btw:addon_prefix": "TC"
+    "btw:addon_prefix": "TC",
+    "loom:injected_interfaces": {
+      "net/minecraft/class_943": ["net/tetro48/classicaddon/ForceDespawnableEntity"]
+    }
   },
   "mixins": [
     "classicaddon.mixins.json"

@@ -2,6 +2,7 @@ package net.tetro48.classicaddon.mixin.entity;
 
 import btw.item.BTWItems;
 import net.minecraft.src.*;
+import net.tetro48.classicaddon.ForceDespawnableEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,6 +25,7 @@ public abstract class EntityZombieMixin extends Entity {
 			if (this.worldObj != null) {
 				if (this.rand.nextFloat() <= 0.04) {
 					EntityChicken chicken = new EntityChicken(this.worldObj);
+					((ForceDespawnableEntity) chicken).trueClassic$setDespawnFlag(true);
 					chicken.setLocationAndAngles(this.posX, this.posY, this.posZ, MathHelper.wrapAngleTo180_float(this.rotationYaw), rotationPitch);
 					worldObj.spawnEntityInWorld(chicken);
 					this.mountEntity(chicken);

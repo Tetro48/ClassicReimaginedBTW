@@ -12,5 +12,6 @@ public abstract class GuiMultiplayerMixin {
 	@Inject(method = "initGui", at = @At("RETURN"))
 	private void disableCompassCoordsJustInCase(CallbackInfo ci) {
 		ClassicAddon.isServerRunningThisAddon = false;
+		ClassicAddon.resetAllSynchronizedPropertyValues();
 	}
 }

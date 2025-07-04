@@ -204,4 +204,8 @@ public abstract class BTWItemsMixin {
 	private static int changeMashedMelon(int par1) {
 		return 3;
 	}
+	@ModifyArg(method = "registerCustomBlockItems", index = 0, at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Item;setMaxStackSize(I)Lnet/minecraft/src/Item;", ordinal = 0))
+	private static int changeMelonMaxStack(int par1) {
+		return 64;
+	}
 }

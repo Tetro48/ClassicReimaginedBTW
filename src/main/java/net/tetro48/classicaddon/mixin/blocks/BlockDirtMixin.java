@@ -1,5 +1,6 @@
 package net.tetro48.classicaddon.mixin.blocks;
 
+import btw.block.BTWBlocks;
 import btw.block.blocks.FullBlock;
 import net.minecraft.src.Block;
 import net.minecraft.src.BlockDirt;
@@ -8,6 +9,7 @@ import net.minecraft.src.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -29,5 +31,9 @@ public abstract class BlockDirtMixin extends FullBlock {
 	@Inject(method = "onNeighborDirtDugWithImproperTool", at = @At("HEAD"), cancellable = true)
 	protected void noConvertDirt(World world, int i, int j, int k, int iToFacing, CallbackInfo ci) {
 		ci.cancel();
+	}
+	@ModifyArg(method = "convertBlock", index = 3, at = @At(value = "INVOKE", target = "Lnet/minecraft/src/World;setBlockWithNotify(IIII)Z"))
+	private int hoeConvertGrassToFarmland(int i) {
+		return BTWBlocks.farmland.blockID;
 	}
 }

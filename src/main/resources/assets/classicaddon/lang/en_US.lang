@@ -5,6 +5,12 @@ classicAddon.serverCheck.kickTimer=If the server does not respond that it has th
 classicAddon.selectWorld.nmCompat.nightmare=Nightmare
 classicAddon.selectWorld.nmCompat.baddream=Dream
 
+
+difficulty.classic.name=True Classic
+difficulty.classic.description=The vanillafied BTW experience.
+difficulty.classic.description2=Its challenge level is equivalent
+difficulty.classic.description3=to vanilla, which is not a lot.
+
 disconnect.failedCheckForTC=Kicked by True Classic addon
 
 item.enchantedBook.name=Enchanted Book

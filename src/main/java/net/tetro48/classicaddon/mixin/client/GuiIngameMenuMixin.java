@@ -13,5 +13,6 @@ public abstract class GuiIngameMenuMixin {
 	@Inject(method = "actionPerformed", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Minecraft;loadWorld(Lnet/minecraft/src/WorldClient;)V", ordinal = 0))
 	public void onLeaveWorld(GuiButton par1GuiButton, CallbackInfo ci) {
 		ClassicAddon.isServerRunningThisAddon = false;
+		ClassicAddon.resetAllSynchronizedPropertyValues();
 	}
 }

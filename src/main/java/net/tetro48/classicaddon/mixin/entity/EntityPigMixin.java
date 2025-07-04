@@ -18,6 +18,6 @@ public abstract class EntityPigMixin {
 	}
 	@Inject(method = "isBreedingItem", at = @At("HEAD"), cancellable = true)
 	private void changeBreedingItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-		cir.setReturnValue(stack.itemID == BTWItems.carrot.itemID || stack.itemID == Item.potato.itemID);
+		cir.setReturnValue(stack.itemID == BTWItems.carrot.itemID || stack.itemID == Item.potato.itemID || stack.itemID == BTWItems.chocolate.itemID);
 	}
 }

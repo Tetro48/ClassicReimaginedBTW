@@ -1,9 +1,11 @@
 package net.tetro48.classicaddon.mixin.items;
 
 import net.minecraft.src.Item;
+import net.minecraft.src.PotionHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(Item.class)
 public abstract class ItemMixin {
@@ -138,5 +140,9 @@ public abstract class ItemMixin {
 	@ModifyArg(method = "<clinit>", index = 2, at = @At(value = "INVOKE", target = "Lnet/minecraft/src/ItemAppleGold;<init>(IIFZ)V"))
 	private static float changeGoldenAppleSaturation(float f) {
 		return 1.6f;
+	}
+	@Redirect(method = "<clinit>", at = @At(ordinal = 72, value = "INVOKE", target = "Lnet/minecraft/src/Item;setTextureName(Ljava/lang/String;)Lnet/minecraft/src/Item;"))
+	private static Item makeSugarABrewingItem(Item instance, String par1Str) {
+		return instance.setTextureName(par1Str).setPotionEffect(PotionHelper.sugarEffect);
 	}
 }

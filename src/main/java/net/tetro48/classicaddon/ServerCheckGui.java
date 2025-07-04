@@ -22,6 +22,9 @@ public class ServerCheckGui extends GuiScreen {
 
 	}
 
+	//stop players from doing "ESC" trick
+	protected void keyTyped(char par1, int par2) {}
+
 	public void updateScreen() {
 		if (!ClassicAddon.isServerRunningThisAddon) {
 			this.ticksUntilKick--;

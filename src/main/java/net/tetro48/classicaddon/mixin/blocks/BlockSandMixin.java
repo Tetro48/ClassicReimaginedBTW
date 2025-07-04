@@ -20,4 +20,9 @@ public abstract class BlockSandMixin extends Block {
 	public void changeDropOnBadBreak(BlockSand instance, World world, int i, int j, int k, int id, int amount, int iDamageDropped, float fChanceOfDrop, World world2, int x, int y, int z, int iMetadata) {
 		this.dropItemsIndividually(world, i, j, k, instance.blockID, 1, iMetadata, fChanceOfDrop);
 	}
+
+	@Override
+	public float getMovementModifier(World world, int i, int j, int k) {
+		return 1F;
+	}
 }

@@ -8,6 +8,7 @@ import net.minecraft.src.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -23,6 +24,15 @@ public abstract class FarmlandBlockBaseMixin extends Block {
 	}
 	@Redirect(method = "dropComponentItemsOnBadBreak", at = @At(value = "INVOKE", target = "Lbtw/block/blocks/FarmlandBlockBase;dropItemsIndividually(Lnet/minecraft/src/World;IIIIIIF)V"))
 	public void changeDirtDropOnBadBreak(FarmlandBlockBase instance, World world, int i, int j, int k, int id, int amount, int iDamageDropped, float fChanceOfDrop, World world2, int x, int y, int z, int iMetadata) {
-		this.dropItemsIndividually(world, i, j, k, BTWBlocks.looseDirt.blockID, 1, iMetadata, fChanceOfDrop);
+		this.dropItemsIndividually(world, i, j, k, Block.dirt.blockID, 1, iMetadata, fChanceOfDrop);
+	}
+	@ModifyArg(method = "onFallenUpon", index = 3, at = @At(value = "INVOKE", target = "Lnet/minecraft/src/World;setBlockWithNotify(IIII)Z"))
+	private int modifyConversion(int i) {
+		return Block.dirt.blockID;
+	}
+
+	@Override
+	public float getMovementModifier(World world, int i, int j, int k) {
+		return 1F;
 	}
 }
