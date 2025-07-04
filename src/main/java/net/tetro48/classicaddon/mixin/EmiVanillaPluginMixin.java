@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class EmiVanillaPluginMixin {
 	@Shadow public abstract void register(EmiRegistry registry);
 
-	@ModifyArg(method = "register", at = @At(ordinal = 1, value = "INVOKE", target = "Lemi/dev/emi/emi/api/stack/EmiStack;of(Lnet/minecraft/src/Block;)Lemi/dev/emi/emi/api/stack/EmiStack;"), remap = false)
+	@ModifyArg(method = "register", at = @At(ordinal = 1, value = "INVOKE", target = "Lemi/dev/emi/emi/api/stack/EmiStack;of(Lnet/minecraft/src/Block;)Lemi/dev/emi/emi/api/stack/EmiStack;"))
 	private Block modifyCraftingWorkstation(Block block) {
 		return BTWBlocks.workbench;
 	}
