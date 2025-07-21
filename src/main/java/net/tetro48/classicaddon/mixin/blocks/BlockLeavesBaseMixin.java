@@ -13,16 +13,11 @@ import java.util.List;
 
 @Mixin(BlockLeavesBase.class)
 public abstract class BlockLeavesBaseMixin extends Block {
-	@Shadow protected float movementModifier;
 
 	protected BlockLeavesBaseMixin(int par1, Material par2Material) {
 		super(par1, par2Material);
 	}
 
-	@Inject(method = "<init>", at = @At("RETURN"))
-	private void onInit(int par1, Material par2Material, boolean par3, CallbackInfo ci) {
-		if (!ClassicAddon.passableLeaves) movementModifier = 0.8f;
-	}
 	@Inject(method = "getBlocksMovement", at = @At("RETURN"), cancellable = true)
 	public void getBlocksMovement(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, CallbackInfoReturnable<Boolean> cir) {
 		cir.setReturnValue(ClassicAddon.passableLeaves);
