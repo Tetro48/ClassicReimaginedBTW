@@ -21,7 +21,7 @@ public abstract class BlockLeavesMixin extends Block {
 
 	@Inject(method = "dropBlockAsItemWithChance", at = @At("TAIL"))
 	private void dropAppleOnChance(World world, int i, int j, int k, int iMetadata, float fChance, int iFortuneModifier, CallbackInfo ci) {
-		if (!world.isRemote && iMetadata == 0) {
+		if (!world.isRemote && iMetadata % 4 == 0) {
 			int appleChance = switch (iFortuneModifier) {
 				case 1:
 					yield 180;
