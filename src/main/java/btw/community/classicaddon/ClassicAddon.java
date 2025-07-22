@@ -35,6 +35,7 @@ public class ClassicAddon extends BTWAddon {
 	public static boolean chickenJockeyToggle;
 	public static boolean canBabyAnimalEatLooseFood;
 	public static boolean passableLeaves;
+	public static boolean vanillaifyBuckets;
 
 	public static boolean isServerRunningThisAddon = false;
 
@@ -104,6 +105,11 @@ public class ClassicAddon extends BTWAddon {
 					passableLeaves = Boolean.parseBoolean(string);
 				},
 				" *** SYNCHRONIZED PROPERTIES ***\n\n# This toggles the passable leaves functionality.");
+		this.registerSynchronizedProperty("VanillaifyBuckets", "True",
+				(string) -> {
+					vanillaifyBuckets = Boolean.parseBoolean(string);
+				},
+				"This option re-introduces vanilla bucket mechanics. This makes screw pumps useless.");
 	}
 
 	public void registerSynchronizedProperty(String propertyName, String defaultValue, Consumer<String> callback, String comment) {
