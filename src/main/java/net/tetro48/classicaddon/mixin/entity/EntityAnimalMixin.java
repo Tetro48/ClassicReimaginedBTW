@@ -43,7 +43,7 @@ public abstract class EntityAnimalMixin extends EntityAgeable {
 	@Inject(method = "isReadyToEatLooseFood", at = @At("RETURN"), cancellable = true)
 	private void notEatLooseFoodIfChild(CallbackInfoReturnable<Boolean> cir) {
 		if (this.isChild() && !ClassicAddon.animageddonToggle) {
-			cir.setReturnValue(true);
+			cir.setReturnValue(ClassicAddon.canBabyAnimalEatLooseFood);
 		}
 	}
 
