@@ -33,6 +33,7 @@ public class ClassicAddon extends BTWAddon {
 	public static boolean gloomToggle;
 	public static int visualNewMoonBrightnessLevel = 0;
 	public static boolean chickenJockeyToggle;
+	public static boolean guaranteedSeedDrop;
 	public static boolean canBabyAnimalEatLooseFood;
 	public static boolean passableLeaves;
 	public static boolean vanillaifyBuckets;
@@ -79,6 +80,7 @@ public class ClassicAddon extends BTWAddon {
 			visualNewMoonBrightnessLevel = Integer.parseInt(propertyValues.get("VisualNewMoonBrightnessLevel"));
 		}
 		chickenJockeyToggle = Boolean.parseBoolean(propertyValues.get("ChickenJockeyToggle"));
+		guaranteedSeedDrop = Boolean.parseBoolean(propertyValues.get("GuaranteedSeedDrop"));
 		canBabyAnimalEatLooseFood = Boolean.parseBoolean(propertyValues.get("CanBabyAnimalEatLooseFood"));
 		synchronizedConfigProperties.forEach(((propertyName, configProperty) -> {
 			configProperty.setInternalValue(propertyValues.get(propertyName));
@@ -99,6 +101,7 @@ public class ClassicAddon extends BTWAddon {
 		this.registerPropertyClientOnly("VisualNewMoonBrightnessLevel", "0", "This is purely a visual setting... \n# 0: Pitch black. 1: A tiny bit of light");
 		this.registerProperty("AnimageddonToggle", "False", "A toggle for BTW Animageddon. Turning this off will disable animal hunger, makes sheep's wool insta-grow when grazing one grass, wolves need to be fed once to shit.");
 		this.registerProperty("ChickenJockeyToggle", "False", "This toggles spawning of buggy chicken jockeys.");
+		this.registerProperty("GuaranteedSeedDrop", "True", "This makes sure that seeds will always drop, no matter the growth stage, just like in modern vanilla.");
 		this.registerProperty("CanBabyAnimalEatLooseFood", "False", "A toggle to re-introduce the bug with baby animal eating off of ground. This only works while Animageddon is turned off.");
 		this.registerSynchronizedProperty("PassableLeaves", "True",
 				(string) -> {

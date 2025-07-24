@@ -15,6 +15,7 @@
     "FoodStatsMixin",
     "KilnRecipeListMixin",
     "PistonPackingRecipeListMixin",
+    "PlayerControllerMPMixin",
     "PlayerStatusEffectsMixin",
     "SawRecipeListMixin",
     "SmeltingRecipeListMixin",

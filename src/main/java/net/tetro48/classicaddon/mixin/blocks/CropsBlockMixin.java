@@ -2,6 +2,7 @@ package net.tetro48.classicaddon.mixin.blocks;
 
 import btw.block.blocks.CropsBlock;
 import btw.block.blocks.PlantsBlock;
+import btw.community.classicaddon.ClassicAddon;
 import net.minecraft.src.Material;
 import net.minecraft.src.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -41,7 +42,7 @@ public abstract class CropsBlockMixin extends PlantsBlock {
 					}
 				}
 			}
-			else {
+			if (!isFullyGrown(metadata) || ClassicAddon.guaranteedSeedDrop) {
 				this.dropSeeds(world, x, y, z, metadata);
 			}
 		}

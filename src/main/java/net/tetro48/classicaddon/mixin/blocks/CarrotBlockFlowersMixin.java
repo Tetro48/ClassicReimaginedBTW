@@ -2,6 +2,7 @@ package net.tetro48.classicaddon.mixin.blocks;
 
 import btw.block.blocks.CarrotBlockFlowers;
 import btw.block.blocks.CropsBlock;
+import btw.community.classicaddon.ClassicAddon;
 import btw.item.BTWItems;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.World;
@@ -33,7 +34,7 @@ public abstract class CarrotBlockFlowersMixin extends CropsBlock {
 					}
 				}
 			}
-			else {
+			if (!isFullyGrown(metadata) || ClassicAddon.guaranteedSeedDrop) {
 				this.dropSeeds(world, x, y, z, metadata);
 			}
 		}
