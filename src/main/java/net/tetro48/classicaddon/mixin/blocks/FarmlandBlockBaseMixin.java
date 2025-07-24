@@ -31,6 +31,11 @@ public abstract class FarmlandBlockBaseMixin extends Block {
 		return Block.dirt.blockID;
 	}
 
+	@ModifyArg(method = "checkForSoilReversion", index = 3, at = @At(value = "INVOKE", target = "Lnet/minecraft/src/World;setBlockWithNotify(IIII)Z"))
+	private int modifyReversion(int i) {
+		return Block.dirt.blockID;
+	}
+
 	@Override
 	public float getMovementModifier(World world, int i, int j, int k) {
 		return 1F;

@@ -51,9 +51,10 @@ public abstract class ContainerRepairMixin extends Container {
 			ItemStack itemStack3 = this.inputSlots.getStackInSlot(1);
 			Map enchantments = EnchantmentHelper.getEnchantments(itemStack2);
 			l += itemStack.getRepairCost() + (itemStack3 == null ? 0 : itemStack3.getRepairCost());
+			boolean bl = false;
 			this.stackSizeToBeUsedInRepair = 0;
 			if (itemStack3 != null) {
-				boolean bl = itemStack3.itemID == Item.enchantedBook.itemID && Item.enchantedBook.func_92110_g(itemStack3).tagCount() > 0;
+				bl = itemStack3.itemID == Item.enchantedBook.itemID && Item.enchantedBook.func_92110_g(itemStack3).tagCount() > 0;
 				if (itemStack2.isItemStackDamageable() && itemStack2.getItem().getIsRepairable(itemStack, itemStack3)) {
 					int k = Math.min(itemStack2.getItemDamageForDisplay(), itemStack2.getMaxDamage() / 4);
 					if (k <= 0) {
@@ -99,10 +100,10 @@ public abstract class ContainerRepairMixin extends Container {
 					boolean bl3 = false;
 
 					for(Object enchObj : itemEnchantments.keySet()) {
-						Map.Entry<Integer, Integer> enchantmentID = (Map.Entry<Integer, Integer>) enchObj;
-						Enchantment enchantment = Enchantment.enchantmentsList[enchantmentID.getKey()];
-						int q = (int) enchantments.get(enchantmentID.getKey());
-						int r = enchantmentID.getValue();
+						Integer enchantmentID = (Integer) enchObj;
+						Enchantment enchantment = Enchantment.enchantmentsList[enchantmentID];
+						int q = EnchantmentHelper.getEnchantmentLevel(enchantmentID, itemStack2);
+						int r = (int) itemEnchantments.get(enchantmentID);
 						r = q == r ? r + 1 : Math.max(r, q);
 						boolean bl4 = enchantment.canApply(itemStack);
 						if (this.thePlayer.capabilities.isCreativeMode || itemStack.itemID == Item.enchantedBook.itemID) {
@@ -110,7 +111,8 @@ public abstract class ContainerRepairMixin extends Container {
 						}
 
 						for(Object registryEntry2 : enchantments.keySet()) {
-							if (!registryEntry2.equals(enchantment) && !enchantment.canApplyTogether((Enchantment) registryEntry2)) {
+							Integer enchantmentID2 = (Integer) registryEntry2;
+							if (!enchantmentID2.equals(enchantmentID) && !enchantment.canApplyTogether(Enchantment.enchantmentsList[enchantmentID2])) {
 								bl4 = false;
 								++i;
 							}
@@ -123,7 +125,7 @@ public abstract class ContainerRepairMixin extends Container {
 							if (r > enchantment.getMaxLevel()) {
 								r = enchantment.getMaxLevel();
 							}
-
+							enchantments.put(enchantmentID, r);
 							int s = 0;
 							switch (enchantment.getWeight()) {
 								case 1:

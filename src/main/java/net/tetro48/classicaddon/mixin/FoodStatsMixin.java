@@ -33,7 +33,7 @@ public abstract class FoodStatsMixin {
 	}
 	@Redirect(method = "onUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/GameRules;getGameRuleBooleanValue(Ljava/lang/String;)Z", ordinal = 0))
 	public boolean turnOffBTWHeal(GameRules instance, String par1Str) {
-		return this.foodLevel >= 54;
+		return this.foodLevel >= getHungerRegenCutoff();
 	}
 	@ModifyConstant(method = "onUpdate", constant = @Constant(floatValue = 1.33F))
 	private float increasePrecision(float constant) {
@@ -49,7 +49,7 @@ public abstract class FoodStatsMixin {
 				this.addExhaustion(f);
 				this.foodTimer = 0;
 			}
-		} else if (bl && this.foodLevel >= 54 && player.shouldHeal()) {
+		} else if (bl && (this.foodLevel >= getHungerRegenCutoff()) && player.shouldHeal()) {
 			if (this.foodTimer >= 80) {
 				player.heal(1.0F);
 				this.addExhaustion(ClassicAddon.quickHealToggle ? 6.0F : 3.0F);
@@ -61,5 +61,12 @@ public abstract class FoodStatsMixin {
 	public void addFatRegardless(int iFoodGain, float fFatMultiplier, CallbackInfo ci) {
 		this.foodSaturationLevel = Math.min(this.foodSaturationLevel + (float)iFoodGain * fFatMultiplier / 3.0F, this.foodLevel / 3f);
 		ci.cancel();
+	}
+	@Unique
+	private static int getHungerRegenCutoff() {
+		if (ClassicAddon.intentionalHungerRegenOffset) {
+			return 52;
+		}
+		return 54;
 	}
 }

@@ -4,6 +4,7 @@ import btw.AddonHandler;
 import btw.BTWAddon;
 import btw.BTWMod;
 import btw.block.BTWBlocks;
+import btw.crafting.manager.CauldronCraftingManager;
 import btw.crafting.manager.SoulforgeCraftingManager;
 import btw.item.BTWItems;
 import btw.item.items.ToolItem;
@@ -34,6 +35,7 @@ public class ClassicAddon extends BTWAddon {
 	public static int visualNewMoonBrightnessLevel = 0;
 	public static boolean chickenJockeyToggle;
 	public static boolean guaranteedSeedDrop;
+	public static boolean intentionalHungerRegenOffset;
 	public static boolean canBabyAnimalEatLooseFood;
 	public static boolean passableLeaves;
 	public static boolean vanillaifyBuckets;
@@ -81,6 +83,7 @@ public class ClassicAddon extends BTWAddon {
 		}
 		chickenJockeyToggle = Boolean.parseBoolean(propertyValues.get("ChickenJockeyToggle"));
 		guaranteedSeedDrop = Boolean.parseBoolean(propertyValues.get("GuaranteedSeedDrop"));
+		intentionalHungerRegenOffset = Boolean.parseBoolean(propertyValues.get("IntentionalHungerRegenOffset"));
 		canBabyAnimalEatLooseFood = Boolean.parseBoolean(propertyValues.get("CanBabyAnimalEatLooseFood"));
 		synchronizedConfigProperties.forEach(((propertyName, configProperty) -> {
 			configProperty.setInternalValue(propertyValues.get(propertyName));
@@ -101,6 +104,7 @@ public class ClassicAddon extends BTWAddon {
 		this.registerPropertyClientOnly("VisualNewMoonBrightnessLevel", "0", "This is purely a visual setting... \n# 0: Pitch black. 1: A tiny bit of light");
 		this.registerProperty("AnimageddonToggle", "False", "A toggle for BTW Animageddon. Turning this off will disable animal hunger, makes sheep's wool insta-grow when grazing one grass, wolves need to be fed once to shit.");
 		this.registerProperty("ChickenJockeyToggle", "False", "This toggles spawning of buggy chicken jockeys.");
+		this.registerProperty("IntentionalHungerRegenOffset", "True", "This shifts the regen stop region to be below 8.6 shanks instead of below 9 shanks.\n# This makes regen feel much more consistent, even if internally, it may not exactly match up.");
 		this.registerProperty("GuaranteedSeedDrop", "True", "This makes sure that seeds will always drop, no matter the growth stage, just like in modern vanilla.");
 		this.registerProperty("CanBabyAnimalEatLooseFood", "False", "A toggle to re-introduce the bug with baby animal eating off of ground. This only works while Animageddon is turned off.");
 		this.registerSynchronizedProperty("PassableLeaves", "True",
@@ -148,6 +152,7 @@ public class ClassicAddon extends BTWAddon {
 		});
 		SoulforgeCraftingManager.getInstance().addRecipe(new ItemStack(BTWBlocks.dragonVessel),
 				new Object[]{"IGGI", "IUUI", "IHHI", "IIII", 'I', BTWItems.soulforgedSteelIngot, 'G', Block.fenceIron, 'U', BTWItems.urn, 'H', new ItemStack(BTWBlocks.aestheticOpaque, 1, 3)});
+		CauldronCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.heartyStew, 5), new ItemStack[]{new ItemStack(BTWItems.boiledPotato), new ItemStack(BTWItems.cookedCarrot), new ItemStack(BTWItems.brownMushroom, 3), new ItemStack(BTWItems.flour), new ItemStack(BTWItems.cookedMysteryMeat), new ItemStack(Item.bowlEmpty, 5)});
 	}
 
 	@Override

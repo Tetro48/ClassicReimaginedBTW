@@ -85,6 +85,7 @@
     "entity.EntityPlayerMixin",
     "entity.EntityPlayerMPMixin",
     "entity.EntitySheepMixin",
+    "entity.EntitySlimeMixin",
     "entity.EntitySpiderMixin",
     "entity.EntityWolfMixin",
     "entity.EntityZombieMixin",

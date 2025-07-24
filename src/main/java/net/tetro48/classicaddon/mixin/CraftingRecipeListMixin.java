@@ -187,7 +187,7 @@ public abstract class CraftingRecipeListMixin {
 		RecipeManager.removeVanillaRecipe(new ItemStack(BTWItems.wickerWeaving, 1, 299), new Object[]{"##", "##", '#', Item.reed});
 		RecipeManager.removeVanillaRecipe(new ItemStack(Block.anvil), new Object[]{"III", " I ", "III", 'I', Item.ingotIron});
 		RecipeManager.addRecipe(new ItemStack(Block.anvil), new Object[]{"III", " i ", "iii", 'I', Block.blockIron, 'i', Item.ingotIron});
-		RecipeManager.addRecipe(new ItemStack(BTWItems.wickerPane, 1, 299), new Object[]{"##", "##", '#', Item.reed});
+		RecipeManager.addRecipe(new ItemStack(BTWItems.wickerPane, 1), new Object[]{"##", "##", '#', Item.reed});
 		RecipeManager.removeVanillaShapelessRecipe(new ItemStack(BTWItems.tastySandwich, 2), new Object[]{new ItemStack(Item.bread), new ItemStack(BTWItems.cookedMysteryMeat)});
 		if (!FabricLoader.getInstance().isModLoaded("craftableeyes")) {
 			RecipeManager.addShapelessRecipe(new ItemStack(Item.eyeOfEnder), new Object[]{new ItemStack(Item.enderPearl), new ItemStack(Item.blazePowder)});

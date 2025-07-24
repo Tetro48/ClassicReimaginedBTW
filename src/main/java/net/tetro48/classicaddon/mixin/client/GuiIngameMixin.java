@@ -13,6 +13,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Locale;
+
 @Mixin(GuiIngame.class)
 public abstract class GuiIngameMixin extends Gui {
 	@Shadow @Final private Minecraft mc;
@@ -46,7 +48,25 @@ public abstract class GuiIngameMixin extends Gui {
 			y += 40;
 		if (ClassicAddon.isServerRunningThisAddon) {
 			if (isPlayerHoldingCompass) {
-				this.drawString(this.mc.fontRenderer, String.format("Coordinates: %.3f / %.3f / %.3f (%.2f, %.2f)", mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, MathHelper.wrapAngleTo180_float(mc.thePlayer.rotationYaw), MathHelper.wrapAngleTo180_float(mc.thePlayer.rotationPitch)), 2, y, 0xE0E0E0);
+				String direction;
+				String string4;
+				float yaw = MathHelper.wrapAngleTo180_float(this.mc.thePlayer.rotationYaw);
+				int directionID = MathHelper.floor_double(yaw / 90.0d + 0.5d) & 3;
+				if (directionID == 0) {
+					direction = "+Z";
+					string4 = "S";
+				} else if (directionID == 1) {
+					direction = "-X";
+					string4 = "W";
+				} else if (directionID == 2) {
+					direction = "-Z";
+					string4 = "N";
+				} else {
+					direction = "+X";
+					string4 = "E";
+				}
+				this.drawString(this.mc.fontRenderer, String.format(java.util.Locale.ROOT, "XYZ: %.3f / %.3f / %.3f", this.mc.thePlayer.posX, this.mc.thePlayer.boundingBox.minY, this.mc.thePlayer.posZ), 2, y, 0xE0E0E0);
+				this.drawString(this.mc.fontRenderer, String.format(Locale.ROOT, "Facing: %s (%s) (%.1f / %.1f)", direction, string4, yaw, MathHelper.wrapAngleTo180_float(this.mc.thePlayer.rotationPitch)), 2, y + 10, 0xE0E0E0);
 			}
 			else {
 				this.drawString(this.mc.fontRenderer, "Hold the compass to view coordinates.", 2, y, 0xFF9090);
