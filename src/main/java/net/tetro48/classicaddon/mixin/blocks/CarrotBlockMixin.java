@@ -33,8 +33,11 @@ public abstract class CarrotBlockMixin extends CropsBlock {
 						this.dropBlockAsItem_do(world, x, y, z, new ItemStack(BTWItems.carrot));
 					}
 				}
+				if (ClassicAddon.guaranteedSeedDrop) {
+					this.dropBlockAsItem_do(world, x, y, z, new ItemStack(BTWItems.carrot));
+				}
 			}
-			if (!isFullyGrown(metadata) || ClassicAddon.guaranteedSeedDrop) {
+			else {
 				this.dropSeeds(world, x, y, z, metadata);
 			}
 		}
