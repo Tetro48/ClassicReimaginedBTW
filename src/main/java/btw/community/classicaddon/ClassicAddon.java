@@ -108,14 +108,10 @@ public class ClassicAddon extends BTWAddon {
 		this.registerProperty("GuaranteedSeedDrop", "True", "This makes sure that seeds will always drop, no matter the growth stage, just like in modern vanilla.");
 		this.registerProperty("CanBabyAnimalEatLooseFood", "False", "A toggle to re-introduce the bug with baby animal eating off of ground. This only works while Animageddon is turned off.");
 		this.registerSynchronizedProperty("PassableLeaves", "True",
-				(string) -> {
-					passableLeaves = Boolean.parseBoolean(string);
-				},
+				string -> passableLeaves = Boolean.parseBoolean(string),
 				" *** SYNCHRONIZED PROPERTIES ***\n\n# This toggles the passable leaves functionality.");
 		this.registerSynchronizedProperty("VanillaifyBuckets", "True",
-				(string) -> {
-					vanillaifyBuckets = Boolean.parseBoolean(string);
-				},
+				string -> vanillaifyBuckets = Boolean.parseBoolean(string),
 				"This option re-introduces vanilla bucket mechanics. This makes screw pumps useless.");
 	}
 
