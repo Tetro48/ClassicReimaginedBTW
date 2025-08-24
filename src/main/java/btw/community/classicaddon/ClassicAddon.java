@@ -160,19 +160,11 @@ public class ClassicAddon extends BTWAddon {
 		super.initializeDifficultyCommon(difficulty);
 
 		if (difficulty.shouldIncreaseStoneToolSpeed()) {
-			if (Objects.equals(BTWMod.instance.getVersionString(), "3.0.0 Beta Snapshot 3a")){
-				((ToolItem) Item.axeStone).applyStandardEfficiencyModifiers();
-				((ToolItem) Item.pickaxeStone).applyStandardEfficiencyModifiers();
-				((ToolItem) Item.shovelStone).applyStandardEfficiencyModifiers();
-				((ToolItem) Item.hoeStone).applyStandardEfficiencyModifiers();
-				((ToolItem) BTWItems.sharpStone).applyStandardEfficiencyModifiers();
-				return;
-			}
-			((ToolItem) Item.axeStone).efficiencyOnProperMaterial = EnumToolMaterial.STONE.getEfficiencyOnProperMaterial();
-			((ToolItem) Item.pickaxeStone).efficiencyOnProperMaterial = EnumToolMaterial.STONE.getEfficiencyOnProperMaterial();
-			((ToolItem) Item.shovelStone).efficiencyOnProperMaterial = EnumToolMaterial.STONE.getEfficiencyOnProperMaterial();
-			((ToolItem) Item.hoeStone).efficiencyOnProperMaterial = EnumToolMaterial.STONE.getEfficiencyOnProperMaterial();
-			((ToolItem) BTWItems.sharpStone).efficiencyOnProperMaterial = EnumToolMaterial.STONE.getEfficiencyOnProperMaterial();
+			((ToolItem) Item.axeStone).addCustomEfficiencyMultiplier(0.5F);
+			((ToolItem) Item.pickaxeStone).addCustomEfficiencyMultiplier(0.5F);
+			((ToolItem) Item.shovelStone).addCustomEfficiencyMultiplier(0.5F);
+			((ToolItem) Item.hoeStone).addCustomEfficiencyMultiplier(0.5F);
+			((ToolItem) BTWItems.sharpStone).addCustomEfficiencyMultiplier(0.5F);
 		}
 	}
 }

@@ -4,7 +4,6 @@
   "package": "net.tetro48.classicaddon.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "ClassicDifficultyMixin",
     "ContainerRepairMixin",
     "CraftingRecipeListMixin",
     "CrucibleRecipeListMixin",
@@ -13,7 +12,9 @@
     "EmiVanillaPluginMixin",
     "EnchantmentHelperMixin",
     "FoodStatsMixin",
+    "InventoryPlayerMixin",
     "KilnRecipeListMixin",
+    "MaterialMixin",
     "PistonPackingRecipeListMixin",
     "PlayerControllerMPMixin",
     "PlayerStatusEffectsMixin",
