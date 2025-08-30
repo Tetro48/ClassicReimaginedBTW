@@ -2,12 +2,14 @@ package btw.community.classicaddon;
 
 import btw.AddonHandler;
 import btw.BTWAddon;
-import btw.BTWMod;
 import btw.block.BTWBlocks;
 import btw.crafting.manager.CauldronCraftingManager;
 import btw.crafting.manager.SoulforgeCraftingManager;
+import btw.crafting.recipe.RecipeManager;
 import btw.item.BTWItems;
 import btw.item.items.ToolItem;
+import btw.item.tag.Tag;
+import btw.item.tag.TagInstance;
 import btw.world.util.difficulty.Difficulty;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.*;
@@ -22,6 +24,8 @@ import java.util.function.Consumer;
 
 public class ClassicAddon extends BTWAddon {
 	private static ClassicAddon instance;
+
+	public static Tag looseCobblestonesTag;
 
 	public static int planksHandChopped;
 	public static int planksWithStoneAxe;
@@ -131,6 +135,8 @@ public class ClassicAddon extends BTWAddon {
 	}
 	@Override
 	public void initialize() {
+		this.initializeTags();
+		this.initializeRecipes();
 		AddonHandler.logMessage(this.getName() + " Version " + this.getVersionString() + " Initializing...");
 		registerPacketHandler("classicaddon|onJoin", (payload, entityPlayer) -> {
 			isServerRunningThisAddon = true;
@@ -149,6 +155,48 @@ public class ClassicAddon extends BTWAddon {
 		SoulforgeCraftingManager.getInstance().addRecipe(new ItemStack(BTWBlocks.dragonVessel),
 				new Object[]{"IGGI", "IUUI", "IHHI", "IIII", 'I', BTWItems.soulforgedSteelIngot, 'G', Block.fenceIron, 'U', BTWItems.urn, 'H', new ItemStack(BTWBlocks.aestheticOpaque, 1, 3)});
 		CauldronCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.heartyStew, 5), new ItemStack[]{new ItemStack(BTWItems.boiledPotato), new ItemStack(BTWItems.cookedCarrot), new ItemStack(BTWItems.brownMushroom, 3), new ItemStack(BTWItems.flour), new ItemStack(BTWItems.cookedMysteryMeat), new ItemStack(Item.bowlEmpty, 5)});
+	}
+
+	public void initializeTags() {
+		looseCobblestonesTag = Tag.of(loc("loose_cobblestones"), new ItemStack(BTWBlocks.looseCobblestone, 1, 0), new ItemStack(BTWBlocks.looseCobblestone, 1, 4), new ItemStack(BTWBlocks.looseCobblestone, 1, 8));
+	}
+
+	public void initializeRecipes() {
+		RecipeManager.addRecipe(new ItemStack(Item.swordStone, 1),
+				new Object[]{
+						"#",
+						"#",
+						"/", '#', TagInstance.of(ClassicAddon.looseCobblestonesTag), '/', Item.stick});
+
+		RecipeManager.addRecipe(new ItemStack(Item.shovelStone, 1),
+				new Object[]{
+						"#",
+						"/",
+						"/", '#', TagInstance.of(ClassicAddon.looseCobblestonesTag), '/', Item.stick});
+		RecipeManager.addRecipe(new ItemStack(Item.hoeStone, 1),
+				new Object[]{
+						"#/",
+						" /",
+						" /", '#', TagInstance.of(ClassicAddon.looseCobblestonesTag), '/', Item.stick});
+		RecipeManager.addRecipe(new ItemStack(Item.axeStone, 1),
+				new Object[]{
+						"# ",
+						"#/",
+						" /", '#', TagInstance.of(ClassicAddon.looseCobblestonesTag), '/', Item.stick});
+		RecipeManager.addRecipe(new ItemStack(Item.pickaxeStone, 1),
+				new Object[]{
+						"###",
+						" / ",
+						" / ", '#', TagInstance.of(ClassicAddon.looseCobblestonesTag), '/', Item.stick});
+		RecipeManager.addRecipe(new ItemStack(Block.furnaceIdle, 1),
+				new Object[]{
+						"###",
+						"#B#",
+						"###", '#', ClassicAddon.looseCobblestonesTag, 'B', BTWBlocks.idleOven});
+	}
+
+	private static ResourceLocation loc(String id) {
+		return new ResourceLocation("classicaddon", id);
 	}
 
 	@Override

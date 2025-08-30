@@ -2,9 +2,15 @@ package net.tetro48.classicaddon.mixin.blocks;
 
 import btw.block.BTWBlocks;
 import btw.block.blocks.AnvilBlock;
+import btw.block.model.AnvilModel;
+import btw.block.model.BlockModel;
+import btw.client.render.util.RenderUtils;
 import btw.world.util.WorldUtils;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -16,6 +22,8 @@ import java.util.Random;
 
 @Mixin(AnvilBlock.class)
 public abstract class AnvilBlockMixin extends Block {
+
+	@Shadow private AnvilModel model;
 
 	protected AnvilBlockMixin(int par1, Material par2Material) {
 		super(par1, par2Material);
@@ -60,6 +68,17 @@ public abstract class AnvilBlockMixin extends Block {
 	@Inject(method = "quantityDropped", at = @At("RETURN"), cancellable = true)
 	public void changeDropQuantity(CallbackInfoReturnable<Integer> cir) {
 		cir.setReturnValue(1);
+	}
+
+	@Environment(EnvType.CLIENT)
+	public void renderFallingBlock(RenderBlocks renderBlocks, int i, int j, int k, int iMetadata) {
+		int iFacing = this.getFacing(iMetadata);
+		BlockModel transformedModel = this.model.makeTemporaryCopy();
+		transformedModel.rotateAroundYToFacing(iFacing);
+		renderBlocks.setUVRotateTop(this.convertFacingToTopTextureRotation(iFacing));
+		renderBlocks.setUVRotateBottom(this.convertFacingToBottomTextureRotation(iFacing));
+		transformedModel.renderAsBlock(renderBlocks, this, i, j, k);
+		renderBlocks.clearUVRotation();
 	}
 
 	public void onBlockAdded(World world, int i, int j, int k) {

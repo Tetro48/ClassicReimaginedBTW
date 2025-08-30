@@ -15,4 +15,16 @@ public abstract class MaterialMixin {
 	private static Material doNotRequireToolForGround(Material instance){
 		return instance;
 	}
+	@Redirect(method = "<clinit>", at = @At(value = "INVOKE", ordinal = 5, target = "Lnet/minecraft/src/Material;setRequiresTool()Lnet/minecraft/src/Material;"))
+	private static Material doNotRequireToolForSand(Material instance){
+		return instance;
+	}
+	@Redirect(method = "<clinit>", at = @At(value = "INVOKE", ordinal = 6, target = "Lnet/minecraft/src/Material;setRequiresTool()Lnet/minecraft/src/Material;"))
+	private static Material doNotRequireToolForSnow(Material instance){
+		return instance;
+	}
+	@Redirect(method = "<clinit>", at = @At(value = "INVOKE", ordinal = 7, target = "Lnet/minecraft/src/Material;setRequiresTool()Lnet/minecraft/src/Material;"))
+	private static Material doNotRequireToolForCraftedSnow(Material instance){
+		return instance;
+	}
 }

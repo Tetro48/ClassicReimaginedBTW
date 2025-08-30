@@ -5,6 +5,8 @@ import btw.community.classicaddon.ClassicAddon;
 import btw.crafting.recipe.CraftingRecipeList;
 import btw.crafting.recipe.RecipeManager;
 import btw.item.BTWItems;
+import btw.item.tag.BTWTags;
+import btw.item.tag.TagInstance;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.src.Block;
 import net.minecraft.src.Item;
@@ -100,22 +102,23 @@ public abstract class CraftingRecipeListMixin {
 		return par1ItemStack;
 	}
 
+	///True Classic's tags can't be used here, go look at ClassicAddon.java in btw.community.classicaddon
+	@Inject(method = "addStoneToolRecipes", at = @At("HEAD"), remap = false, cancellable = true)
+	private static void redoStoneToolRecipes(CallbackInfo ci){
+		ci.cancel();
+	}
+
 	@Inject(method = "addRecipes", at = @At("TAIL"), remap = false)
 	private static void addNewRecipes(CallbackInfo ci){
-		RecipeManager.addRecipe(new ItemStack(Block.furnaceIdle, 1),
-				new Object[]{
-						"###",
-						"#B#",
-						"###", '#', BTWBlocks.looseCobblestone, 'B', BTWBlocks.idleOven});
 		RecipeManager.addRecipe(new ItemStack(Block.enchantmentTable, 1),
 				new Object[]{
 						" B ",
 						"D#D",
-						"###", '#', Block.obsidian, 'B', Item.book, 'D', Item.diamond});
+						"###", '#', Block.obsidian, 'B', Item.book, 'D', BTWItems.diamondIngot});
 		RecipeManager.addRecipe(new ItemStack(Item.brewingStand, 1),
 				new Object[]{
 						" B ",
-						"###", '#', Block.cobblestone, 'B', Item.blazeRod});
+						"###", '#', BTWTags.cobblestones, 'B', Item.blazeRod});
 		for (int i = 0; i < 3; i++) {
 			addMortarRecipe(new ItemStack(BTWBlocks.looseCobblestone, 1, i<<2), new ItemStack(Block.cobblestone, 1, i), i<2);
 			addMortarRecipe(new ItemStack(BTWBlocks.looseCobblestoneSlab, 1, i<<2), new ItemStack(BTWBlocks.cobblestoneSlab, 1, i), i<2);
@@ -144,41 +147,36 @@ public abstract class CraftingRecipeListMixin {
 				new Object[]{
 						"###",
 						"# #",
-						"###", '#', Block.planks});
+						"###", '#', BTWTags.planks});
 		RecipeManager.addRecipe(new ItemStack(Item.pickaxeWood, 1),
 				new Object[]{
 						"###",
 						" / ",
-						" / ", '#', Block.planks, '/', Item.stick});
+						" / ", '#', BTWTags.planks, '/', Item.stick});
 		RecipeManager.addRecipe(new ItemStack(Item.shovelWood, 1),
 				new Object[]{
 						"#",
 						"/",
-						"/", '#', Block.planks, '/', Item.stick});
+						"/", '#', BTWTags.planks, '/', Item.stick});
 		RecipeManager.addRecipe(new ItemStack(Item.swordWood, 1),
 				new Object[]{
 						"#",
 						"#",
-						"/", '#', Block.planks, '/', Item.stick});
-		RecipeManager.addRecipe(new ItemStack(Item.swordStone, 1),
-				new Object[]{
-						"#",
-						"#",
-						"/", '#', BTWBlocks.looseCobblestone, '/', Item.stick});
+						"/", '#', BTWTags.planks, '/', Item.stick});
 		RecipeManager.addRecipe(new ItemStack(Item.hoeWood, 1),
 				new Object[]{
-						"##",
+						"#/",
 						" /",
-						" /", '#', Block.planks, '/', Item.stick});
+						" /", '#', BTWTags.planks, '/', Item.stick});
 		RecipeManager.addRecipe(new ItemStack(Item.axeWood, 1),
 				new Object[]{
 						"#  ",
 						"#/ ",
-						" / ", '#', Block.planks, '/', Item.stick});
+						" / ", '#', BTWTags.planks, '/', Item.stick});
 		RecipeManager.addRecipe(new ItemStack(BTWBlocks.workbench, 1),
 				new Object[]{
 						"##",
-						"##", '#', Block.planks});
+						"##", '#', BTWTags.planks});
 		//inefficient manual (vanilla) method
 		RecipeManager.addRecipe(new ItemStack(Block.sandStone, 1),
 				new Object[]{
