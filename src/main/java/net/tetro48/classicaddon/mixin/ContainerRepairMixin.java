@@ -102,7 +102,7 @@ public abstract class ContainerRepairMixin extends Container {
 					for(Object enchObj : itemEnchantments.keySet()) {
 						Integer enchantmentID = (Integer) enchObj;
 						Enchantment enchantment = Enchantment.enchantmentsList[enchantmentID];
-						int q = EnchantmentHelper.getEnchantmentLevel(enchantmentID, itemStack2);
+						int q = (int) enchantments.getOrDefault(enchantmentID, 0);
 						int r = (int) itemEnchantments.get(enchantmentID);
 						r = q == r ? r + 1 : Math.max(r, q);
 						boolean bl4 = enchantment.canApply(itemStack);
