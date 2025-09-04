@@ -1,5 +1,6 @@
 package net.tetro48.classicaddon.mixin;
 
+import btw.community.classicaddon.ClassicAddon;
 import btw.item.BTWItems;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.src.*;
@@ -184,11 +185,11 @@ public abstract class ContainerRepairMixin extends Container {
 				itemStack2 = null;
 			}
 
-			if (j == i && j > 0 && this.maximumCost >= 40) {
+			if (j == i && j > 0 && this.maximumCost >= 40 && !ClassicAddon.yeetTooExpensive) {
 				this.maximumCost = 39;
 			}
 
-			if (this.maximumCost >= 40 && !this.thePlayer.capabilities.isCreativeMode) {
+			if (this.maximumCost >= 40 && !ClassicAddon.yeetTooExpensive && !this.thePlayer.capabilities.isCreativeMode) {
 				itemStack2 = null;
 			}
 

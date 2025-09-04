@@ -121,6 +121,7 @@
     "client.GuiIngameMixin",
     "client.GuiMultiplayerMixin",
     "client.GuiOptionsMixin",
+    "client.GuiRepairMixin",
     "client.NetClientHandlerMixin"
   ],
   "injectors": {

@@ -43,6 +43,7 @@ public class ClassicAddon extends BTWAddon {
 	public static boolean canBabyAnimalEatLooseFood;
 	public static boolean passableLeaves;
 	public static boolean vanillaifyBuckets;
+	public static boolean yeetTooExpensive;
 
 	public static boolean isServerRunningThisAddon = false;
 
@@ -117,6 +118,8 @@ public class ClassicAddon extends BTWAddon {
 		this.registerSynchronizedProperty("VanillaifyBuckets", "True",
 				string -> vanillaifyBuckets = Boolean.parseBoolean(string),
 				"This option re-introduces vanilla bucket mechanics. This makes screw pumps useless.");
+		this.registerSynchronizedProperty("YeetTooExpensive", "True",
+				string -> yeetTooExpensive = Boolean.parseBoolean(string), "Removes the Too Expensive! limit if enabled");
 	}
 
 	public void registerSynchronizedProperty(String propertyName, String defaultValue, Consumer<String> callback, String comment) {
