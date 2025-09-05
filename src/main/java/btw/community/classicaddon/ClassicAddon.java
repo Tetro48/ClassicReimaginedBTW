@@ -194,8 +194,8 @@ public class ClassicAddon extends BTWAddon {
 		RecipeManager.addRecipe(new ItemStack(Block.furnaceIdle, 1),
 				new Object[]{
 						"###",
-						"#B#",
-						"###", '#', ClassicAddon.looseCobblestonesTag, 'B', BTWBlocks.idleOven});
+						"# #",
+						"###", '#', ClassicAddon.looseCobblestonesTag});
 	}
 
 	private static ResourceLocation loc(String id) {

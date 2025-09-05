@@ -1,5 +1,6 @@
 package net.tetro48.classicaddon.mixin.items;
 
+import btw.item.items.HoeItem;
 import net.minecraft.src.Item;
 import net.minecraft.src.PotionHelper;
 import org.spongepowered.asm.mixin.Mixin;
@@ -144,5 +145,32 @@ public abstract class ItemMixin {
 	@Redirect(method = "<clinit>", at = @At(ordinal = 72, value = "INVOKE", target = "Lnet/minecraft/src/Item;setTextureName(Ljava/lang/String;)Lnet/minecraft/src/Item;"))
 	private static Item makeSugarABrewingItem(Item instance, String par1Str) {
 		return instance.setTextureName(par1Str).setPotionEffect(PotionHelper.sugarEffect);
+	}
+	@Redirect(method = "<clinit>", at = @At(ordinal = 0, value = "INVOKE", target = "Lnet/minecraft/src/Item;hideFromEMI()Lnet/minecraft/src/Item;"))
+	private static Item doNotHideWoodenSwordFromEMI(Item instance) {
+		return instance;
+	}
+	@Redirect(method = "<clinit>", at = @At(ordinal = 1, value = "INVOKE", target = "Lnet/minecraft/src/Item;hideFromEMI()Lnet/minecraft/src/Item;"))
+	private static Item doNotHideWoodenShovelFromEMI(Item instance) {
+		return instance;
+	}
+	@Redirect(method = "<clinit>", at = @At(ordinal = 2, value = "INVOKE", target = "Lnet/minecraft/src/Item;hideFromEMI()Lnet/minecraft/src/Item;"))
+	private static Item doNotHideWoodenPickaxeFromEMI(Item instance) {
+		return instance;
+	}
+	@Redirect(method = "<clinit>", at = @At(ordinal = 3, value = "INVOKE", target = "Lnet/minecraft/src/Item;hideFromEMI()Lnet/minecraft/src/Item;"))
+	private static Item doNotHideWoodenAxeFromEMI(Item instance) {
+		return instance;
+	}
+	@Redirect(method = "<clinit>", at = @At(ordinal = 4, value = "INVOKE", target = "Lnet/minecraft/src/Item;hideFromEMI()Lnet/minecraft/src/Item;"))
+	private static Item doNotHideWoodenHoeFromEMI(Item instance) {
+		return instance;
+	}
+	@Redirect(method = "<clinit>", at = @At(ordinal = 5, value = "INVOKE", target = "Lnet/minecraft/src/Item;hideFromEMI()Lnet/minecraft/src/Item;"))
+	private static Item doNotHideStoneHoeFromEMI(Item instance) {
+		if (instance instanceof HoeItem) {
+			return instance;
+		}
+		return instance.hideFromEMI();
 	}
 }
