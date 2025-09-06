@@ -17,6 +17,7 @@ public abstract class EmiBTWPluginMixin {
 	@Inject(method = "addInfoRecipes", at = @At("HEAD"), remap = false)
 	private void addNewInfo(EmiRegistry registry, CallbackInfo ci) {
 		this.info(registry, BTWBlocks.workbench, "classicAddon.workbench.info");
+		this.info(registry, Block.furnaceIdle, "classicAddon.furnace.info");
 	}
 
 }

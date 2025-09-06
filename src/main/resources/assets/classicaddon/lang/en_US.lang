@@ -16,8 +16,36 @@ disconnect.failedCheckForTC=Kicked by True Classic addon
 item.enchantedBook.name=Enchanted Book
 item.enchantedBook.languageUnfamiliar=This book is enchanted. Apply it to an item with an anvil!
 
+# Achievements stuff
+
+achievementtab.true_classic_starter_guide=Starter Guide to True Classic
+
+achievement.btw.craft_stone_pickaxe=Getting an Upgrade
+
+achievement.classicaddon.mine_wood=Getting Wood
+achievement.classicaddon.mine_wood.desc=Attack a tree until a block of wood pops out
+achievement.classicaddon.crafting_table=Benchmarking
+achievement.classicaddon.crafting_table.desc=Craft a crafting table with four blocks of planks. Beware, it can burn, though!
+achievement.classicaddon.wooden_pickaxe=Time to Mine!
+achievement.classicaddon.wooden_pickaxe.desc=Use planks and shafts to make a pickaxe
+achievement.classicaddon.loose_cobblestone=Loose Cobble
+achievement.classicaddon.loose_cobblestone.desc=Mine stone with a wooden pickaxe
+achievement.classicaddon.furnace=Hot Topic
+achievement.classicaddon.furnace.desc=Construct a furnace out of eight loose cobblestone blocks
+achievement.classicaddon.stone_pickaxe=Getting an Upgrade
+achievement.classicaddon.stone_pickaxe.desc=Use loose cobblestone and shafts to make a stone pickaxe
+achievement.classicaddon.stone_hoe=Time to Farm!
+achievement.classicaddon.stone_hoe.desc=Use loose cobblestone and shafts to make a stone hoe
+achievement.classicaddon.stone_sword=Time to Strike!
+achievement.classicaddon.stone_sword.desc=Use loose cobblestone and shafts to make a stone sword
+achievement.classicaddon.glass_bottle=Glass Bottles
+achievement.classicaddon.glass_bottle.desc=Cook sand in the furnace, then make glass bottles out of them
+achievement.classicaddon.bread=Bake Bread
+achievement.classicaddon.bread.desc=Turn wheat and some water into bread dough, and then cook it in the furnace
+
 # EMI stuff
 
 btw.anvil.info=The Anvil can be placed anywhere, and it's used for either repair, or enchantment book application. Note: This bypasses the typical limit of Infernal Enchanters.
 classicAddon.workbench.info=Crafting table can be placed anywhere. This has vanilla hardness levels.
+classicAddon.furnace.info=Furnaces can be placed anywhere. This will ignite whenever fuel is supplied, and cooks stuff 4x faster than brick ovens, but also burns fuel 4x faster.
 tag.classicaddon.loose_cobblestones=Loose Cobblestones

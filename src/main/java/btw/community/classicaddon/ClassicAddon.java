@@ -2,6 +2,9 @@ package btw.community.classicaddon;
 
 import btw.AddonHandler;
 import btw.BTWAddon;
+import btw.achievement.AchievementProvider;
+import btw.achievement.AchievementTab;
+import btw.achievement.event.BTWAchievementEvents;
 import btw.block.BTWBlocks;
 import btw.crafting.manager.CauldronCraftingManager;
 import btw.crafting.manager.SoulforgeCraftingManager;
@@ -26,6 +29,18 @@ public class ClassicAddon extends BTWAddon {
 	private static ClassicAddon instance;
 
 	public static Tag looseCobblestonesTag;
+
+	public static final AchievementTab TRUE_CLASSIC_STARTER_GUIDE_ACHIEVEMENT_TAB = new AchievementTab("true_classic_starter_guide").setIcon(Block.grass);
+	public static Achievement<ItemStack> GET_WOOD_ACHIEVEMENT;
+	public static Achievement<ItemStack> GET_CRAFTING_TABLE_ACHIEVEMENT;
+	public static Achievement<ItemStack> GET_WOODEN_PICKAXE_ACHIEVEMENT;
+	public static Achievement<ItemStack> GET_LOOSE_COBBLESTONE_ACHIEVEMENT;
+	public static Achievement<ItemStack> GET_FURNACE_ACHIEVEMENT;
+	public static Achievement<ItemStack> GET_STONE_PICKAXE_ACHIEVEMENT;
+	public static Achievement<ItemStack> GET_STONE_HOE_ACHIEVEMENT;
+	public static Achievement<ItemStack> GET_GLASS_BOTTLE_ACHIEVEMENT;
+	public static Achievement<ItemStack> GET_STONE_SWORD_ACHIEVEMENT;
+	public static Achievement<ItemStack> GET_BREAD_ACHIEVEMENT;
 
 	public static int planksHandChopped;
 	public static int planksWithStoneAxe;
@@ -139,6 +154,7 @@ public class ClassicAddon extends BTWAddon {
 	@Override
 	public void initialize() {
 		this.initializeTags();
+		this.initializeAchievements();
 		this.initializeRecipes();
 		AddonHandler.logMessage(this.getName() + " Version " + this.getVersionString() + " Initializing...");
 		registerPacketHandler("classicaddon|onJoin", (payload, entityPlayer) -> {
@@ -158,6 +174,83 @@ public class ClassicAddon extends BTWAddon {
 		SoulforgeCraftingManager.getInstance().addRecipe(new ItemStack(BTWBlocks.dragonVessel),
 				new Object[]{"IGGI", "IUUI", "IHHI", "IIII", 'I', BTWItems.soulforgedSteelIngot, 'G', Block.fenceIron, 'U', BTWItems.urn, 'H', new ItemStack(BTWBlocks.aestheticOpaque, 1, 3)});
 		CauldronCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.heartyStew, 5), new ItemStack[]{new ItemStack(BTWItems.boiledPotato), new ItemStack(BTWItems.cookedCarrot), new ItemStack(BTWItems.brownMushroom, 3), new ItemStack(BTWItems.flour), new ItemStack(BTWItems.cookedMysteryMeat), new ItemStack(Item.bowlEmpty, 5)});
+	}
+
+	public void initializeAchievements() {
+		AchievementProvider.NameStep<ItemStack> builder = AchievementProvider.getBuilder(BTWAchievementEvents.ItemEvent.class);
+		GET_WOOD_ACHIEVEMENT = builder.name(loc("mine_wood"))
+				.icon(Block.wood)
+				.displayLocation(-2, 0)
+				.triggerCondition(itemStack -> itemStack.itemID == Block.wood.blockID)
+				.build()
+				.setNoAnnounce()
+				.registerAchievement(TRUE_CLASSIC_STARTER_GUIDE_ACHIEVEMENT_TAB);
+		GET_CRAFTING_TABLE_ACHIEVEMENT = builder.name(loc("crafting_table"))
+				.icon(Block.workbench)
+				.displayLocation(-1, 0)
+				.triggerCondition(itemStack -> itemStack.itemID == BTWBlocks.workbench.blockID)
+				.parents(GET_WOOD_ACHIEVEMENT)
+				.build()
+				.registerAchievement(TRUE_CLASSIC_STARTER_GUIDE_ACHIEVEMENT_TAB);
+		GET_WOODEN_PICKAXE_ACHIEVEMENT = builder.name(loc("wooden_pickaxe"))
+				.icon(Item.pickaxeWood)
+				.displayLocation(0, 0)
+				.triggerCondition(itemStack -> itemStack.itemID == Item.pickaxeWood.itemID)
+				.parents(GET_CRAFTING_TABLE_ACHIEVEMENT)
+				.build()
+				.registerAchievement(TRUE_CLASSIC_STARTER_GUIDE_ACHIEVEMENT_TAB);
+		GET_LOOSE_COBBLESTONE_ACHIEVEMENT = builder.name(loc("loose_cobblestone"))
+				.icon(BTWBlocks.looseCobblestone)
+				.displayLocation(1, 0)
+				.triggerCondition(itemStack -> looseCobblestonesTag.test(itemStack))
+				.parents(GET_WOODEN_PICKAXE_ACHIEVEMENT)
+				.build()
+				.registerAchievement(TRUE_CLASSIC_STARTER_GUIDE_ACHIEVEMENT_TAB);
+		GET_STONE_HOE_ACHIEVEMENT = builder.name(loc("stone_hoe"))
+				.icon(Item.hoeStone)
+				.displayLocation(0, 1)
+				.triggerCondition(itemStack -> itemStack.itemID == Item.hoeStone.itemID)
+				.parents(GET_LOOSE_COBBLESTONE_ACHIEVEMENT)
+				.build()
+				.setNoAnnounce()
+				.registerAchievement(TRUE_CLASSIC_STARTER_GUIDE_ACHIEVEMENT_TAB);
+		GET_FURNACE_ACHIEVEMENT = builder.name(loc("furnace"))
+				.icon(Block.furnaceIdle)
+				.displayLocation(1, 1)
+				.triggerCondition(itemStack -> itemStack.itemID == Block.furnaceIdle.blockID)
+				.parents(GET_LOOSE_COBBLESTONE_ACHIEVEMENT)
+				.build()
+				.registerAchievement(TRUE_CLASSIC_STARTER_GUIDE_ACHIEVEMENT_TAB);
+		GET_GLASS_BOTTLE_ACHIEVEMENT = builder.name(loc("glass_bottle"))
+				.icon(Item.glassBottle)
+				.displayLocation(2, 1)
+				.triggerCondition(itemStack -> itemStack.itemID == Item.glassBottle.itemID)
+				.parents(GET_FURNACE_ACHIEVEMENT)
+				.build()
+				.setNoAnnounce()
+				.registerAchievement(TRUE_CLASSIC_STARTER_GUIDE_ACHIEVEMENT_TAB);
+		GET_BREAD_ACHIEVEMENT = builder.name(loc("bread"))
+				.icon(Item.bread)
+				.displayLocation(1, 2)
+				.triggerCondition(itemStack -> itemStack.itemID == Item.bread.itemID)
+				.parents(GET_FURNACE_ACHIEVEMENT, GET_STONE_HOE_ACHIEVEMENT, GET_GLASS_BOTTLE_ACHIEVEMENT)
+				.build()
+				.registerAchievement(TRUE_CLASSIC_STARTER_GUIDE_ACHIEVEMENT_TAB);
+		GET_STONE_PICKAXE_ACHIEVEMENT = builder.name(loc("stone_pickaxe"))
+				.icon(Item.pickaxeStone)
+				.displayLocation(2, -1)
+				.triggerCondition(itemStack -> itemStack.itemID == Item.pickaxeStone.itemID)
+				.parents(GET_LOOSE_COBBLESTONE_ACHIEVEMENT)
+				.build()
+				.setNoAnnounce()
+				.registerAchievement(TRUE_CLASSIC_STARTER_GUIDE_ACHIEVEMENT_TAB);
+		GET_STONE_SWORD_ACHIEVEMENT = builder.name(loc("stone_sword"))
+				.icon(Item.swordStone)
+				.displayLocation(0, -1)
+				.triggerCondition(itemStack -> itemStack.itemID == Item.swordStone.itemID)
+				.parents(GET_LOOSE_COBBLESTONE_ACHIEVEMENT)
+				.build()
+				.registerAchievement(TRUE_CLASSIC_STARTER_GUIDE_ACHIEVEMENT_TAB);
 	}
 
 	public void initializeTags() {
@@ -196,6 +289,7 @@ public class ClassicAddon extends BTWAddon {
 						"###",
 						"# #",
 						"###", '#', ClassicAddon.looseCobblestonesTag});
+		FurnaceRecipes.smelting().addSmelting(Block.sand.blockID, new ItemStack(Block.glass), 0f, 2);
 	}
 
 	private static ResourceLocation loc(String id) {
