@@ -71,7 +71,7 @@ public class ClassicAddon extends BTWAddon {
 	@Override
 	public void serverPlayerConnectionInitialized(NetServerHandler serverHandler, EntityPlayerMP playerMP) {
 		super.serverPlayerConnectionInitialized(serverHandler, playerMP);
-		serverHandler.sendPacketToPlayer(new Packet3Chat(ChatMessageComponent.createFromText("True Classic Synchronized Configs:")));
+		serverHandler.sendPacketToPlayer(new Packet3Chat(ChatMessageComponent.createFromTranslationKey("classicAddon.synchronizedConfigsI18n")));
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		DataOutputStream dataStream = new DataOutputStream(byteStream);
 		synchronizedConfigProperties.forEach((propertyName, configProperty) -> {

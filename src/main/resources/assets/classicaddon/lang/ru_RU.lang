@@ -1,0 +1,49 @@
+classicAddon.selectWorld.cursedDifficulty=Проклятый %s
+classicAddon.serverCheck.doesServerHaveTC1=Проверка наличия на этом сервере True Classic...
+classicAddon.serverCheck.doesServerHaveTC2=Если на этом сервере установлена старая версия TC, это не сработает.
+classicAddon.serverCheck.kickTimer=Если сервер не ответит, что этот аддон установлен в течение %sс, вас выгонят из игры.
+classicAddon.selectWorld.nmCompat.nightmare=Кошмар
+classicAddon.selectWorld.nmCompat.baddream=Сон
+classicAddon.synchronizedConfigsI18n=Синхронизированные конфиги True Classic:
+
+difficulty.classic.name=Истин. Классический
+difficulty.classic.description=Ваниллифицированный BTW.
+difficulty.classic.description2=Его сложность эквивалентен
+difficulty.classic.description3=ванильному, что немного.
+
+disconnect.failedCheckForTC=Выгнали аддоном True Classic
+
+item.enchantedBook.name=Зачарованная книга
+item.enchantedBook.languageUnfamiliar=Эта книга зачарована. Примените чары к предмету с помощью наковальни!
+
+# Достижения
+
+achievementtab.true_classic_starter_guide=Руководство для начинающих по True Classic
+
+achievement.btw.craft_stone_pickaxe=Обновка!
+achievement.classicaddon.mine_wood=Нарубить дров
+achievement.classicaddon.mine_wood.desc=Сломать дерево, чтобы получить бревно
+achievement.classicaddon.crafting_table=Рабочий стол
+achievement.classicaddon.crafting_table.desc=Собрать верстак из четырех досок. Осторожно, может сгореть!
+achievement.classicaddon.wooden_pickaxe=Пора в шахту!
+achievement.classicaddon.wooden_pickaxe.desc=Собрать кирку из досок и древков
+achievement.classicaddon.loose_cobblestone=Рыхлый булыжник
+achievement.classicaddon.loose_cobblestone.desc=Добудьте камень деревянной киркой
+achievement.classicaddon.furnace=Горячая штучка
+achievement.classicaddon.furnace.desc=Сделать печь из восъми рыхлых булыжников
+achievement.classicaddon.stone_pickaxe=Обновка!
+achievement.classicaddon.stone_pickaxe.desc=Собрать каменную кирку из булыжников и древков
+achievement.classicaddon.stone_hoe=Дачный сезон!
+achievement.classicaddon.stone_hoe.desc=Собрать мотыгу из булыжника и древков
+achievement.classicaddon.stone_sword=К бою готов!
+achievement.classicaddon.stone_sword.desc=Собрать каменный меч из булыжников и древка
+achievement.classicaddon.glass_bottle=Стеклянные бутылки
+achievement.classicaddon.glass_bottle.desc=Обработайте песок в печи, а затем сделайте из него стеклянные бутылки
+achievement.classicaddon.bread=Хлеб насущный
+achievement.classicaddon.bread.desc=Испечь хлеб из теста сделанная из муки и воды
+
+# EMI stuff
+btw.anvil.info=Наковальню можно разместить где угодно, и она используется как для ремонта, так и для применения книги зачарования. Примечание: это обходит типичное ограничение Инферальных Зачаровании.
+classicAddon.workbench.info=Верстак можно разместить где угодно. Добывается как обычно. Примечание: Может сгореть.
+classicAddon.furnace.info=Печи можно разместить где угодно. Они зажигаются при подаче топлива и готовят 4x быстрее, чем кирпичные печи, но и топливо сжигается 4x быстрее.
+tag.classicaddon.loose_cobblestones=Рыхлые булыжники
