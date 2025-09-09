@@ -5,7 +5,7 @@ classicAddon.serverCheck.kickTimer=Если сервер не ответит, ч
 classicAddon.selectWorld.nmCompat.nightmare=Кошмар
 classicAddon.selectWorld.nmCompat.baddream=Сон
 classicAddon.synchronizedConfigsI18n=Синхронизированные конфиги True Classic:
-classicAddon.holdCompassForCoordinates=Держите компасс чтобы смотреть координаты.
+classicAddon.holdCompassForCoordinates=Держите компас чтобы смотреть координаты.
 
 difficulty.classic.name=Истин. Классический
 difficulty.classic.description=Ваниллифицированный BTW.
