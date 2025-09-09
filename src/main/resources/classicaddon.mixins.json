@@ -90,6 +90,7 @@
     "entity.EntitySheepMixin",
     "entity.EntitySlimeMixin",
     "entity.EntitySpiderMixin",
+    "entity.EntityWitchMixin",
     "entity.EntityWolfMixin",
     "entity.EntityZombieMixin",
     "items.AnvilBlockItemMixin",
