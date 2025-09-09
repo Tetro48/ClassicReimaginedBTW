@@ -5,6 +5,7 @@ classicAddon.serverCheck.kickTimer=Если сервер не ответит, ч
 classicAddon.selectWorld.nmCompat.nightmare=Кошмар
 classicAddon.selectWorld.nmCompat.baddream=Сон
 classicAddon.synchronizedConfigsI18n=Синхронизированные конфиги True Classic:
+classicAddon.holdCompassForCoordinates=Держите компасс чтобы смотреть координаты.
 
 difficulty.classic.name=Истин. Классический
 difficulty.classic.description=Ваниллифицированный BTW.
@@ -42,7 +43,7 @@ achievement.classicaddon.glass_bottle.desc=Обработайте песок в 
 achievement.classicaddon.bread=Хлеб насущный
 achievement.classicaddon.bread.desc=Испечь хлеб из теста сделанная из муки и воды
 
-# EMI stuff
+# Для EMI
 btw.anvil.info=Наковальню можно разместить где угодно, и она используется как для ремонта, так и для применения книги зачарования. Примечание: это обходит типичное ограничение Инферальных Зачаровании.
 classicAddon.workbench.info=Верстак можно разместить где угодно. Добывается как обычно. Примечание: Может сгореть.
 classicAddon.furnace.info=Печи можно разместить где угодно. Они зажигаются при подаче топлива и готовят 4x быстрее, чем кирпичные печи, но и топливо сжигается 4x быстрее.

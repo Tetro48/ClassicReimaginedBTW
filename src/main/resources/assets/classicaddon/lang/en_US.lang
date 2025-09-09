@@ -5,6 +5,7 @@ classicAddon.serverCheck.kickTimer=If the server does not respond that it has th
 classicAddon.selectWorld.nmCompat.nightmare=Nightmare
 classicAddon.selectWorld.nmCompat.baddream=Dream
 classicAddon.synchronizedConfigsI18n=Synchronized Configs from True Classic:
+classicAddon.holdCompassForCoordinates=Hold the compass to view coordinates.
 
 
 difficulty.classic.name=True Classic

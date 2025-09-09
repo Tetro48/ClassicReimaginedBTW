@@ -69,7 +69,7 @@ public abstract class GuiIngameMixin extends Gui {
 				this.drawString(this.mc.fontRenderer, String.format(Locale.ROOT, "Facing: %s (%s) (%.1f / %.1f)", direction, string4, yaw, MathHelper.wrapAngleTo180_float(this.mc.thePlayer.rotationPitch)), 2, y + 10, 0xE0E0E0);
 			}
 			else {
-				this.drawString(this.mc.fontRenderer, "Hold the compass to view coordinates.", 2, y, 0xFF9090);
+				this.drawString(this.mc.fontRenderer, I18n.getString("classicAddon.holdCompassForCoordinates"), 2, y, 0xFF9090);
 			}
 		}
 	}
