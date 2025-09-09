@@ -137,6 +137,7 @@ public abstract class CraftingRecipeListMixin {
 		addMortarRecipe(new ItemStack(BTWBlocks.looseNetherBrick, 1), new ItemStack(Block.netherBrick, 1));
 		addMortarRecipe(new ItemStack(BTWBlocks.looseNetherBrickSlab, 1), new ItemStack(Block.stoneSingleSlab, 1, 6));
 		addMortarRecipe(new ItemStack(BTWBlocks.looseNetherBrickStairs, 1), new ItemStack(Block.stairsNetherBrick, 1));
+		addMortarRecipe(new ItemStack(BTWBlocks.idleLooseOven, 1), new ItemStack(BTWBlocks.idleOven, 1));
 		RecipeManager.addShapelessRecipe(new ItemStack(Item.book, 1),
 				new Object[] {
 						Item.paper, Item.paper, Item.paper, Item.leather});
