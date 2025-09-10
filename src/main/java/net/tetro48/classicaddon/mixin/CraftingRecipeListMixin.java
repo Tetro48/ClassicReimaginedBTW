@@ -44,6 +44,12 @@ public abstract class CraftingRecipeListMixin {
 						new ItemStack(BTWItems.soulDust, 2, 0)
 				},
 				new ItemStack[]{new ItemStack(BTWBlocks.bloodWoodLog, 1, 0)});
+		RecipeManager.addLogChoppingRecipe(new ItemStack(Block.planks, ClassicAddon.planksWithIronAxes, 4), new ItemStack[]{
+						new ItemStack(BTWItems.bark, 1, 4),
+						new ItemStack(BTWItems.soulDust, 2, 0)},
+				new ItemStack(Block.planks, ClassicAddon.planksWithStoneAxe, 4),
+				new ItemStack[]{new ItemStack(BTWItems.bark, 1, 4),
+						new ItemStack(BTWItems.soulDust, 2, 0)}, new ItemStack(BTWBlocks.bloodWoodLog, 1, 0));
 		ci.cancel();
 	}
 
