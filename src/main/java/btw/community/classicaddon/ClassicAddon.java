@@ -7,8 +7,10 @@ import btw.achievement.AchievementTab;
 import btw.achievement.event.BTWAchievementEvents;
 import btw.block.BTWBlocks;
 import btw.crafting.manager.CauldronCraftingManager;
+import btw.crafting.manager.SawCraftingManager;
 import btw.crafting.manager.SoulforgeCraftingManager;
 import btw.crafting.recipe.RecipeManager;
+import btw.crafting.recipe.types.customcrafting.LogChoppingRecipe;
 import btw.item.BTWItems;
 import btw.item.items.ToolItem;
 import btw.item.tag.Tag;
@@ -41,6 +43,11 @@ public class ClassicAddon extends BTWAddon {
 	public static Achievement<ItemStack> GET_GLASS_BOTTLE_ACHIEVEMENT;
 	public static Achievement<ItemStack> GET_STONE_SWORD_ACHIEVEMENT;
 	public static Achievement<ItemStack> GET_BREAD_ACHIEVEMENT;
+
+	public static int oldPlanksHandChopped;
+	public static int oldPlanksWithStoneAxe;
+	public static int oldPlanksWithIronAxes;
+	public static int oldPlanksWithSaw;
 
 	public static int planksHandChopped;
 	public static int planksWithStoneAxe;
@@ -113,10 +120,6 @@ public class ClassicAddon extends BTWAddon {
 	@Override
 	public void preInitialize() {
 		synchronizedConfigProperties = new Hashtable<>();
-		this.registerProperty("PlanksFromHand", "2", "The amount of planks you get from just using logs on a grid. Default: 2");
-		this.registerProperty("PlanksWithStoneAxe", "3", "The amount of planks you get with stone axe. Default: 3");
-		this.registerProperty("PlanksWithIronAxes", "4", "The amount of planks you get with iron or better axe. Default: 4");
-		this.registerProperty("PlanksWithSaw", "6", "The amount of planks you get from sawing planks. Default: 6");
 		this.registerProperty("QuickHealToggle", "False", "This is a toggle for vMC 1.9+ regeneration system. False (Off) by default.");
 		this.registerProperty("QuickHealTicks", "40", "How quickly the regen occurs. 20 ticks = 1 second. 10 ticks is vanilla, 40 ticks is Tetro48's suggested value.");
 		this.registerProperty("CursedDifficultyMode", "False", "Allow changing BTW difficulty, but marking it cursed");
@@ -135,6 +138,10 @@ public class ClassicAddon extends BTWAddon {
 				"This option re-introduces vanilla bucket mechanics. This makes screw pumps useless.");
 		this.registerSynchronizedProperty("YeetTooExpensive", "True",
 				string -> yeetTooExpensive = Boolean.parseBoolean(string), "Removes the Too Expensive! limit if enabled");
+		this.registerSynchronizedProperty("PlanksFromHand", "2", string -> planksHandChopped = Integer.parseInt(string),"The amount of planks you get from just using logs on a grid. Default: 2");
+		this.registerSynchronizedProperty("PlanksWithStoneAxe", "3", string -> planksWithStoneAxe = Integer.parseInt(string), "The amount of planks you get with stone axe. Default: 3");
+		this.registerSynchronizedProperty("PlanksWithIronAxes", "4", string -> planksWithIronAxes = Integer.parseInt(string), "The amount of planks you get with iron or better axe. Default: 4");
+		this.registerSynchronizedProperty("PlanksWithSaw", "6", string -> planksWithSaw = Integer.parseInt(string), "The amount of planks you get from sawing planks. Default: 6");
 	}
 
 	public void registerSynchronizedProperty(String propertyName, String defaultValue, Consumer<String> callback, String comment) {
@@ -166,9 +173,13 @@ public class ClassicAddon extends BTWAddon {
 					while (dataStream.available() > 0) {
 						String propertyName = dataStream.readUTF();
 						SynchronizedConfigProperty configProperty = synchronizedConfigProperties.get(propertyName);
-						configProperty.setExternalValue(dataStream.readUTF());
+						String stringValue = dataStream.readUTF();
+						if (configProperty != null) {
+							configProperty.setExternalValue(stringValue);
+						}
 					}
 				} catch (Exception ignored) {}
+				modifyPlankRecipes();
 			}
 		});
 		SoulforgeCraftingManager.getInstance().addRecipe(new ItemStack(BTWBlocks.dragonVessel),
@@ -290,6 +301,81 @@ public class ClassicAddon extends BTWAddon {
 						"# #",
 						"###", '#', ClassicAddon.looseCobblestonesTag});
 		FurnaceRecipes.smelting().addSmelting(Block.sand.blockID, new ItemStack(Block.glass), 0f, 2);
+	}
+
+	private static int getMatchingRecipeIndex(List recipes, IRecipe recipe) {
+		for(int iIndex = 0; iIndex < recipes.size(); ++iIndex) {
+			IRecipe tempRecipe = (IRecipe)recipes.get(iIndex);
+			if (tempRecipe.matches(recipe)) {
+				return iIndex;
+			}
+		}
+
+		return -1;
+	}
+	private static int findChoppingRecipeWithOnlyOutputs(List recipes, ItemStack output, ItemStack lowQualityOutput) {
+		for (int i = 0; i < recipes.size(); i++) {
+			if (recipes.get(i) instanceof LogChoppingRecipe choppingRecipe) {
+				if (output.matches(choppingRecipe.getRecipeOutput(), true) &&
+						lowQualityOutput.matches(choppingRecipe.getRecipeOutputLowQuality(), true)) {
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
+
+	private static void modifyRecipeStackOutput(List recipes, ItemStack[] inputs, ItemStack output, int newOutputAmount) {
+		ShapelessRecipes tempRecipe = CraftingManager.getInstance().createShapelessRecipe(output, inputs);
+		int index = getMatchingRecipeIndex(recipes, tempRecipe);
+		if (index == -1) return;
+		IRecipe recipe = (IRecipe) recipes.get(index);
+		recipe.getRecipeOutput().stackSize = newOutputAmount;
+	}
+
+	private static void modifyLogChoppingRecipeStackOutput(List recipes, ItemStack output, ItemStack lowQualityOutput, int newOutputAmount, int newLowQualityOutputAmount) {
+		int index = findChoppingRecipeWithOnlyOutputs(recipes, output, lowQualityOutput);
+		if (index == -1) return;
+		LogChoppingRecipe recipe = (LogChoppingRecipe) recipes.get(index);
+		recipe.getRecipeOutput().stackSize = newOutputAmount;
+		recipe.getRecipeOutputLowQuality().stackSize = newLowQualityOutputAmount;
+	}
+	private static void modifyLogSawRecipeStackOutput(Block block, int metadata, ItemStack itemStack, int newOutputAmount) {
+		ItemStack[] outputs = SawCraftingManager.instance.getRecipe(block, metadata).getOutput();
+		ItemStack desiredStack = null;
+		for (ItemStack output : outputs) {
+			if (itemStack.itemID == output.itemID && itemStack.getItemDamage() == output.getItemDamage()) {
+				desiredStack = output;
+				break;
+			}
+		}
+		if (desiredStack != null) {
+			desiredStack.stackSize = newOutputAmount;
+		}
+	}
+
+	public static void modifyPlankRecipes() {
+		List recipes = CraftingManager.getInstance().getRecipes();
+		for(int i = 0; i < 4; ++i) {
+			modifyRecipeStackOutput(recipes, new ItemStack[]{new ItemStack(Block.wood, 1, i)},
+					new ItemStack(Block.planks, ClassicAddon.oldPlanksHandChopped, i), ClassicAddon.planksHandChopped);
+			modifyLogChoppingRecipeStackOutput(recipes, new ItemStack(Block.planks, ClassicAddon.oldPlanksWithIronAxes, i),
+					new ItemStack(Block.planks, ClassicAddon.oldPlanksWithStoneAxe, i), ClassicAddon.planksWithIronAxes, ClassicAddon.planksWithStoneAxe);
+		}
+
+		modifyRecipeStackOutput(recipes, new ItemStack[]{new ItemStack(BTWBlocks.bloodWoodLog)},
+				new ItemStack(Block.planks, ClassicAddon.oldPlanksHandChopped, 4), ClassicAddon.planksHandChopped);
+		modifyLogChoppingRecipeStackOutput(recipes, new ItemStack(Block.planks, ClassicAddon.oldPlanksWithIronAxes, 4),
+				new ItemStack(Block.planks, ClassicAddon.oldPlanksWithStoneAxe, 4), ClassicAddon.planksWithIronAxes, ClassicAddon.planksWithStoneAxe);
+		modifyLogSawRecipeStackOutput(Block.wood, 0, new ItemStack(Block.planks, ClassicAddon.oldPlanksWithSaw, 0), ClassicAddon.planksWithSaw);
+		modifyLogSawRecipeStackOutput(Block.wood, 1, new ItemStack(Block.planks, ClassicAddon.oldPlanksWithSaw, 1), ClassicAddon.planksWithSaw);
+		modifyLogSawRecipeStackOutput(Block.wood, 2, new ItemStack(Block.planks, ClassicAddon.oldPlanksWithSaw, 2), ClassicAddon.planksWithSaw);
+		modifyLogSawRecipeStackOutput(Block.wood, 3, new ItemStack(Block.planks, ClassicAddon.oldPlanksWithSaw, 3), ClassicAddon.planksWithSaw);
+		modifyLogSawRecipeStackOutput(BTWBlocks.bloodWoodLog, 32767, new ItemStack(Block.planks, ClassicAddon.oldPlanksWithSaw, 4), ClassicAddon.planksWithSaw);
+		ClassicAddon.oldPlanksHandChopped = ClassicAddon.planksHandChopped;
+		ClassicAddon.oldPlanksWithStoneAxe = ClassicAddon.planksWithStoneAxe;
+		ClassicAddon.oldPlanksWithIronAxes = ClassicAddon.planksWithIronAxes;
+		ClassicAddon.oldPlanksWithSaw = ClassicAddon.planksWithSaw;
 	}
 
 	private static ResourceLocation loc(String id) {

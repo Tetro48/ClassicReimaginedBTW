@@ -23,7 +23,7 @@ public abstract class CraftingRecipeListMixin {
 	private static void changeLogChoppingRecipes(CallbackInfo ci) {
 		for(int i = 0; i < 4; ++i) {
 			RecipeManager.addShapelessRecipeWithSecondaryOutputIndicator(
-					new ItemStack(Block.planks, 2, i),
+					new ItemStack(Block.planks, ClassicAddon.planksHandChopped, i),
 					new ItemStack[]{
 							new ItemStack(BTWItems.bark, 1, i),
 							new ItemStack(BTWItems.sawDust, 2, 0)
@@ -38,7 +38,7 @@ public abstract class CraftingRecipeListMixin {
 		}
 
 		RecipeManager.addShapelessRecipeWithSecondaryOutputIndicator(
-				new ItemStack(Block.planks, 2, 4),
+				new ItemStack(Block.planks, ClassicAddon.planksHandChopped, 4),
 				new ItemStack[]{
 						new ItemStack(BTWItems.bark, 1, 4),
 						new ItemStack(BTWItems.soulDust, 2, 0)
