@@ -159,6 +159,7 @@ public class ClassicAddon extends BTWAddon {
 		this.initializeTags();
 		this.initializeAchievements();
 		this.initializeRecipes();
+		this.revealItemsToEMI();
 		AddonHandler.logMessage(this.getName() + " Version " + this.getVersionString() + " Initializing...");
 		registerPacketHandler("classicaddon|onJoin", (payload, entityPlayer) -> {
 			isServerRunningThisAddon = true;
@@ -297,6 +298,15 @@ public class ClassicAddon extends BTWAddon {
 						"# #",
 						"###", '#', ClassicAddon.looseCobblestonesTag});
 		FurnaceRecipes.smelting().addSmelting(Block.sand.blockID, new ItemStack(Block.glass), 0f, 2);
+	}
+
+	public void revealItemsToEMI() {
+		Item.axeWood.trueClassic$revealToEMI();
+		Item.hoeWood.trueClassic$revealToEMI();
+		Item.swordWood.trueClassic$revealToEMI();
+		Item.pickaxeWood.trueClassic$revealToEMI();
+		Item.shovelWood.trueClassic$revealToEMI();
+		Item.hoeStone.trueClassic$revealToEMI();
 	}
 
 	private static int getMatchingRecipeIndex(List recipes, IRecipe recipe) {
