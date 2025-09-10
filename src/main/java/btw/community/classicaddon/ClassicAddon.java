@@ -138,10 +138,10 @@ public class ClassicAddon extends BTWAddon {
 				"This option re-introduces vanilla bucket mechanics. This makes screw pumps useless.");
 		this.registerSynchronizedProperty("YeetTooExpensive", "True",
 				string -> yeetTooExpensive = Boolean.parseBoolean(string), "Removes the Too Expensive! limit if enabled");
-		this.registerSynchronizedProperty("PlanksFromHand", "2", string -> planksHandChopped = Integer.parseInt(string),"The amount of planks you get from just using logs on a grid. Default: 2");
-		this.registerSynchronizedProperty("PlanksWithStoneAxe", "3", string -> planksWithStoneAxe = Integer.parseInt(string), "The amount of planks you get with stone axe. Default: 3");
-		this.registerSynchronizedProperty("PlanksWithIronAxes", "4", string -> planksWithIronAxes = Integer.parseInt(string), "The amount of planks you get with iron or better axe. Default: 4");
-		this.registerSynchronizedProperty("PlanksWithSaw", "6", string -> planksWithSaw = Integer.parseInt(string), "The amount of planks you get from sawing planks. Default: 6");
+		this.registerSynchronizedProperty("PlanksFromHand", "2", string -> planksHandChopped = MathHelper.clamp_int(Integer.parseInt(string), 1, 64),"The amount of planks you get from just using logs on a grid. Default: 2");
+		this.registerSynchronizedProperty("PlanksWithStoneAxe", "3", string -> planksWithStoneAxe = MathHelper.clamp_int(Integer.parseInt(string), 1, 64), "The amount of planks you get with stone axe. Default: 3");
+		this.registerSynchronizedProperty("PlanksWithIronAxes", "4", string -> planksWithIronAxes = MathHelper.clamp_int(Integer.parseInt(string), 1, 64), "The amount of planks you get with iron or better axe. Default: 4");
+		this.registerSynchronizedProperty("PlanksWithSaw", "6", string -> planksWithSaw = MathHelper.clamp_int(Integer.parseInt(string), 1, 64), "The amount of planks you get from sawing planks. Default: 6");
 	}
 
 	public void registerSynchronizedProperty(String propertyName, String defaultValue, Consumer<String> callback, String comment) {
