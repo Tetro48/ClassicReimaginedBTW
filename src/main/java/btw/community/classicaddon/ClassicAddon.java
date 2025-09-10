@@ -96,10 +96,6 @@ public class ClassicAddon extends BTWAddon {
 
 	@Override
 	public void handleConfigProperties(Map<String, String> propertyValues) {
-		planksHandChopped = Integer.parseInt(propertyValues.get("PlanksFromHand"));
-		planksWithStoneAxe = Integer.parseInt(propertyValues.get("PlanksWithStoneAxe"));
-		planksWithIronAxes = Integer.parseInt(propertyValues.get("PlanksWithIronAxes"));
-		planksWithSaw = Integer.parseInt(propertyValues.get("PlanksWithSaw"));
 		quickHealToggle = Boolean.parseBoolean(propertyValues.get("QuickHealToggle"));
 		quickHealTicks = Integer.parseInt(propertyValues.get("QuickHealTicks"));
 		cursedDifficultyMode = Boolean.parseBoolean(propertyValues.get("CursedDifficultyMode"));
