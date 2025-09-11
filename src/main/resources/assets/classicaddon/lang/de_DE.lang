@@ -1,0 +1,52 @@
+classicAddon.selectWorld.cursedDifficulty=Bizarres %s
+classicAddon.serverCheck.doesServerHaveTC1=Schaut nach Anzeichen das dieser server mit True-Classic läuft...
+classicAddon.serverCheck.doesServerHaveTC2=Wenn der Server mit einer alten Version von TC läuft, wird das nicht funktionieren.
+classicAddon.serverCheck.kickTimer=Wenn der Server nicht innerhalb %ss damit Antwortet das es dieses Addon hat, wirst du gekickt.
+classicAddon.selectWorld.nmCompat.nightmare=Albtraum
+classicAddon.selectWorld.nmCompat.baddream=Traum
+classicAddon.synchronizedConfigsI18n=Synchronisierte Configs von True Classic:
+classicAddon.holdCompassForCoordinates=Halte einen Kompass um Koordinaten anzuzeigen.
+
+difficulty.classic.name=True Classic
+difficulty.classic.description=Die vanillafizierte BTW-Erfahrung.
+difficulty.classic.description2=Dessen Herausforderungsniveau enspricht dem
+difficulty.classic.description3=von Vanilla, was nicht viel ist.
+
+disconnect.failedCheckForTC=Du wurdest vom True-Classic Addon Gekickt
+
+item.enchantedBook.name=Verzaubertes Buch
+item.enchantedBook.languageUnfamiliar=Dieses Buch ist Verzaubert. Wende es mit einem Amboss auf einem Gegenstand an!
+
+# Achievements stuff
+
+achievementtab.true_classic_starter_guide=Anfängerleitfaden zu True Classic
+
+achievement.btw.craft_stone_pickaxe=Technischer Fortschritt
+
+achievement.classicaddon.mine_wood=Dreimal auf Holz geklopft!
+achievement.classicaddon.mine_wood.desc=Schlage einem Baum bis ein stück Holz herausfällt
+achievement.classicaddon.crafting_table=Fortgeschrittenes Handwerk
+achievement.classicaddon.crafting_table.desc=Stelle eine Werkbank aus vier Holzbrettern her. Pass aber auf, die ist brennbar!
+achievement.classicaddon.wooden_pickaxe=Glück auf!
+achievement.classicaddon.wooden_pickaxe.desc=Fertige eine Spitzhacke aus Holzbrettern und Stielen
+achievement.classicaddon.loose_cobblestone=Lockerer Stein
+achievement.classicaddon.loose_cobblestone.desc=Baue Stein mit einer Holzspitzhacke ab
+achievement.classicaddon.furnace=Heiße Angelegenheit
+achievement.classicaddon.furnace.desc=Baue einen Ofen aus acht lockeren Bruchsteinblöcken
+achievement.classicaddon.stone_pickaxe=Technischer Fortschritt
+achievement.classicaddon.stone_pickaxe.desc=Stelle eine bessere Spitzhacke aus lockeren Bruchsteinblöcken und Stielen her
+achievement.classicaddon.stone_hoe=Fang an zu ackern!
+achievement.classicaddon.stone_hoe.desc=Baue eine Feldhacke aus lockeren Bruchsteinblöcken und Stielen
+achievement.classicaddon.stone_sword=Zu den Waffen!
+achievement.classicaddon.stone_sword.desc=Fertige ein Steinschwert aus lockeren Bruchsteinblöcken und Stielen
+achievement.classicaddon.glass_bottle=Glasflaschen
+achievement.classicaddon.glass_bottle.desc=Schmelze Sand im Ofen, dann stelle Glasflaschen damit her
+achievement.classicaddon.bread=Backe Brot
+achievement.classicaddon.bread.desc=Mache Brotteig aus Weizenmehl und etwas Wasser, und backe diesen danach im Ofen
+
+# EMI stuff
+
+btw.anvil.info=Der Amboss kann überall platziert werden, und wird entweder für Reparaturen oder die Anwendung von Verzauberten Büchern verwendet. Beachte: Dies umgeht das typische Limit von Höllischen Zaubertischen.
+classicAddon.workbench.info=Werkbänke können überall platziert werden. Diese haben Vanilla-Härte. Beachte: Sie sind Brennbar.
+classicAddon.furnace.info=Öfen können überall platziert werden. Diese werden sich selbst entzünden wenn Brennstoff zugeführt wird, und schmelzt Gegenstände 4x schneller wie Ziegelstein-Backöfen, aber verbrennt auch Brennstoff 4x schneller.
+tag.classicaddon.loose_cobblestones=Lockere Bruchsteine
