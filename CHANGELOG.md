@@ -1,0 +1,38 @@
+## Unsorted changes:
+- Removed armor weight
+- Rebalanced a lot of foods, and made hearty stew the most powerful food source
+  - cake got nerfed severely, by the way
+  - creeper oysters are not worth it nowadays
+  - mystery meat is not worth it
+- Foods now stack to 64, along with other items
+- Turned fat into saturation
+- Insta-mining is back here
+- Buckets now act like they are on vanilla. Beware, lava buckets, unlike others, can't be placed as a bucket block!
+- Animals no longer get hunted by zombies and spiders. Squids still hunt 'em, though.
+- Most animals now have vanilla breeding items (even horses, which makes them greedy af)
+- Metal chunks now smelt into ingots
+- Most dirt variants (including BTW's) drops normal dirt
+- Modified log chopping recipes
+- Modified tool durability to vanilla levels (59 for wooden tools, 131 for stone tools, 250 for iron tools)
+- Regeneration now takes hunger (which, makes creeper oysters kinda not worth it)
+- Fishing is faster and more lenient
+- Coordinates are visible when holding a compass, _while_ on a True Classic server.
+- Stone of any strata and netherrack can now be mined by any pickaxe
+- Anvils now have later vanilla Minecraft behavior, along with "Too Expensive" being removed
+- Wooden and Stone Tools now have vanilla mining speed.
+- Added baby zombies. This increases difficulty by a bit.
+- Way less blocks slow you down now (snow, grass, sugarcane, crops, etc.)
+- Added crafting recipes for Crafting Table, Furnace, Brewing Stand, Book, Enchantment Table and Vessel of the Dragon (this one is just plain silly)
+- Tweaked villager trades a bit
+- Nerfed iron tool durability from 500 to 250.
+- Crucible now has 100% returns when recycling iron and gold.
+  - This is done with sweeping changes first, then finely tuned afterwards.
+- Daily growth crops have been all changed to grow faster, by disregarding the daily growth flag
+- Crops now give the seed back when broken too early
+- Oak leaves have a random chance to drop apples
+- Gloom is disabled by default
+- Ender eyes are now craftable
+- Mortaring can now be done in inventory, and chiseling out mortar can be done with chisels in crafting grid
+- Raw meat food poisoning duration is reduced from 60s to 30s.
+- Books can now be enchanted, and renamed Ancient Manuscript back to Enchanted Book
+- Cows drop leather
