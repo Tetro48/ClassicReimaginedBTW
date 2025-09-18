@@ -68,6 +68,7 @@ public abstract class CrucibleRecipeListMixin {
 		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(Item.ingotIron, 7), new ItemStack[]{new ItemStack(Block.anvil)});
 		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 4), new ItemStack[]{new ItemStack(Item.compass)});
 		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 1), new ItemStack[]{new ItemStack(BTWBlocks.woodenDetectorRail)});
+		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 1), new ItemStack[]{new ItemStack(Block.railDetector)});
 		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 1), new ItemStack[]{new ItemStack(Block.rail, 2)});
 
 		//adds tweaked recipes
