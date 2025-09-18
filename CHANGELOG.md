@@ -36,3 +36,5 @@
 - Raw meat food poisoning duration is reduced from 60s to 30s.
 - Books can now be enchanted, and renamed Ancient Manuscript back to Enchanted Book
 - Cows drop leather
+- Added the 1% drop chance for hemp seeds from tallgrass
+- Changed hardness levels

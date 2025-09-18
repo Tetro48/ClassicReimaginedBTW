@@ -26,7 +26,7 @@ public abstract class BlockStoneMixin extends FullBlock {
 		cir.setReturnValue(0);
 	}
 	@Inject(method = "getBlockHardness", at = @At("RETURN"), cancellable = true)
-	public void sameBreakingSpeed(World world, int i, int j, int k, CallbackInfoReturnable<Float> cir) {
-		cir.setReturnValue(super.getBlockHardness(world, i, j, k));
+	public void lowerBlockHardness(World world, int i, int j, int k, CallbackInfoReturnable<Float> cir) {
+		cir.setReturnValue(cir.getReturnValue() / 1.5f);
 	}
 }

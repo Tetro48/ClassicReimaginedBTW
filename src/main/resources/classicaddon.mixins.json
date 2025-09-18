@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "BTWTagsMixin",
+    "ClassicDifficultyMixin",
     "ContainerRepairMixin",
     "CraftingRecipeListMixin",
     "CrucibleRecipeListMixin",
@@ -40,9 +41,11 @@
     "blocks.BlockSandMixin",
     "blocks.BlockSandStoneMixin",
     "blocks.BlockSoulSandMixin",
+    "blocks.BlockStemMixin",
     "blocks.BlockStepMixin",
     "blocks.BlockStoneBrickMixin",
     "blocks.BlockStoneMixin",
+    "blocks.BlockTallGrassMixin",
     "blocks.BlockWorkbenchMixin",
     "blocks.BrickBlockMixin",
     "blocks.BrickStairsBlockMixin",
@@ -115,7 +118,8 @@
     "items.ItemFishingRodMixin",
     "items.ItemFoodMixin",
     "items.ItemMixin",
-    "items.ShovelItemStoneMixin"
+    "items.ShovelItemStoneMixin",
+    "items.StumpRemoverItemMixin"
   ],
   "client": [
     "client.GuiCreateWorldMixin",

@@ -19,7 +19,7 @@ public abstract class RoughStoneBlockMixin {
 		cir.setReturnValue(0);
 	}
 	@ModifyArg(method = "<init>", at = @At(value = "INVOKE", target = "Lbtw/block/blocks/RoughStoneBlock;setHardness(F)Lnet/minecraft/src/Block;"))
-	public float sameBreakingSpeed(float par1) {
-		return 2.25f;
+	public float lowerBlockHardness(float par1) {
+		return par1 / 1.5f;
 	}
 }
