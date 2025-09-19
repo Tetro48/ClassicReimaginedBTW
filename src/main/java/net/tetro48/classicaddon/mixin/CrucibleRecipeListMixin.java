@@ -15,7 +15,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 import static java.util.Map.entry;
@@ -70,6 +69,12 @@ public abstract class CrucibleRecipeListMixin {
 		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 1), new ItemStack[]{new ItemStack(BTWBlocks.woodenDetectorRail)});
 		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 1), new ItemStack[]{new ItemStack(Block.railDetector)});
 		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 1), new ItemStack[]{new ItemStack(Block.rail, 2)});
+		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 7), new ItemStack[]{new ItemStack(Item.bucketEmpty)});
+		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 7), new ItemStack[]{new ItemStack(Item.bucketLava)});
+		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 7), new ItemStack[]{new ItemStack(Item.bucketWater)});
+		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 7), new ItemStack[]{new ItemStack(Item.bucketMilk)});
+		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 7), new ItemStack[]{new ItemStack(BTWItems.cementBucket)});
+		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 7), new ItemStack[]{new ItemStack(BTWItems.milkChocolateBucket)});
 
 		//adds tweaked recipes
 		RecipeManager.addStokedCrucibleRecipe(new ItemStack(Item.goldNugget, 8), new ItemStack[]{new ItemStack(BTWItems.ocularOfEnder)});
@@ -88,5 +93,11 @@ public abstract class CrucibleRecipeListMixin {
 		RecipeManager.addStokedCrucibleRecipe(new ItemStack(BTWItems.ironNugget, 4), new ItemStack[]{new ItemStack(BTWItems.ironChisel, 1, 32767)});
 		RecipeManager.addStokedCrucibleRecipe(new ItemStack(Item.ingotIron, 31), new ItemStack[]{new ItemStack(Block.anvil, 1)});
 		RecipeManager.addStokedCrucibleRecipe(new ItemStack(Item.ingotIron, 4), new ItemStack[]{new ItemStack(Item.compass)});
+		RecipeManager.addStokedCrucibleRecipe(new ItemStack(Item.ingotIron, 3), new ItemStack[]{new ItemStack(Item.bucketEmpty)});
+		RecipeManager.addStokedCrucibleRecipe(new ItemStack(Item.ingotIron, 3), new ItemStack[]{new ItemStack(Item.bucketLava)});
+		RecipeManager.addStokedCrucibleRecipe(new ItemStack(Item.ingotIron, 3), new ItemStack[]{new ItemStack(Item.bucketWater)});
+		RecipeManager.addStokedCrucibleRecipe(new ItemStack(Item.ingotIron, 3), new ItemStack[]{new ItemStack(Item.bucketMilk)});
+		RecipeManager.addStokedCrucibleRecipe(new ItemStack(Item.ingotIron, 3), new ItemStack[]{new ItemStack(BTWItems.cementBucket)});
+		RecipeManager.addStokedCrucibleRecipe(new ItemStack(Item.ingotIron, 3), new ItemStack[]{new ItemStack(BTWItems.milkChocolateBucket)});
 	}
 }
