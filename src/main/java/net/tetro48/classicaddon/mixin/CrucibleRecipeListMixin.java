@@ -80,7 +80,7 @@ public abstract class CrucibleRecipeListMixin {
 		RecipeManager.addStokedCrucibleRecipe(new ItemStack(Item.goldNugget, 8), new ItemStack[]{new ItemStack(BTWItems.ocularOfEnder)});
 		RecipeManager.addStokedCrucibleRecipe(new ItemStack(Item.goldNugget, 8), new ItemStack[]{new ItemStack(BTWItems.goldenDung)});
 		RecipeManager.addStokedCrucibleRecipe(new ItemStack[]{new ItemStack(Item.goldNugget, 1), new ItemStack(Item.ingotIron, 2)}, new ItemStack[]{new ItemStack(Block.railPowered, 2)});
-		RecipeManager.addStokedCrucibleRecipe(new ItemStack[]{new ItemStack(Item.ingotIron, 1), new ItemStack(BTWItems.steelNugget, 6)}, new ItemStack[]{new ItemStack(BTWBlocks.steelDetectorRail, 1)});
+		RecipeManager.addStokedCrucibleRecipe(new ItemStack[]{new ItemStack(Item.ingotIron, 1), new ItemStack(BTWItems.steelNugget, 3)}, new ItemStack[]{new ItemStack(BTWBlocks.steelDetectorRail, 1)});
 		RecipeManager.addStokedCrucibleRecipe(new ItemStack(Item.ingotIron, 1), new ItemStack[]{new ItemStack(BTWBlocks.woodenDetectorRail)});
 		RecipeManager.addStokedCrucibleRecipe(new ItemStack(Item.ingotIron, 1), new ItemStack[]{new ItemStack(Block.railDetector)});
 		RecipeManager.addStokedCrucibleRecipe(new ItemStack(Item.ingotIron, 3), new ItemStack[]{new ItemStack(Block.rail, 8)});
