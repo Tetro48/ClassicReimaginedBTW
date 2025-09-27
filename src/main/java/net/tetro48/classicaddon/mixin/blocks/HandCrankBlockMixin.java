@@ -9,6 +9,6 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 public abstract class HandCrankBlockMixin {
 	@ModifyArg(method = "onBlockActivated", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/EntityPlayer;addExhaustion(F)V"))
 	private float undoCostMultiplier(float par1) {
-		return 2;
+		return 1;
 	}
 }
