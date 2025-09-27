@@ -4,6 +4,7 @@ import btw.block.BTWBlocks;
 import btw.community.classicaddon.ClassicAddon;
 import btw.crafting.recipe.CraftingRecipeList;
 import btw.crafting.recipe.RecipeManager;
+import btw.crafting.recipe.types.customcrafting.WoolBlockRecipe;
 import btw.item.BTWItems;
 import btw.item.tag.BTWTags;
 import btw.item.tag.TagInstance;
@@ -329,5 +330,24 @@ public abstract class CraftingRecipeListMixin {
 				'X', Item.ingotIron,
 				'R', Item.redstone,
 				'#', BTWBlocks.steelPressurePlate});
+		RecipeManager.removeVanillaRecipe(new ItemStack(Block.cloth), new Object[]{
+				" # ",
+				"#W#",
+				" # ",
+				'#', new ItemStack(BTWItems.wool, 1, 32767),
+				'W', new ItemStack(BTWBlocks.wickerBlock)});
+		RecipeManager.addShapedRecipeWithCustomClass(WoolBlockRecipe.class, new ItemStack(Block.cloth), new Object[]{
+				"##",
+				"##",
+				'#', new ItemStack(BTWItems.wool, 1, 32767)});
+		for (int i = 0; i < 16; i++) {
+			RecipeManager.addShapelessRecipe(new ItemStack(BTWItems.wool, 2, 15 - i), new ItemStack[]{new ItemStack(Block.cloth, 1, i)});
+			RecipeManager.addShapelessRecipe(new ItemStack(BTWItems.wool, 4, 15 - i), new ItemStack[]{
+					new ItemStack(Block.cloth, 1, i),
+					new ItemStack(Item.shears, 1, 32767)});
+			RecipeManager.addShapelessRecipe(new ItemStack(BTWItems.wool, 4, 15 - i), new ItemStack[]{
+					new ItemStack(Block.cloth, 1, i),
+					new ItemStack(BTWItems.diamondShears, 1, 32767)});
+		}
 	}
 }
