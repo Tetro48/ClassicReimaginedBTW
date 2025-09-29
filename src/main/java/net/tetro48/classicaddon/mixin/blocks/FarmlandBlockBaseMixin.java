@@ -1,11 +1,11 @@
 package net.tetro48.classicaddon.mixin.blocks;
 
-import btw.block.BTWBlocks;
 import btw.block.blocks.FarmlandBlockBase;
 import net.minecraft.src.Block;
 import net.minecraft.src.Material;
 import net.minecraft.src.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -40,4 +40,5 @@ public abstract class FarmlandBlockBaseMixin extends Block {
 	public float getMovementModifier(World world, int i, int j, int k) {
 		return 1F;
 	}
+
 }

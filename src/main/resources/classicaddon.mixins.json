@@ -59,6 +59,7 @@
     "blocks.CropsBlockMixin",
     "blocks.DailyGrowthCropsBlockMixin",
     "blocks.DirtSlabBlockMixin",
+    "blocks.FarmlandBlockBaseInvoker",
     "blocks.FarmlandBlockBaseMixin",
     "blocks.FarmlandBlockMixin",
     "blocks.GrassSlabBlockMixin",

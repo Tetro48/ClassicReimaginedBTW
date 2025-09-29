@@ -57,8 +57,8 @@ public abstract class BlockDirtMixin extends FullBlock {
 
 			Block var8 = Block.blocksList[world.getBlockId(neighborPos.x, neighborPos.y, neighborPos.z)];
 			if (var8 instanceof FarmlandBlock farmlandBlock) {
-				if (farmlandBlock.isHydrated(world.getBlockMetadata(neighborPos.x, neighborPos.y, neighborPos.z))) {
-					return farmlandBlock.hasIrrigatingBlocks(world, x, y, z);
+				if (((FarmlandBlockBaseInvoker)farmlandBlock).getIsHydrated(world.getBlockMetadata(neighborPos.x, neighborPos.y, neighborPos.z))) {
+					return ((FarmlandBlockBaseInvoker)farmlandBlock).getHasIrrigatingBlocks(world, x, y, z);
 				}
 			}
 		}
