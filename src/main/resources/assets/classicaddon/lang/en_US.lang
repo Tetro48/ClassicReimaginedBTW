@@ -5,6 +5,7 @@ classicAddon.serverCheck.kickTimer=If the server does not respond that it has th
 classicAddon.selectWorld.nmCompat.nightmare=Nightmare
 classicAddon.selectWorld.nmCompat.baddream=Dream
 classicAddon.synchronizedConfigsI18n=Synchronized Configs from True Classic:
+classicAddon.synchronizedConfigsCommandHint=Type /trueclassic configs to see synchronized configs
 classicAddon.holdCompassForCoordinates=Hold a compass to view coordinates.
 
 
@@ -23,6 +24,7 @@ item.enchantedBook.languageUnfamiliar=This book is enchanted. Apply it to an ite
 achievementtab.true_classic_starter_guide=Starter Guide to True Classic
 
 achievement.btw.craft_stone_pickaxe=Getting an Upgrade
+achievement.btw.make_work_stump=Crafting Stump
 
 achievement.classicaddon.mine_wood=Getting Wood
 achievement.classicaddon.mine_wood.desc=Attack a tree until a block of wood pops out

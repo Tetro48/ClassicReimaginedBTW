@@ -4,14 +4,12 @@ import btw.block.BTWBlocks;
 import btw.community.classicaddon.ClassicAddon;
 import btw.crafting.recipe.CraftingRecipeList;
 import btw.crafting.recipe.RecipeManager;
+import btw.crafting.recipe.types.customcrafting.ConditionalRecipe;
 import btw.crafting.recipe.types.customcrafting.WoolBlockRecipe;
 import btw.item.BTWItems;
 import btw.item.tag.BTWTags;
-import btw.item.tag.TagInstance;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.src.Block;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
+import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.*;
@@ -236,10 +234,18 @@ public abstract class CraftingRecipeListMixin {
 				"iii",
 				'I', Block.blockIron,
 				'i', Item.ingotIron});
-		RecipeManager.addRecipe(new ItemStack(BTWItems.wickerPane, 1), new Object[]{
+		ShapedRecipes weavedWickerPaneRecipe = CraftingManager.getInstance().createRecipe(
+				new ItemStack(BTWItems.wickerPane, 1), new Object[]{
 				"##",
 				"##",
 				'#', Item.reed});
+		ShapedRecipes wickerWeavingRecipe = CraftingManager.getInstance().createRecipe(
+				new ItemStack(BTWItems.wickerWeaving, 1, 299), new Object[]{
+						"##",
+						"##",
+						'#', Item.reed});
+		CraftingManager.getInstance().getRecipeList().add(new ConditionalRecipe(weavedWickerPaneRecipe, world -> !ClassicAddon.wickerWeavingToggle));
+		CraftingManager.getInstance().getRecipeList().add(new ConditionalRecipe(wickerWeavingRecipe, world -> ClassicAddon.wickerWeavingToggle));
 		RecipeManager.removeVanillaShapelessRecipe(new ItemStack(BTWItems.tastySandwich, 2), new Object[]{
 				new ItemStack(Item.bread),
 				new ItemStack(BTWItems.cookedMysteryMeat)});

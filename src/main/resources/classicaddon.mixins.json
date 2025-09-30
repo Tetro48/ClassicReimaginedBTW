@@ -83,6 +83,7 @@
     "blocks.StoneBrickStairsBlockMixin",
     "blocks.SugarCaneBlockBaseMixin",
     "blocks.WheatCropBlockMixin",
+    "blocks.WorkStumpBlockMixin",
     "entity.EntityAnimalMixin",
     "entity.EntityChickenMixin",
     "entity.EntityCowMixin",

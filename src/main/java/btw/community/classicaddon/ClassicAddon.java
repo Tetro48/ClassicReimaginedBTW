@@ -70,6 +70,8 @@ public class ClassicAddon extends BTWAddon {
 	public static boolean passableLeaves;
 	public static boolean vanillaifyBuckets;
 	public static boolean yeetTooExpensive;
+	public static boolean wickerWeavingToggle;
+	public static boolean hardcoreStump;
 
 	public static boolean isServerRunningThisAddon = false;
 
@@ -82,7 +84,7 @@ public class ClassicAddon extends BTWAddon {
 	@Override
 	public void serverPlayerConnectionInitialized(NetServerHandler serverHandler, EntityPlayerMP playerMP) {
 		super.serverPlayerConnectionInitialized(serverHandler, playerMP);
-		serverHandler.sendPacketToPlayer(new Packet3Chat(ChatMessageComponent.createFromTranslationKey("classicAddon.synchronizedConfigsI18n")));
+		serverHandler.sendPacketToPlayer(new Packet3Chat(ChatMessageComponent.createFromTranslationKey("classicAddon.synchronizedConfigsCommandHint")));
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		DataOutputStream dataStream = new DataOutputStream(byteStream);
 		synchronizedConfigProperties.forEach((propertyName, configProperty) -> {
@@ -93,7 +95,6 @@ public class ClassicAddon extends BTWAddon {
 			catch (Exception e) {
 				e.printStackTrace();
 			}
-			serverHandler.sendPacketToPlayer(new Packet3Chat(ChatMessageComponent.createFromText(propertyName + ": " + configProperty.getInternalValue())));
 		});
 		serverHandler.sendPacketToPlayer(new Packet250CustomPayload("classicaddon|onJoin", byteStream.toByteArray()));
 	}
@@ -128,12 +129,12 @@ public class ClassicAddon extends BTWAddon {
 		this.registerProperty("CursedDifficultyMode", "False", "Allow changing BTW difficulty, but marking it cursed");
 		this.registerProperty("GloomToggle", "False", "This toggles gloom effect.");
 		this.registerPropertyClientOnly("VisualNewMoonBrightnessLevel", "0", "This is purely a visual setting... \n# 0: Pitch black. 1: A tiny bit of light");
-		this.registerProperty("AnimageddonToggle", "False", "A toggle for BTW Animageddon. Turning this off will disable animal hunger, makes sheep's wool insta-grow when grazing one grass, wolves need to be fed once to shit.");
-		this.registerProperty("ChickenJockeyToggle", "False", "This toggles spawning of buggy chicken jockeys.");
 		this.registerProperty("IntentionalHungerRegenOffset", "True", "This shifts the regen stop region to be below 8.6 shanks instead of below 9 shanks.\n# This makes regen feel much more consistent, even if internally, it may not exactly match up.");
 		this.registerProperty("GuaranteedSeedDrop", "True", "This makes sure that crop seeds will always drop, no matter the growth stage, just like in modern vanilla.");
-		this.registerProperty("CanBabyAnimalEatLooseFood", "False", "A toggle to re-introduce the bug with baby animal eating off of ground. This only works while Animageddon is turned off.");
 		this.registerProperty("HempSeedDropFromTallGrass", "True", "This toggles the 1% drop chance for hemp seeds from tall grass");
+		this.registerProperty("CanBabyAnimalEatLooseFood", "False",
+				" *** ANIMAL CONFIGS ***\n\n# A toggle to re-introduce the bug with baby animal eating off of ground. This only works while Animageddon is turned off.");
+		this.registerProperty("ChickenJockeyToggle", "False", "This toggles spawning of buggy chicken jockeys.");
 		this.registerProperty("HCHoofsiesToggle", "False", "This toggles the HC Hoofsies mechanic from BTW. This only affects the True Classic difficulty.");
 		this.registerProperty("StrongerHoofsies", "False", "Toggling this on makes kicking animals deal 7 HP. This only affects the True Classic difficulty.");
 		this.registerSynchronizedProperty("PassableLeaves", "False",
@@ -147,10 +148,24 @@ public class ClassicAddon extends BTWAddon {
 				"This option re-introduces vanilla bucket mechanics. This makes screw pumps useless.");
 		this.registerSynchronizedProperty("YeetTooExpensive", "True",
 				string -> yeetTooExpensive = Boolean.parseBoolean(string), "Removes the Too Expensive! limit if enabled");
-		this.registerSynchronizedProperty("PlanksFromHand", "2", string -> planksHandChopped = MathHelper.clamp_int(Integer.parseInt(string), 1, 64),"The amount of planks you get from just using logs on a grid. Default: 2");
-		this.registerSynchronizedProperty("PlanksWithStoneAxe", "3", string -> planksWithStoneAxe = MathHelper.clamp_int(Integer.parseInt(string), 1, 64), "The amount of planks you get with stone axe. Default: 3");
-		this.registerSynchronizedProperty("PlanksWithIronAxes", "4", string -> planksWithIronAxes = MathHelper.clamp_int(Integer.parseInt(string), 1, 64), "The amount of planks you get with iron or better axe. Default: 4");
-		this.registerSynchronizedProperty("PlanksWithSaw", "6", string -> planksWithSaw = MathHelper.clamp_int(Integer.parseInt(string), 1, 64), "The amount of planks you get from sawing planks. Default: 6");
+		this.registerSynchronizedProperty("PlanksFromHand", "2",
+				string -> planksHandChopped = MathHelper.clamp_int(Integer.parseInt(string), 1, 64),
+				"The amount of planks you get from just using logs on a grid. Default: 2");
+		this.registerSynchronizedProperty("PlanksWithStoneAxe", "3",
+				string -> planksWithStoneAxe = MathHelper.clamp_int(Integer.parseInt(string), 1, 64),
+				"The amount of planks you get with stone axe. Default: 3");
+		this.registerSynchronizedProperty("PlanksWithIronAxes", "4",
+				string -> planksWithIronAxes = MathHelper.clamp_int(Integer.parseInt(string), 1, 64),
+				"The amount of planks you get with iron or better axe. Default: 4");
+		this.registerSynchronizedProperty("PlanksWithSaw", "6",
+				string -> planksWithSaw = MathHelper.clamp_int(Integer.parseInt(string), 1, 64),
+				"The amount of planks you get from sawing planks. Default: 6");
+		this.registerSynchronizedProperty("WickerWeavingToggle", "False",
+				string -> wickerWeavingToggle = Boolean.parseBoolean(string),
+				" *** Silly Synchronized Configs *** \n\n# Wicker weaving crafting recipe toggle. This applies to all difficulties.");
+		this.registerSynchronizedProperty("HardcoreStump", "False",
+				string -> hardcoreStump = Boolean.parseBoolean(string),
+				"Enabling this allows chisels to make work stumps from tree stumps. This applies to all difficulties.");
 	}
 
 	public void registerSynchronizedProperty(String propertyName, String defaultValue, Consumer<String> callback, String comment) {
@@ -190,6 +205,47 @@ public class ClassicAddon extends BTWAddon {
 					}
 				} catch (Exception ignored) {}
 				modifyPlankRecipes();
+			}
+		});
+		this.registerAddonCommand(new CommandBase() {
+			@Override
+			public String getCommandName() {
+				return "trueclassic";
+			}
+
+			@Override
+			public String getCommandUsage(ICommandSender iCommandSender) {
+				return "/trueclassic configs";
+			}
+
+			@Override
+			public boolean canCommandSenderUseCommand(ICommandSender par1ICommandSender) {
+				return true;
+			}
+
+			@Override
+			public void processCommand(ICommandSender iCommandSender, String[] strings) {
+				if (strings.length > 0) {
+					if (strings[0].equals("configs")) {
+						iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("classicAddon.synchronizedConfigsI18n"));
+						synchronizedConfigProperties.forEach((propertyName, configProperty) ->
+								iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromText(propertyName + ": " + configProperty.getInternalValue())));
+					}
+					else {
+						throw new WrongUsageException(getCommandUsage(iCommandSender));
+					}
+				}
+				else {
+					throw new WrongUsageException(getCommandUsage(iCommandSender));
+				}
+			}
+
+			@Override
+			public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr) {
+				if (par2ArrayOfStr.length <= 1) {
+					return List.of("configs");
+				}
+				return null;
 			}
 		});
 		SoulforgeCraftingManager.getInstance().addRecipe(new ItemStack(BTWBlocks.dragonVessel),
