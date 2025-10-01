@@ -1,27 +1,27 @@
 classicAddon.selectWorld.cursedDifficulty=Cursed %s
-classicAddon.serverCheck.doesServerHaveTC1=Checking for signs that this server is running True Classic...
-classicAddon.serverCheck.doesServerHaveTC2=If this server is running an old version of TC, this won't work.
+classicAddon.serverCheck.doesServerHaveCR1=Checking for signs that this server is running Classic Re-imagined...
+classicAddon.serverCheck.doesServerHaveCR2=If this server is running an old version of CR, this won't work.
 classicAddon.serverCheck.kickTimer=If the server does not respond that it has this addon within %ss, you'll get kicked.
 classicAddon.selectWorld.nmCompat.nightmare=Nightmare
 classicAddon.selectWorld.nmCompat.baddream=Dream
-classicAddon.synchronizedConfigsI18n=Synchronized Configs from True Classic:
-classicAddon.synchronizedConfigsCommandHint=Type /trueclassic configs to see synchronized configs
+classicAddon.synchronizedConfigsI18n=Synchronized Configs from Classic Re-imagined:
+classicAddon.synchronizedConfigsCommandHint=Type /classicreimagined configs to see synchronized configs
 classicAddon.holdCompassForCoordinates=Hold a compass to view coordinates.
 
 
-difficulty.classic.name=True Classic
+difficulty.classic.name=Classic +
 difficulty.classic.description=The vanillafied BTW experience.
 difficulty.classic.description2=Its challenge level is equivalent
 difficulty.classic.description3=to vanilla, which is not a lot.
 
-disconnect.failedCheckForTC=Kicked by True Classic addon
+disconnect.failedCheckForCR=Kicked by Classic Re-imagined addon
 
 item.enchantedBook.name=Enchanted Book
 item.enchantedBook.languageUnfamiliar=This book is enchanted. Apply it to an item with an anvil!
 
 # Achievements stuff
 
-achievementtab.true_classic_starter_guide=Starter Guide to True Classic
+achievementtab.true_classic_starter_guide=Starter Guide to Classic Re-imagined
 
 achievement.btw.craft_stone_pickaxe=Getting an Upgrade
 achievement.btw.make_work_stump=Crafting Stump

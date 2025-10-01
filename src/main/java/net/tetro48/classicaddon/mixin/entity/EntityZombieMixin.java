@@ -25,7 +25,7 @@ public abstract class EntityZombieMixin extends Entity {
 			if (ClassicAddon.chickenJockeyToggle && this.worldObj != null) {
 				if (this.rand.nextFloat() <= 0.04) {
 					EntityChicken chicken = new EntityChicken(this.worldObj);
-					chicken.trueClassic$setDespawnFlag(true);
+					chicken.classicReimagined$setDespawnFlag(true);
 					chicken.setLocationAndAngles(this.posX, this.posY, this.posZ, MathHelper.wrapAngleTo180_float(this.rotationYaw), rotationPitch);
 					worldObj.spawnEntityInWorld(chicken);
 					this.mountEntity(chicken);

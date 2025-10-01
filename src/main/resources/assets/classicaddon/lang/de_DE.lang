@@ -1,25 +1,25 @@
 classicAddon.selectWorld.cursedDifficulty=Bizarres %s
-classicAddon.serverCheck.doesServerHaveTC1=Schaut nach Anzeichen das dieser server mit True-Classic läuft...
-classicAddon.serverCheck.doesServerHaveTC2=Wenn der Server mit einer alten Version von TC läuft, wird das nicht funktionieren.
+classicAddon.serverCheck.doesServerHaveCR1=Schaut nach Anzeichen das dieser server mit Classic Re-imagined läuft...
+classicAddon.serverCheck.doesServerHaveCR2=Wenn der Server mit einer alten Version von CR läuft, wird das nicht funktionieren.
 classicAddon.serverCheck.kickTimer=Wenn der Server nicht innerhalb %ss damit Antwortet das es dieses Addon hat, wirst du gekickt.
 classicAddon.selectWorld.nmCompat.nightmare=Albtraum
 classicAddon.selectWorld.nmCompat.baddream=Traum
-classicAddon.synchronizedConfigsI18n=Synchronisierte Configs von True Classic:
+classicAddon.synchronizedConfigsI18n=Synchronisierte Configs von Classic Re-Imagined:
 classicAddon.holdCompassForCoordinates=Halte einen Kompass um Koordinaten anzuzeigen.
 
-difficulty.classic.name=True Classic
+difficulty.classic.name=Klassisch +
 difficulty.classic.description=Die vanillafizierte BTW-Erfahrung.
 difficulty.classic.description2=Dessen Herausforderungsniveau enspricht dem
 difficulty.classic.description3=von Vanilla, was nicht viel ist.
 
-disconnect.failedCheckForTC=Du wurdest vom True-Classic Addon Gekickt
+disconnect.failedCheckForCR=Du wurdest vom True-Classic Addon Gekickt
 
 item.enchantedBook.name=Verzaubertes Buch
 item.enchantedBook.languageUnfamiliar=Dieses Buch ist Verzaubert. Wende es mit einem Amboss auf einem Gegenstand an!
 
 # Achievements stuff
 
-achievementtab.true_classic_starter_guide=Anfängerleitfaden zu True Classic
+achievementtab.true_classic_starter_guide=Anfängerleitfaden zu Classic Re-imagined
 
 achievement.btw.craft_stone_pickaxe=Technischer Fortschritt
 

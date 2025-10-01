@@ -135,14 +135,14 @@ public class ClassicAddon extends BTWAddon {
 		this.registerProperty("CanBabyAnimalEatLooseFood", "False",
 				" *** ANIMAL CONFIGS ***\n\n# A toggle to re-introduce the bug with baby animal eating off of ground. This only works while Animageddon is turned off.");
 		this.registerProperty("ChickenJockeyToggle", "False", "This toggles spawning of buggy chicken jockeys.");
-		this.registerProperty("HCHoofsiesToggle", "False", "This toggles the HC Hoofsies mechanic from BTW. This only affects the True Classic difficulty.");
-		this.registerProperty("StrongerHoofsies", "False", "Toggling this on makes kicking animals deal 7 HP. This only affects the True Classic difficulty.");
+		this.registerProperty("HCHoofsiesToggle", "False", "This toggles the HC Hoofsies mechanic from BTW. This only affects the Classic Re-Imagined difficulty.");
+		this.registerProperty("StrongerHoofsies", "False", "Toggling this on makes kicking animals deal 7 HP. This only affects the Classic Re-Imagined difficulty.");
 		this.registerSynchronizedProperty("PassableLeaves", "False",
 				string -> passableLeaves = Boolean.parseBoolean(string),
 				" *** SYNCHRONIZED PROPERTIES ***\n\n# This toggles the passable leaves functionality.");
 		this.registerSynchronizedProperty("HardcoreSpawnToggle", "False",
 				string -> hardcoreSpawnToggle = Boolean.parseBoolean(string),
-				"This toggles the HC Spawn mechanic from BTW. This only affects the True Classic difficulty.");
+				"This toggles the HC Spawn mechanic from BTW. This only affects the Classic Re-Imagined difficulty.");
 		this.registerSynchronizedProperty("VanillaifyBuckets", "True",
 				string -> vanillaifyBuckets = Boolean.parseBoolean(string),
 				"This option re-introduces vanilla bucket mechanics. This makes screw pumps useless.");
@@ -210,12 +210,12 @@ public class ClassicAddon extends BTWAddon {
 		this.registerAddonCommand(new CommandBase() {
 			@Override
 			public String getCommandName() {
-				return "trueclassic";
+				return "classicreimagined";
 			}
 
 			@Override
 			public String getCommandUsage(ICommandSender iCommandSender) {
-				return "/trueclassic configs";
+				return "/ configs";
 			}
 
 			@Override
@@ -370,12 +370,12 @@ public class ClassicAddon extends BTWAddon {
 	}
 
 	public void revealItemsToEMI() {
-		Item.axeWood.trueClassic$revealToEMI();
-		Item.hoeWood.trueClassic$revealToEMI();
-		Item.swordWood.trueClassic$revealToEMI();
-		Item.pickaxeWood.trueClassic$revealToEMI();
-		Item.shovelWood.trueClassic$revealToEMI();
-		Item.hoeStone.trueClassic$revealToEMI();
+		Item.axeWood.classicReimagined$revealToEMI();
+		Item.hoeWood.classicReimagined$revealToEMI();
+		Item.swordWood.classicReimagined$revealToEMI();
+		Item.pickaxeWood.classicReimagined$revealToEMI();
+		Item.shovelWood.classicReimagined$revealToEMI();
+		Item.hoeStone.classicReimagined$revealToEMI();
 	}
 
 	private static int getMatchingRecipeIndex(List recipes, IRecipe recipe) {

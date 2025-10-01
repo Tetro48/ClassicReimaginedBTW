@@ -1,4 +1,4 @@
-# True Classic addon for BTW
+# Classic Re-imagined addon for BTW
 
 This addon introduces a lot of changes that brings BTW closer to vanilla (parts of it from modern versions)
 

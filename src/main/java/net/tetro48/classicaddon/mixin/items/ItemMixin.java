@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public abstract class ItemMixin implements InterfaceItemEMI {
 
 	@Override
-	public Item trueClassic$revealToEMI() {
+	public Item classicReimagined$revealToEMI() {
 		if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.CLIENT)) {
 			for (int i = 0; i < 16; ++i) {
 				EmiRemoveFromIndex.removed.remove(EmiStack.of(new ItemStack((Item)(Object)this, 1, i)));

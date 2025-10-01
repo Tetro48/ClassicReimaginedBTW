@@ -107,7 +107,7 @@ public abstract class CraftingRecipeListMixin {
 		return par1ItemStack;
 	}
 
-	///True Classic's tags can't be used here, go look at ClassicAddon.java in btw.community.classicaddon
+	///Classic Re-imagined's tags can't be used here, go look at ClassicAddon.java in btw.community.classicaddon
 	@Inject(method = "addStoneToolRecipes", at = @At("HEAD"), remap = false, cancellable = true)
 	private static void redoStoneToolRecipes(CallbackInfo ci){
 		ci.cancel();

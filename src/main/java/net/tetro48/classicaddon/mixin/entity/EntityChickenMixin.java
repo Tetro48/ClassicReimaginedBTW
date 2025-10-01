@@ -35,7 +35,7 @@ public abstract class EntityChickenMixin extends EntityAnimal implements ForceDe
 	}
 
 	@Override
-	public void trueClassic$setDespawnFlag(boolean despawnFlag) {
+	public void classicReimagined$setDespawnFlag(boolean despawnFlag) {
 		this.despawnFlag = despawnFlag;
 	}
 }

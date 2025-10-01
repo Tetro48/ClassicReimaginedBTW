@@ -16,7 +16,7 @@
 - Modified tool durability to vanilla levels (59 for wooden tools, 131 for stone tools, 250 for iron tools)
 - Regeneration now takes hunger (which, makes creeper oysters kinda not worth it)
 - Fishing is faster and more lenient
-- Coordinates are visible when holding a compass, _while_ on a True Classic server.
+- Coordinates are visible when holding a compass, _while_ on a Classic Re-imagined server.
 - Stone of any strata and netherrack can now be mined by any pickaxe
 - Anvils now have later vanilla Minecraft behavior, along with "Too Expensive" being removed
 - Wooden and Stone Tools now have vanilla mining speed.
@@ -38,3 +38,5 @@
 - Cows drop leather
 - Added the 1% drop chance for hemp seeds from tallgrass
 - Changed hardness levels
+- Sheep now drop wool blocks
+- Optional configs to make All Achievement runs possible
