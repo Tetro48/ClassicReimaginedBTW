@@ -112,6 +112,7 @@
     "items.CreeperOysterItemMixin",
     "items.CuredFoodItemMixin",
     "items.DoorItemMixin",
+    "items.EnchantmentMixin",
     "items.EnumArmorMaterialMixin",
     "items.EnumToolMaterialMixin",
     "items.FoodItemMixin",
