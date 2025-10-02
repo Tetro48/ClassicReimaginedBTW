@@ -115,6 +115,7 @@
     "items.EnchantmentMixin",
     "items.EnumArmorMaterialMixin",
     "items.EnumToolMaterialMixin",
+    "items.FlintAndSteelItemMixin",
     "items.FoodItemMixin",
     "items.FreshPumpkinBlockItemMixin",
     "items.HoeItemMixin",

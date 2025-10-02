@@ -4,10 +4,7 @@ import btw.world.util.difficulty.Difficulties;
 import btw.world.util.difficulty.Difficulty;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.src.EnumOptions;
-import net.minecraft.src.GuiOptions;
-import net.minecraft.src.GuiSmallButton;
-import net.minecraft.src.I18n;
+import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -31,6 +28,31 @@ public abstract class GuiOptionsMixin {
 					var6.displayString = I18n.getString("selectWorld.difficulty") + ": " + I18n.getStringParams("classicAddon.selectWorld.cursedDifficulty", I18n.getString("classicAddon.selectWorld.nmCompat.baddream"));
 				}
 			}
+		}
+		else {
+			var6.displayString += "+";
+		}
+	}
+	@Inject(method = "actionPerformed", at = @At("RETURN"))
+	private void manageActionPerformedIngameDifficultyDisplay(GuiButton par1GuiButton, CallbackInfo ci) {
+		Difficulty difficulty = MinecraftServer.getServer().worldServers[0].worldInfo.getDifficulty();
+		if (EnumOptions.getEnumOptions(par1GuiButton.id) != EnumOptions.DIFFICULTY) {
+			return;
+		}
+		par1GuiButton.displayString = I18n.getString("selectWorld.difficulty") + ": " + difficulty.getLocalizedName();
+		if (difficulty != Difficulties.CLASSIC) {
+			par1GuiButton.displayString = I18n.getString("selectWorld.difficulty") + ": " + I18n.getStringParams("classicAddon.selectWorld.cursedDifficulty", difficulty.getLocalizedName());
+			if (FabricLoader.getInstance().isModLoaded("nightmare_mode")) {
+				if (difficulty == Difficulties.HOSTILE) {
+					par1GuiButton.displayString = I18n.getString("selectWorld.difficulty") + ": " + I18n.getStringParams("classicAddon.selectWorld.cursedDifficulty", I18n.getString("classicAddon.selectWorld.nmCompat.nightmare"));
+				}
+				else if (difficulty == Difficulties.STANDARD) {
+					par1GuiButton.displayString = I18n.getString("selectWorld.difficulty") + ": " + I18n.getStringParams("classicAddon.selectWorld.cursedDifficulty", I18n.getString("classicAddon.selectWorld.nmCompat.baddream"));
+				}
+			}
+		}
+		else {
+			par1GuiButton.displayString += "+";
 		}
 	}
 }

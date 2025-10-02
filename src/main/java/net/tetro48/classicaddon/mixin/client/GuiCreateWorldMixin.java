@@ -46,6 +46,9 @@ public abstract class GuiCreateWorldMixin {
 				}
 			}
 		}
+		else {
+			this.buttonDifficultyLevel.displayString += "+";
+		}
 	}
 	@Inject(method = "func_82288_a", at = @At("TAIL"))
 	public void hideDifficultyLock(boolean par1, CallbackInfo ci) {

@@ -355,5 +355,7 @@ public abstract class CraftingRecipeListMixin {
 					new ItemStack(Block.cloth, 1, i),
 					new ItemStack(BTWItems.diamondShears, 1, 32767)});
 		}
+		RecipeManager.removeVanillaShapelessRecipe(new ItemStack(Item.flintAndSteel, 1), new Object[]{new ItemStack(BTWItems.ironNugget), new ItemStack(Item.flint)});
+		RecipeManager.addShapelessRecipe(new ItemStack(Item.flintAndSteel, 1), new Object[]{new ItemStack(Item.ingotIron), new ItemStack(Item.flint)});
 	}
 }

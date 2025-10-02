@@ -5,9 +5,9 @@ classicAddon.serverCheck.kickTimer=Если сервер не ответит, ч
 classicAddon.selectWorld.nmCompat.nightmare=Кошмар
 classicAddon.selectWorld.nmCompat.baddream=Сон
 classicAddon.synchronizedConfigsI18n=Синхронизированные конфиги Classic Re-Imagined:
+classicAddon.synchronizedConfigsCommandHint=Введите /classicreimagined configs чтобы увидеть синхронизированные конфиги
 classicAddon.holdCompassForCoordinates=Держите компас чтобы смотреть координаты.
 
-difficulty.classic.name=Классический +
 difficulty.classic.description=Ваниллифицированный BTW.
 difficulty.classic.description2=Его сложность эквивалентен
 difficulty.classic.description3=ванильному, что немного.
@@ -22,6 +22,7 @@ item.enchantedBook.languageUnfamiliar=Эта книга зачарована. П
 achievementtab.true_classic_starter_guide=Руководство для начинающих по Classic Re-Imagined
 
 achievement.btw.craft_stone_pickaxe=Обновка!
+achievement.btw.make_work_stump=Рабочий пень
 achievement.classicaddon.mine_wood=Нарубить дров
 achievement.classicaddon.mine_wood.desc=Сломать дерево, чтобы получить бревно
 achievement.classicaddon.crafting_table=Рабочий стол
@@ -47,4 +48,5 @@ achievement.classicaddon.bread.desc=Испечь хлеб из теста сде
 btw.anvil.info=Наковальню можно разместить где угодно, и она используется как для ремонта, так и для применения книги зачарования. Примечание: это обходит типичное ограничение Инферальных Зачаровании.
 classicAddon.workbench.info=Верстак можно разместить где угодно. Добывается как обычно. Примечание: Может сгореть.
 classicAddon.furnace.info=Печи можно разместить где угодно. Они зажигаются при подаче топлива и готовят 4x быстрее, чем кирпичные печи, но и топливо сжигается 4x быстрее.
+
 tag.classicaddon.loose_cobblestones=Рыхлые булыжники

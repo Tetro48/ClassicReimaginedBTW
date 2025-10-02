@@ -8,8 +8,6 @@ classicAddon.synchronizedConfigsI18n=Synchronized Configs from Classic Re-imagin
 classicAddon.synchronizedConfigsCommandHint=Type /classicreimagined configs to see synchronized configs
 classicAddon.holdCompassForCoordinates=Hold a compass to view coordinates.
 
-
-difficulty.classic.name=Classic +
 difficulty.classic.description=The vanillafied BTW experience.
 difficulty.classic.description2=Its challenge level is equivalent
 difficulty.classic.description3=to vanilla, which is not a lot.
