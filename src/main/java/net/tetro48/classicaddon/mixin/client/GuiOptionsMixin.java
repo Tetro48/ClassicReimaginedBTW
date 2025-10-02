@@ -35,10 +35,10 @@ public abstract class GuiOptionsMixin {
 	}
 	@Inject(method = "actionPerformed", at = @At("RETURN"))
 	private void manageActionPerformedIngameDifficultyDisplay(GuiButton par1GuiButton, CallbackInfo ci) {
-		Difficulty difficulty = MinecraftServer.getServer().worldServers[0].worldInfo.getDifficulty();
 		if (EnumOptions.getEnumOptions(par1GuiButton.id) != EnumOptions.DIFFICULTY) {
 			return;
 		}
+		Difficulty difficulty = MinecraftServer.getServer().worldServers[0].worldInfo.getDifficulty();
 		par1GuiButton.displayString = I18n.getString("selectWorld.difficulty") + ": " + difficulty.getLocalizedName();
 		if (difficulty != Difficulties.CLASSIC) {
 			par1GuiButton.displayString = I18n.getString("selectWorld.difficulty") + ": " + I18n.getStringParams("classicAddon.selectWorld.cursedDifficulty", difficulty.getLocalizedName());
