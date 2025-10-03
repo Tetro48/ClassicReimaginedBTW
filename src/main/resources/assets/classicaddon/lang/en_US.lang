@@ -14,6 +14,7 @@ difficulty.classic.description3=to vanilla, which is not a lot.
 
 disconnect.failedCheckForCR=Kicked by Classic Re-imagined addon
 
+item.fireworks.name=Firework
 item.enchantedBook.name=Enchanted Book
 item.enchantedBook.languageUnfamiliar=This book is enchanted. Apply it to an item with an anvil!
 
