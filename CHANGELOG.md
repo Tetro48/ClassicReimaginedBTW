@@ -41,4 +41,6 @@
 - Sheep now drop wool blocks
 - Optional configs to make All Achievement runs possible
 - Lowered arcane scroll prices from 48-64 down to 32-48
-- Flint and steel now act like fire charges, with durability
+- Flint and Steel now act like fire charges, with durability
+- Flint and Steel now require iron ingot instead of iron nugget
+- Increased amount of fireworks crafted from 1 to 3

@@ -21,6 +21,7 @@
     "PistonPackingRecipeListMixin",
     "PlayerControllerMPMixin",
     "PlayerStatusEffectsMixin",
+    "RecipeFireworksMixin",
     "SawRecipeListMixin",
     "SmeltingRecipeListMixin",
     "TradeListMixin",
