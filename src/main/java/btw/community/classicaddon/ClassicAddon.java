@@ -85,6 +85,10 @@ public class ClassicAddon extends BTWAddon {
 	public void serverPlayerConnectionInitialized(NetServerHandler serverHandler, EntityPlayerMP playerMP) {
 		super.serverPlayerConnectionInitialized(serverHandler, playerMP);
 		serverHandler.sendPacketToPlayer(new Packet3Chat(ChatMessageComponent.createFromTranslationKey("classicAddon.synchronizedConfigsCommandHint")));
+		serverHandler.sendPacketToPlayer(getOnJoinPacket());
+	}
+
+	public Packet250CustomPayload getOnJoinPacket() {
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		DataOutputStream dataStream = new DataOutputStream(byteStream);
 		synchronizedConfigProperties.forEach((propertyName, configProperty) -> {
@@ -96,7 +100,7 @@ public class ClassicAddon extends BTWAddon {
 				e.printStackTrace();
 			}
 		});
-		serverHandler.sendPacketToPlayer(new Packet250CustomPayload("classicaddon|onJoin", byteStream.toByteArray()));
+		return new Packet250CustomPayload("classicaddon|onJoin", byteStream.toByteArray());
 	}
 
 	@Override
