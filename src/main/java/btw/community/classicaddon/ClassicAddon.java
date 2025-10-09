@@ -267,6 +267,7 @@ public class ClassicAddon extends BTWAddon {
 							iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromText("You've set property " + strings[1] + " to: " + strings[2] + ". This is temporary, to have it be permanent, this must be done by the server owner/manager."));
 							notifyAdmins(iCommandSender, "Property " + strings[1] + " has been set to: " + strings[2] + ".");
 							configProperty.setInternalValue(strings[2]);
+							configProperty.resetExternalValue();
 							sendPacketToAllPlayers(getOnJoinPacket());
 							sendPacketToAllPlayers(new Packet3Chat(ChatMessageComponent.createFromText(strings[1] + " got changed to: " + strings[2])));
 
