@@ -50,3 +50,4 @@ btw.anvil.info=Der Amboss kann überall platziert werden, und wird entweder für
 classicAddon.workbench.info=Werkbänke können überall platziert werden. Diese haben Vanilla-Härte. Beachte: Sie sind Brennbar.
 classicAddon.furnace.info=Öfen können überall platziert werden. Diese werden sich selbst entzünden wenn Brennstoff zugeführt wird, und schmelzt Gegenstände 4x schneller wie Ziegelstein-Backöfen, aber verbrennt auch Brennstoff 4x schneller.
 tag.classicaddon.loose_cobblestones=Lockere Bruchsteine
+tag.classicaddon.any_cobblestone=Beliebiger Bruchstein

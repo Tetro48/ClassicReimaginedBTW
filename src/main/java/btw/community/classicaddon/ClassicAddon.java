@@ -13,9 +13,11 @@ import btw.crafting.recipe.RecipeManager;
 import btw.crafting.recipe.types.customcrafting.LogChoppingRecipe;
 import btw.item.BTWItems;
 import btw.item.items.ToolItem;
+import btw.item.tag.BTWTags;
 import btw.item.tag.Tag;
 import btw.item.tag.TagInstance;
 import btw.world.util.difficulty.Difficulty;
+import emi.dev.emi.emi.runtime.EmiReloadManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.*;
 import net.tetro48.classicaddon.SynchronizedConfigProperty;
@@ -32,7 +34,9 @@ public class ClassicAddon extends BTWAddon {
 
 	public static Tag looseCobblestonesTag;
 
-	public static final AchievementTab TRUE_CLASSIC_STARTER_GUIDE_ACHIEVEMENT_TAB = new AchievementTab("true_classic_starter_guide").setIcon(Block.grass);
+	public static Tag anyCobblestoneTag;
+
+	public static final AchievementTab CLASSIC_REIMAGINED_STARTER_GUIDE_ACHIEVEMENT_TAB = new AchievementTab("CLASSIC_REIMAGINED_starter_guide").setIcon(Block.grass);
 	public static Achievement<ItemStack> GET_WOOD_ACHIEVEMENT;
 	public static Achievement<ItemStack> GET_CRAFTING_TABLE_ACHIEVEMENT;
 	public static Achievement<ItemStack> GET_WOODEN_PICKAXE_ACHIEVEMENT;
@@ -76,6 +80,7 @@ public class ClassicAddon extends BTWAddon {
 	public static boolean isServerRunningThisAddon = false;
 
 	private static Hashtable<String, SynchronizedConfigProperty> synchronizedConfigProperties;
+	private static List<String> synchronizedPropertyNames;
 
 	public ClassicAddon() {
 		super();
@@ -128,6 +133,7 @@ public class ClassicAddon extends BTWAddon {
 	@Override
 	public void preInitialize() {
 		synchronizedConfigProperties = new Hashtable<>();
+		synchronizedPropertyNames = new ArrayList<>(11);
 		this.registerProperty("QuickHealToggle", "False", "This is a toggle for vMC 1.9+ regeneration system. False (Off) by default.");
 		this.registerProperty("QuickHealTicks", "40", "How quickly the regen occurs. 20 ticks = 1 second. 10 ticks is vanilla, 40 ticks is Tetro48's suggested value.");
 		this.registerProperty("CursedDifficultyMode", "False", "Allow changing BTW difficulty, but marking it cursed");
@@ -139,14 +145,14 @@ public class ClassicAddon extends BTWAddon {
 		this.registerProperty("CanBabyAnimalEatLooseFood", "False",
 				" *** ANIMAL CONFIGS ***\n\n# A toggle to re-introduce the bug with baby animal eating off of ground. This only works while Animageddon is turned off.");
 		this.registerProperty("ChickenJockeyToggle", "False", "This toggles spawning of buggy chicken jockeys.");
-		this.registerProperty("HCHoofsiesToggle", "False", "This toggles the HC Hoofsies mechanic from BTW. This only affects the Classic Re-Imagined difficulty.");
-		this.registerProperty("StrongerHoofsies", "False", "Toggling this on makes kicking animals deal 7 HP. This only affects the Classic Re-Imagined difficulty.");
+		this.registerProperty("HCHoofsiesToggle", "False", "This toggles the HC Hoofsies mechanic from BTW. This only affects the Classic+ difficulty.");
+		this.registerProperty("StrongerHoofsies", "False", "Toggling this on makes kicking animals deal 7 HP. This only affects the Classic+ difficulty.");
 		this.registerSynchronizedProperty("PassableLeaves", "False",
 				string -> passableLeaves = Boolean.parseBoolean(string),
 				" *** SYNCHRONIZED PROPERTIES ***\n\n# This toggles the passable leaves functionality.");
 		this.registerSynchronizedProperty("HardcoreSpawnToggle", "False",
 				string -> hardcoreSpawnToggle = Boolean.parseBoolean(string),
-				"This toggles the HC Spawn mechanic from BTW. This only affects the Classic Re-Imagined difficulty.");
+				"This toggles the HC Spawn mechanic from BTW. This only affects the Classic+ difficulty.");
 		this.registerSynchronizedProperty("VanillaifyBuckets", "True",
 				string -> vanillaifyBuckets = Boolean.parseBoolean(string),
 				"This option re-introduces vanilla bucket mechanics. This makes screw pumps useless.");
@@ -175,6 +181,7 @@ public class ClassicAddon extends BTWAddon {
 	public void registerSynchronizedProperty(String propertyName, String defaultValue, Consumer<String> callback, String comment) {
 		this.registerProperty(propertyName, defaultValue, comment);
 		synchronizedConfigProperties.put(propertyName, new SynchronizedConfigProperty(propertyName, defaultValue, callback));
+		synchronizedPropertyNames.add(propertyName);
 	}
 
 	public static void resetAllSynchronizedPropertyValues() {
@@ -186,6 +193,14 @@ public class ClassicAddon extends BTWAddon {
 			this.registerProperty(propertyName, defaultValue, comment);
 		}
 	}
+
+	public static void sendPacketToAllPlayers(Packet packet) {
+		for (Object player : MinecraftServer.getServer().getConfigurationManager().playerEntityList) {
+			if (player instanceof EntityPlayerMP) {
+				((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(packet);
+			}
+		}
+	}
 	@Override
 	public void initialize() {
 		this.initializeTags();
@@ -194,7 +209,6 @@ public class ClassicAddon extends BTWAddon {
 		this.revealItemsToEMI();
 		AddonHandler.logMessage(this.getName() + " Version " + this.getVersionString() + " Initializing...");
 		registerPacketHandler("classicaddon|onJoin", (payload, entityPlayer) -> {
-			isServerRunningThisAddon = true;
 			if (payload.length > 0) {
 				ByteArrayInputStream inputStream = new ByteArrayInputStream(payload.data);
 				DataInputStream dataStream = new DataInputStream(inputStream);
@@ -209,7 +223,12 @@ public class ClassicAddon extends BTWAddon {
 					}
 				} catch (Exception ignored) {}
 				modifyPlankRecipes();
+				// post-load only
+				if (isServerRunningThisAddon) {
+					EmiReloadManager.reload();
+				}
 			}
+			isServerRunningThisAddon = true;
 		});
 		this.registerAddonCommand(new CommandBase() {
 			@Override
@@ -219,7 +238,10 @@ public class ClassicAddon extends BTWAddon {
 
 			@Override
 			public String getCommandUsage(ICommandSender iCommandSender) {
-				return "/ configs";
+				if (iCommandSender.canCommandSenderUseCommand(this.getRequiredPermissionLevel(), this.getCommandName())) {
+					return "/classicreimagined configs OR /classicreimagined set <param_name> <value>";
+				}
+				return "/classicreimagined configs";
 			}
 
 			@Override
@@ -232,10 +254,23 @@ public class ClassicAddon extends BTWAddon {
 				if (strings.length > 0) {
 					if (strings[0].equals("configs")) {
 						iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("classicAddon.synchronizedConfigsI18n"));
-						synchronizedConfigProperties.forEach((propertyName, configProperty) ->
-								iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromText(propertyName + ": " + configProperty.getInternalValue())));
-					}
-					else {
+						synchronizedPropertyNames.forEach((propertyName) ->
+								iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromText(propertyName + ": " + synchronizedConfigProperties.get(propertyName).getInternalValue())));
+					} else if (strings[0].equals("set") && iCommandSender.canCommandSenderUseCommand(this.getRequiredPermissionLevel(), this.getCommandName())) {
+							SynchronizedConfigProperty configProperty = synchronizedConfigProperties.get(strings[1]);
+							if (configProperty == null) {
+								throw new WrongUsageException("Incorrect property name!");
+							}
+							if (strings.length < 3) {
+								throw new WrongUsageException("/classicreimagined set " + strings[1] + " <value>");
+							}
+							iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromText("You've set property " + strings[1] + " to: " + strings[2] + ". This is temporary, to have it be permanent, this must be done by the server owner/manager."));
+							notifyAdmins(iCommandSender, "Property " + strings[1] + " has been set to: " + strings[2] + ".");
+							configProperty.setInternalValue(strings[2]);
+							sendPacketToAllPlayers(getOnJoinPacket());
+							sendPacketToAllPlayers(new Packet3Chat(ChatMessageComponent.createFromText(strings[1] + " got changed to: " + strings[2])));
+
+					} else {
 						throw new WrongUsageException(getCommandUsage(iCommandSender));
 					}
 				}
@@ -247,7 +282,14 @@ public class ClassicAddon extends BTWAddon {
 			@Override
 			public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr) {
 				if (par2ArrayOfStr.length <= 1) {
-					return List.of("configs");
+					if (par1ICommandSender.canCommandSenderUseCommand(this.getRequiredPermissionLevel(), this.getCommandName())) {
+						return getListOfStringsMatchingLastWord(par2ArrayOfStr, "configs", "set");
+					}
+					else return getListOfStringsMatchingLastWord(par2ArrayOfStr, "configs");
+				}
+				else if (par2ArrayOfStr.length == 2 && par2ArrayOfStr[0].equals("set")) {
+					String[] strings = synchronizedPropertyNames.toArray(new String[0]);
+					return getListOfStringsMatchingLastWord(par2ArrayOfStr, strings);
 				}
 				return null;
 			}
@@ -265,28 +307,28 @@ public class ClassicAddon extends BTWAddon {
 				.triggerCondition(itemStack -> itemStack.itemID == Block.wood.blockID)
 				.build()
 				.setNoAnnounce()
-				.registerAchievement(TRUE_CLASSIC_STARTER_GUIDE_ACHIEVEMENT_TAB);
+				.registerAchievement(CLASSIC_REIMAGINED_STARTER_GUIDE_ACHIEVEMENT_TAB);
 		GET_CRAFTING_TABLE_ACHIEVEMENT = builder.name(loc("crafting_table"))
 				.icon(Block.workbench)
 				.displayLocation(-1, 0)
 				.triggerCondition(itemStack -> itemStack.itemID == BTWBlocks.workbench.blockID)
 				.parents(GET_WOOD_ACHIEVEMENT)
 				.build()
-				.registerAchievement(TRUE_CLASSIC_STARTER_GUIDE_ACHIEVEMENT_TAB);
+				.registerAchievement(CLASSIC_REIMAGINED_STARTER_GUIDE_ACHIEVEMENT_TAB);
 		GET_WOODEN_PICKAXE_ACHIEVEMENT = builder.name(loc("wooden_pickaxe"))
 				.icon(Item.pickaxeWood)
 				.displayLocation(0, 0)
 				.triggerCondition(itemStack -> itemStack.itemID == Item.pickaxeWood.itemID)
 				.parents(GET_CRAFTING_TABLE_ACHIEVEMENT)
 				.build()
-				.registerAchievement(TRUE_CLASSIC_STARTER_GUIDE_ACHIEVEMENT_TAB);
+				.registerAchievement(CLASSIC_REIMAGINED_STARTER_GUIDE_ACHIEVEMENT_TAB);
 		GET_LOOSE_COBBLESTONE_ACHIEVEMENT = builder.name(loc("loose_cobblestone"))
 				.icon(BTWBlocks.looseCobblestone)
 				.displayLocation(1, 0)
 				.triggerCondition(itemStack -> looseCobblestonesTag.test(itemStack))
 				.parents(GET_WOODEN_PICKAXE_ACHIEVEMENT)
 				.build()
-				.registerAchievement(TRUE_CLASSIC_STARTER_GUIDE_ACHIEVEMENT_TAB);
+				.registerAchievement(CLASSIC_REIMAGINED_STARTER_GUIDE_ACHIEVEMENT_TAB);
 		GET_STONE_HOE_ACHIEVEMENT = builder.name(loc("stone_hoe"))
 				.icon(Item.hoeStone)
 				.displayLocation(0, 1)
@@ -294,14 +336,14 @@ public class ClassicAddon extends BTWAddon {
 				.parents(GET_LOOSE_COBBLESTONE_ACHIEVEMENT)
 				.build()
 				.setNoAnnounce()
-				.registerAchievement(TRUE_CLASSIC_STARTER_GUIDE_ACHIEVEMENT_TAB);
+				.registerAchievement(CLASSIC_REIMAGINED_STARTER_GUIDE_ACHIEVEMENT_TAB);
 		GET_FURNACE_ACHIEVEMENT = builder.name(loc("furnace"))
 				.icon(Block.furnaceIdle)
 				.displayLocation(1, 1)
 				.triggerCondition(itemStack -> itemStack.itemID == Block.furnaceIdle.blockID)
 				.parents(GET_LOOSE_COBBLESTONE_ACHIEVEMENT)
 				.build()
-				.registerAchievement(TRUE_CLASSIC_STARTER_GUIDE_ACHIEVEMENT_TAB);
+				.registerAchievement(CLASSIC_REIMAGINED_STARTER_GUIDE_ACHIEVEMENT_TAB);
 		GET_GLASS_BOTTLE_ACHIEVEMENT = builder.name(loc("glass_bottle"))
 				.icon(Item.glassBottle)
 				.displayLocation(2, 1)
@@ -309,14 +351,14 @@ public class ClassicAddon extends BTWAddon {
 				.parents(GET_FURNACE_ACHIEVEMENT)
 				.build()
 				.setNoAnnounce()
-				.registerAchievement(TRUE_CLASSIC_STARTER_GUIDE_ACHIEVEMENT_TAB);
+				.registerAchievement(CLASSIC_REIMAGINED_STARTER_GUIDE_ACHIEVEMENT_TAB);
 		GET_BREAD_ACHIEVEMENT = builder.name(loc("bread"))
 				.icon(Item.bread)
 				.displayLocation(1, 2)
 				.triggerCondition(itemStack -> itemStack.itemID == Item.bread.itemID)
 				.parents(GET_FURNACE_ACHIEVEMENT, GET_STONE_HOE_ACHIEVEMENT, GET_GLASS_BOTTLE_ACHIEVEMENT)
 				.build()
-				.registerAchievement(TRUE_CLASSIC_STARTER_GUIDE_ACHIEVEMENT_TAB);
+				.registerAchievement(CLASSIC_REIMAGINED_STARTER_GUIDE_ACHIEVEMENT_TAB);
 		GET_STONE_PICKAXE_ACHIEVEMENT = builder.name(loc("stone_pickaxe"))
 				.icon(Item.pickaxeStone)
 				.displayLocation(2, -1)
@@ -324,18 +366,19 @@ public class ClassicAddon extends BTWAddon {
 				.parents(GET_LOOSE_COBBLESTONE_ACHIEVEMENT)
 				.build()
 				.setNoAnnounce()
-				.registerAchievement(TRUE_CLASSIC_STARTER_GUIDE_ACHIEVEMENT_TAB);
+				.registerAchievement(CLASSIC_REIMAGINED_STARTER_GUIDE_ACHIEVEMENT_TAB);
 		GET_STONE_SWORD_ACHIEVEMENT = builder.name(loc("stone_sword"))
 				.icon(Item.swordStone)
 				.displayLocation(0, -1)
 				.triggerCondition(itemStack -> itemStack.itemID == Item.swordStone.itemID)
 				.parents(GET_LOOSE_COBBLESTONE_ACHIEVEMENT)
 				.build()
-				.registerAchievement(TRUE_CLASSIC_STARTER_GUIDE_ACHIEVEMENT_TAB);
+				.registerAchievement(CLASSIC_REIMAGINED_STARTER_GUIDE_ACHIEVEMENT_TAB);
 	}
 
 	public void initializeTags() {
 		looseCobblestonesTag = Tag.of(loc("loose_cobblestones"), new ItemStack(BTWBlocks.looseCobblestone, 1, 0), new ItemStack(BTWBlocks.looseCobblestone, 1, 4), new ItemStack(BTWBlocks.looseCobblestone, 1, 8));
+		anyCobblestoneTag = Tag.of(loc("any_cobblestone"), looseCobblestonesTag, BTWTags.cobblestones);
 	}
 
 	public void initializeRecipes() {
@@ -343,33 +386,33 @@ public class ClassicAddon extends BTWAddon {
 				new Object[]{
 						"#",
 						"#",
-						"/", '#', TagInstance.of(ClassicAddon.looseCobblestonesTag), '/', Item.stick});
+						"/", '#', TagInstance.of(ClassicAddon.anyCobblestoneTag), '/', Item.stick});
 
 		RecipeManager.addRecipe(new ItemStack(Item.shovelStone, 1),
 				new Object[]{
 						"#",
 						"/",
-						"/", '#', TagInstance.of(ClassicAddon.looseCobblestonesTag), '/', Item.stick});
+						"/", '#', TagInstance.of(ClassicAddon.anyCobblestoneTag), '/', Item.stick});
 		RecipeManager.addRecipe(new ItemStack(Item.hoeStone, 1),
 				new Object[]{
 						"#/",
 						" /",
-						" /", '#', TagInstance.of(ClassicAddon.looseCobblestonesTag), '/', Item.stick});
+						" /", '#', TagInstance.of(ClassicAddon.anyCobblestoneTag), '/', Item.stick});
 		RecipeManager.addRecipe(new ItemStack(Item.axeStone, 1),
 				new Object[]{
 						"# ",
 						"#/",
-						" /", '#', TagInstance.of(ClassicAddon.looseCobblestonesTag), '/', Item.stick});
+						" /", '#', TagInstance.of(ClassicAddon.anyCobblestoneTag), '/', Item.stick});
 		RecipeManager.addRecipe(new ItemStack(Item.pickaxeStone, 1),
 				new Object[]{
 						"###",
 						" / ",
-						" / ", '#', TagInstance.of(ClassicAddon.looseCobblestonesTag), '/', Item.stick});
+						" / ", '#', TagInstance.of(ClassicAddon.anyCobblestoneTag), '/', Item.stick});
 		RecipeManager.addRecipe(new ItemStack(Block.furnaceIdle, 1),
 				new Object[]{
 						"###",
 						"# #",
-						"###", '#', ClassicAddon.looseCobblestonesTag});
+						"###", '#', ClassicAddon.anyCobblestoneTag});
 		FurnaceRecipes.smelting().addSmelting(Block.sand.blockID, new ItemStack(Block.glass), 0f, 2);
 	}
 

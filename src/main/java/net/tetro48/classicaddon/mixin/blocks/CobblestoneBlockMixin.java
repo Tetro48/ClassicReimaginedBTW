@@ -21,6 +21,12 @@ public abstract class CobblestoneBlockMixin extends Block {
 		super(par1, par2Material);
 	}
 
+	@Inject(method = "<init>", at = @At("TAIL"))
+	private void makeItChiselable(int iBlockID, CallbackInfo ci) {
+		this.setChiselsCanHarvest();
+		this.setChiselsEffectiveOn();
+	}
+
 	@Redirect(method = "onBlockDestroyedWithImproperTool", at = @At(value = "INVOKE", target = "Lbtw/block/blocks/CobblestoneBlock;dropBlockAsItem(Lnet/minecraft/src/World;IIIII)V"))
 	public void noFistingCobble(CobblestoneBlock instance, World world, int i, int j, int k, int metadata, int quantityBonus) {}
 	@Inject(method = "idDropped", at = @At("RETURN"), cancellable = true)

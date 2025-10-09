@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 
@@ -22,6 +23,11 @@ public abstract class CobblestoneSlabBlockMixin extends Block {
 		super(par1, par2Material);
 	}
 
+	@Inject(method = "<init>", at = @At("TAIL"))
+	private void makeItChiselable(int iBlockID, boolean bDoubleSlab, CallbackInfo ci) {
+		this.setChiselsCanHarvest();
+		this.setChiselsEffectiveOn();
+	}
 	@Override
 	public void onBlockDestroyedWithImproperTool(World world, EntityPlayer player, int i, int j, int k, int iMetadata) {}
 	@Inject(method = "idDropped", at = @At("RETURN"), cancellable = true)

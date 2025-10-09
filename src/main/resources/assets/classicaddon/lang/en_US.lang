@@ -52,3 +52,4 @@ btw.anvil.info=The Anvil can be placed anywhere, and it's used for either repair
 classicAddon.workbench.info=Crafting table can be placed anywhere. This has vanilla hardness levels. Note: This can burn.
 classicAddon.furnace.info=Furnaces can be placed anywhere. This will ignite whenever fuel is supplied, and cooks stuff 4x faster than brick ovens, but also burns fuel 4x faster.
 tag.classicaddon.loose_cobblestones=Loose Cobblestones
+tag.classicaddon.any_cobblestone=Any Cobblestone

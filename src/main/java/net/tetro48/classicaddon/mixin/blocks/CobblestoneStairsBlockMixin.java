@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 
@@ -19,6 +20,12 @@ public abstract class CobblestoneStairsBlockMixin extends Block {
 
 	protected CobblestoneStairsBlockMixin(int par1, Material par2Material) {
 		super(par1, par2Material);
+	}
+
+	@Inject(method = "<init>", at = @At("TAIL"))
+	private void makeItChiselable(int iBlockID, int strata, CallbackInfo ci) {
+		this.setChiselsCanHarvest();
+		this.setChiselsEffectiveOn();
 	}
 
 	@Redirect(method = "onBlockDestroyedWithImproperTool", at = @At(value = "INVOKE", target = "Lbtw/block/blocks/CobblestoneStairsBlock;dropBlockAsItem(Lnet/minecraft/src/World;IIIII)V"))
