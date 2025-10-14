@@ -1,10 +1,7 @@
 package net.tetro48.classicaddon.mixin.entity;
 
 import btw.world.util.WorldUtils;
-import net.minecraft.src.EntityAnimal;
-import net.minecraft.src.EntityChicken;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.World;
+import net.minecraft.src.*;
 import net.tetro48.classicaddon.ForceDespawnableEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -20,7 +17,7 @@ public abstract class EntityChickenMixin extends EntityAnimal implements ForceDe
 	@Unique
 	public boolean despawnFlag = false;
 	@Unique
-	public long accelerationTicks = 0;
+	public long ticksUntilRNGEggs = 0;
 
 	public EntityChickenMixin(World par1World) {
 		super(par1World);
@@ -28,7 +25,7 @@ public abstract class EntityChickenMixin extends EntityAnimal implements ForceDe
 	@Inject(method = "writeEntityToNBT", at = @At("TAIL"))
 	private void writeNewNBT(NBTTagCompound tag, CallbackInfo ci) {
 		tag.setBoolean("tcDespawnFlag", despawnFlag);
-		tag.setLong("crAccelerationTicks", accelerationTicks);
+		tag.setLong("crAccelerationTicks", ticksUntilRNGEggs);
 	}
 	@Inject(method = "readEntityFromNBT", at = @At("TAIL"))
 	private void readNewNBT(NBTTagCompound tag, CallbackInfo ci) {
@@ -36,16 +33,16 @@ public abstract class EntityChickenMixin extends EntityAnimal implements ForceDe
 			despawnFlag = tag.getBoolean("tcDespawnFlag");
 		}
 		if (tag.hasKey("crAccelerationTicks")) {
-			accelerationTicks = tag.getLong("crAccelerationTicks");
+			ticksUntilRNGEggs = tag.getLong("crAccelerationTicks");
 		}
 		else {
-			accelerationTicks = 0;
+			ticksUntilRNGEggs = 0;
 		}
 	}
 
 	@Inject(method = "isReadyToEatBreedingItem", at = @At("HEAD"), cancellable = true)
 	private void doNotEatIfAccelerationActive(CallbackInfoReturnable<Boolean> cir) {
-		if (accelerationTicks > 600) {
+		if (ticksUntilRNGEggs > 600) {
 			cir.setReturnValue(false);
 		}
 		else if (this.isFullyFed() && this.getGrowingAge() == 0) {
@@ -55,7 +52,7 @@ public abstract class EntityChickenMixin extends EntityAnimal implements ForceDe
 
 	@Inject(method = "onEatBreedingItem", at = @At("HEAD"), cancellable = true)
 	private void accelerateEggLaying(CallbackInfo ci) {
-		this.accelerationTicks += 23700L + this.rand.nextInt(600);
+		this.ticksUntilRNGEggs += 96000L + this.rand.nextInt(300);
 		this.worldObj.playSoundAtEntity(this, this.getDeathSound(), this.getSoundVolume(), this.rand.nextFloat() * 0.2F + 1.5F);
 		ci.cancel();
 	}
@@ -65,16 +62,22 @@ public abstract class EntityChickenMixin extends EntityAnimal implements ForceDe
 			ci.cancel();
 			return;
 		}
+		if (this.ticksUntilRNGEggs > 0) {
+			this.ticksUntilRNGEggs--;
+		}
+		if (!this.isChild() && this.isFullyFed() && this.timeToLayEgg > 0L && WorldUtils.getOverworldTimeServerOnly() > this.timeToLayEgg) {
+			if (ticksUntilRNGEggs > 0 || this.worldObj.rand.nextInt(3) == 0) {
+				this.playSound("mob.chicken.plop", 1.0F, this.getSoundPitch());
+				this.dropItem(Item.egg.itemID, 1);
+			}
+			this.timeToLayEgg = 0L;
+		}
 		if (this.timeToLayEgg == 0) {
 			long currentTime = WorldUtils.getOverworldTimeServerOnly();
-			/// The bound can not go any higher than 48000L (2 days)
-			this.timeToLayEgg = currentTime + this.rand.nextLong(12000L, 48000L);
+			this.timeToLayEgg = ((currentTime + 12000L) / 24000L + 1L) * 24000L;
+			this.timeToLayEgg += (-1450 + this.rand.nextInt(600));
 		}
-		if (this.accelerationTicks > 0) {
-			this.accelerationTicks--;
-			//effectively x8 acceleration
-			this.timeToLayEgg -= 7;
-		}
+		ci.cancel();
 	}
 
 	@Inject(method = "validateTimeToLayEgg", at = @At("HEAD"), cancellable = true)
