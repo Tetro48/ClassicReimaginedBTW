@@ -121,6 +121,7 @@
     "items.FlintAndSteelItemMixin",
     "items.FoodItemMixin",
     "items.FreshPumpkinBlockItemMixin",
+    "items.HardBoiledEggItemMixin",
     "items.HoeItemMixin",
     "items.ItemBookMixin",
     "items.ItemDoorMixin",

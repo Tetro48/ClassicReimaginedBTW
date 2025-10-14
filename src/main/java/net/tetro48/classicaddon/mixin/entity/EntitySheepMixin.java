@@ -62,12 +62,13 @@ public abstract class EntitySheepMixin extends EntityAnimal {
 		ticksUntilGraze--;
 		if (!ClassicAddon.animageddonToggle && getSheared()) {
 			woolAccumulationCount--;
+			ticksUntilGraze -= 7;
 		}
 	}
 	@Override
 	public void onGrazeBlock(int i, int j, int k) {
 		super.onGrazeBlock(i, j, k);
-		ticksUntilGraze = rand.nextInt(600) + 200;
+		ticksUntilGraze = rand.nextInt(2400) + 800;
 		if (!ClassicAddon.animageddonToggle && getSheared()) woolAccumulationCount = 25000;
 	}
 	@Override
