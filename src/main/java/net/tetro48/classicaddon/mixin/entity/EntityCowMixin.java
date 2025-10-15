@@ -2,6 +2,7 @@ package net.tetro48.classicaddon.mixin.entity;
 
 import btw.entity.mob.KickingAnimal;
 import btw.item.BTWItems;
+import btw.world.util.difficulty.DifficultyParam;
 import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -49,7 +50,7 @@ public abstract class EntityCowMixin extends KickingAnimal {
 
 				for (int iTempCount = 0; iTempCount < numDrops; ++iTempCount) {
 					if (isBurning()) {
-						if (worldObj.getDifficulty().shouldBurningMobsDropCookedMeat()) {
+						if (worldObj.getDifficultyParameter(DifficultyParam.ShouldBurningAnimalsDropCookedMeat.class)) {
 							dropItem(Item.beefCooked.itemID, 1);
 						}
 						else {

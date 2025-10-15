@@ -8,9 +8,9 @@ classicAddon.synchronizedConfigsI18n=Synchronized Configs from Classic Re-imagin
 classicAddon.synchronizedConfigsCommandHint=Type /classicreimagined configs to see synchronized configs
 classicAddon.holdCompassForCoordinates=Hold a compass to view coordinates.
 
-difficulty.classic.description=The vanillafied BTW experience.
-difficulty.classic.description2=Its challenge level is equivalent
-difficulty.classic.description3=to vanilla, which is not a lot.
+difficulty.btw.classic.description=The vanillafied BTW experience.
+difficulty.btw.classic.description2=Its challenge level is equivalent
+difficulty.btw.classic.description3=to vanilla, which is not a lot.
 
 disconnect.failedCheckForCR=Kicked by Classic Re-imagined addon
 

@@ -8,9 +8,9 @@ classicAddon.synchronizedConfigsI18n=Синхронизированные кон
 classicAddon.synchronizedConfigsCommandHint=Введите /classicreimagined configs чтобы увидеть синхронизированные конфиги
 classicAddon.holdCompassForCoordinates=Держите компас чтобы смотреть координаты.
 
-difficulty.classic.description=Ваниллифицированный BTW.
-difficulty.classic.description2=Его сложность эквивалентен
-difficulty.classic.description3=ванильному, что немного.
+difficulty.btw.classic.description=Ваниллифицированный BTW.
+difficulty.btw.classic.description2=Его сложность эквивалентен
+difficulty.btw.classic.description3=ванильному, что немного.
 
 disconnect.failedCheckForCR=Выгнали аддоном Classic Re-imagined
 

@@ -22,7 +22,7 @@ public abstract class GuiCreateWorldMixin {
 
 	@Inject(method = "<init>", at = @At("RETURN"))
 	public void forceClassicOnInit(CallbackInfo ci) {
-		difficultyID = Difficulties.CLASSIC.ID;
+		difficultyID = Difficulties.CLASSIC.index;
 	}
 
 	@Inject(method = "initGui", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/GuiCreateWorld;updateButtonText()V"))
@@ -35,13 +35,13 @@ public abstract class GuiCreateWorldMixin {
 	}
 	@Inject(method = "updateButtonText", at = @At("RETURN"))
 	public void changeDifficultyText(CallbackInfo ci) {
-		if (difficultyID != Difficulties.CLASSIC.ID) {
+		if (difficultyID != Difficulties.CLASSIC.index) {
 			this.buttonDifficultyLevel.displayString = I18n.getString("selectWorld.difficulty") + ": " + I18n.getStringParams("classicAddon.selectWorld.cursedDifficulty", Difficulties.DIFFICULTY_LIST.get(this.difficultyID).getLocalizedName());
 			if (FabricLoader.getInstance().isModLoaded("nightmare_mode")) {
-				if (difficultyID == Difficulties.HOSTILE.ID) {
+				if (difficultyID == Difficulties.HOSTILE.index) {
 					this.buttonDifficultyLevel.displayString = I18n.getString("selectWorld.difficulty") + ": " + I18n.getStringParams("classicAddon.selectWorld.cursedDifficulty", I18n.getString("classicAddon.selectWorld.nmCompat.nightmare"));
 				}
-				else if (difficultyID == Difficulties.STANDARD.ID) {
+				else if (difficultyID == Difficulties.STANDARD.index) {
 					this.buttonDifficultyLevel.displayString = I18n.getString("selectWorld.difficulty") + ": " + I18n.getStringParams("classicAddon.selectWorld.cursedDifficulty", I18n.getString("classicAddon.selectWorld.nmCompat.baddream"));
 				}
 			}

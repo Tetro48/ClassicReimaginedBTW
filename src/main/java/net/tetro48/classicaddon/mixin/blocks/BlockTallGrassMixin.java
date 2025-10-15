@@ -2,6 +2,7 @@ package net.tetro48.classicaddon.mixin.blocks;
 
 import btw.community.classicaddon.ClassicAddon;
 import btw.item.BTWItems;
+import btw.world.util.difficulty.DifficultyParam;
 import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,7 +17,7 @@ public abstract class BlockTallGrassMixin extends Block {
 
 	@Inject(method = "dropBlockAsItemWithChance", at = @At("TAIL"))
 	private void dropHempSeedsIfEnabled(World world, int x, int y, int z, int metadata, float chance, int fortuneModifier, CallbackInfo ci) {
-		if (!world.isRemote && ClassicAddon.hempSeedDropFromTallGrass && world.getDifficulty().canGrassDropSeeds() && world.rand.nextInt(100) == 0) {
+		if (!world.isRemote && ClassicAddon.hempSeedDropFromTallGrass && world.getDifficultyParameter(DifficultyParam.ShouldTallGrassDropWheatSeeds.class) && world.rand.nextInt(100) == 0) {
 			this.dropBlockAsItem_do(world, x, y, z, new ItemStack(BTWItems.hempSeeds));
 		}
 	}

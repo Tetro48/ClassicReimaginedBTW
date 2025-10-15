@@ -6,6 +6,9 @@ import btw.achievement.AchievementProvider;
 import btw.achievement.AchievementTab;
 import btw.achievement.event.BTWAchievementEvents;
 import btw.block.BTWBlocks;
+import btw.client.gui.debug.BTWDebugRegistry;
+import btw.client.gui.debug.DebugInfoSection;
+import btw.client.gui.debug.DebugRegistryUtils;
 import btw.crafting.manager.CauldronCraftingManager;
 import btw.crafting.manager.SawCraftingManager;
 import btw.crafting.manager.SoulforgeCraftingManager;
@@ -16,7 +19,9 @@ import btw.item.items.ToolItem;
 import btw.item.tag.BTWTags;
 import btw.item.tag.Tag;
 import btw.item.tag.TagInstance;
+import btw.world.util.difficulty.Difficulties;
 import btw.world.util.difficulty.Difficulty;
+import btw.world.util.difficulty.DifficultyParam;
 import emi.dev.emi.emi.runtime.EmiReloadManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.*;
@@ -27,6 +32,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.*;
+import java.util.Locale;
 import java.util.function.Consumer;
 
 public class ClassicAddon extends BTWAddon {
@@ -68,9 +74,6 @@ public class ClassicAddon extends BTWAddon {
 	public static boolean intentionalHungerRegenOffset;
 	public static boolean canBabyAnimalEatLooseFood;
 	public static boolean hempSeedDropFromTallGrass;
-	public static boolean hardcoreSpawnToggle;
-	public static boolean hcHoofsiesToggle;
-	public static boolean strongerHoofsiesToggle;
 	public static boolean passableLeaves;
 	public static boolean vanillaifyBuckets;
 	public static boolean yeetTooExpensive;
@@ -123,8 +126,9 @@ public class ClassicAddon extends BTWAddon {
 		intentionalHungerRegenOffset = Boolean.parseBoolean(propertyValues.get("IntentionalHungerRegenOffset"));
 		canBabyAnimalEatLooseFood = Boolean.parseBoolean(propertyValues.get("CanBabyAnimalEatLooseFood"));
 		hempSeedDropFromTallGrass = Boolean.parseBoolean(propertyValues.get("HempSeedDropFromTallGrass"));
-		hcHoofsiesToggle = Boolean.parseBoolean(propertyValues.get("HCHoofsiesToggle"));
-		strongerHoofsiesToggle = Boolean.parseBoolean(propertyValues.get("StrongerHoofsies"));
+		Difficulties.CLASSIC.modifyParam(DifficultyParam.ShouldLargeAnimalsKick.class, Boolean.parseBoolean(propertyValues.get("HCHoofsiesToggle")));
+		Difficulties.CLASSIC.modifyParam(DifficultyParam.AnimalKickStrengthMultiplier.class,
+				Boolean.parseBoolean(propertyValues.get("StrongerHoofsies")) ? 1f : 0.5f);
 		synchronizedConfigProperties.forEach(((propertyName, configProperty) -> {
 			configProperty.setInternalValue(propertyValues.get(propertyName));
 			configProperty.resetExternalValue();
@@ -151,7 +155,7 @@ public class ClassicAddon extends BTWAddon {
 				string -> passableLeaves = Boolean.parseBoolean(string),
 				" *** SYNCHRONIZED PROPERTIES ***\n\n# This toggles the passable leaves functionality.");
 		this.registerSynchronizedProperty("HardcoreSpawnToggle", "False",
-				string -> hardcoreSpawnToggle = Boolean.parseBoolean(string),
+				string -> Difficulties.CLASSIC.modifyParam(DifficultyParam.ShouldPlayersHardcoreSpawn.class, Boolean.parseBoolean(string)),
 				"This toggles the HC Spawn mechanic from BTW. This only affects the Classic+ difficulty.");
 		this.registerSynchronizedProperty("VanillaifyBuckets", "True",
 				string -> vanillaifyBuckets = Boolean.parseBoolean(string),
@@ -298,6 +302,41 @@ public class ClassicAddon extends BTWAddon {
 		SoulforgeCraftingManager.getInstance().addRecipe(new ItemStack(BTWBlocks.dragonVessel),
 				new Object[]{"IGGI", "IUUI", "IHHI", "IIII", 'I', BTWItems.soulforgedSteelIngot, 'G', Block.fenceIron, 'U', BTWItems.urn, 'H', new ItemStack(BTWBlocks.aestheticOpaque, 1, 3)});
 		CauldronCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.heartyStew, 5), new ItemStack[]{new ItemStack(BTWItems.boiledPotato), new ItemStack(BTWItems.cookedCarrot), new ItemStack(BTWItems.brownMushroom, 3), new ItemStack(BTWItems.flour), new ItemStack(BTWItems.cookedMysteryMeat), new ItemStack(Item.bowlEmpty, 5)});
+	}
+
+	@Override
+	public void postInitialize() {
+		super.postInitialize();
+		DebugInfoSection coordinateInfoSection = DebugRegistryUtils.registerSection(loc("coordinates"), DebugRegistryUtils.Side.LEFT);
+		coordinateInfoSection.orderSectionWithPriority(BTWDebugRegistry.chunksServerSectionID, 1);
+		coordinateInfoSection.addEntry((mc, isExtendedDebug) -> {
+			if (!isExtendedDebug && ClassicAddon.isServerRunningThisAddon) {
+				boolean isPlayerHoldingCompass = mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().itemID == Item.compass.itemID;
+				if (!isPlayerHoldingCompass) {
+					return Optional.of("§c" + I18n.getString("classicAddon.holdCompassForCoordinates"));
+				}
+				String direction;
+				String string4;
+				float yaw = MathHelper.wrapAngleTo180_float(mc.thePlayer.rotationYaw);
+				int directionID = MathHelper.floor_double(yaw / 90.0d + 0.5d) & 3;
+				if (directionID == 0) {
+					direction = "+Z";
+					string4 = "S";
+				} else if (directionID == 1) {
+					direction = "-X";
+					string4 = "W";
+				} else if (directionID == 2) {
+					direction = "-Z";
+					string4 = "N";
+				} else {
+					direction = "+X";
+					string4 = "E";
+				}
+				return Optional.of(String.format(java.util.Locale.ROOT, "XYZ: %.3f / %.3f / %.3f", mc.thePlayer.posX, mc.thePlayer.boundingBox.minY, mc.thePlayer.posZ) + "\n"
+						+ String.format(Locale.ROOT, "Facing: %s (%s) (%.1f / %.1f)", direction, string4, yaw, MathHelper.wrapAngleTo180_float(mc.thePlayer.rotationPitch)));
+			}
+			return Optional.empty();
+		});
 	}
 
 	public void initializeAchievements() {
@@ -508,13 +547,11 @@ public class ClassicAddon extends BTWAddon {
 	@Override
 	public void initializeDifficultyCommon(Difficulty difficulty) {
 		super.initializeDifficultyCommon(difficulty);
-
-		if (difficulty.shouldIncreaseStoneToolSpeed()) {
-			((ToolItem) Item.axeStone).addCustomEfficiencyMultiplier(0.5F);
-			((ToolItem) Item.pickaxeStone).addCustomEfficiencyMultiplier(0.5F);
-			((ToolItem) Item.shovelStone).addCustomEfficiencyMultiplier(0.5F);
-			((ToolItem) Item.hoeStone).addCustomEfficiencyMultiplier(0.5F);
-			((ToolItem) BTWItems.sharpStone).addCustomEfficiencyMultiplier(0.5F);
-		}
+		float inverseStoneToolMultiplier = 1F / difficulty.getParamValue(DifficultyParam.StoneToolSpeedMultiplier.class);
+		((ToolItem) Item.axeStone).addCustomEfficiencyMultiplier(inverseStoneToolMultiplier);
+		((ToolItem) Item.pickaxeStone).addCustomEfficiencyMultiplier(inverseStoneToolMultiplier);
+		((ToolItem) Item.shovelStone).addCustomEfficiencyMultiplier(inverseStoneToolMultiplier);
+		((ToolItem) Item.hoeStone).addCustomEfficiencyMultiplier(inverseStoneToolMultiplier);
+		((ToolItem) BTWItems.sharpStone).addCustomEfficiencyMultiplier(inverseStoneToolMultiplier);
 	}
 }

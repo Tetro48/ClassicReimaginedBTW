@@ -4,6 +4,7 @@ import btw.util.status.BTWStatusCategory;
 import btw.util.status.PlayerStatusEffects;
 import btw.util.status.StatusCategory;
 import btw.util.status.StatusEffectBuilder;
+import btw.world.util.difficulty.DifficultyParam;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -28,9 +29,9 @@ public abstract class PlayerStatusEffectsMixin {
 			if (player.capabilities.isCreativeMode) {
 				return false;
 			} else {
-				int hungerStart = 24 - player.worldObj.getDifficulty().getStatusEffectOffset() * 3;
-				int maxHunger = hungerStart - player.worldObj.getDifficulty().getStatusEffectStageGap() * 6 * (level - 1);
-				int minHunger = hungerStart - player.worldObj.getDifficulty().getStatusEffectStageGap() * 6 * level;
+				int hungerStart = 24 - player.worldObj.getDifficultyParameter(DifficultyParam.StatusEffectOffset.class) * 3;
+				int maxHunger = hungerStart - player.worldObj.getDifficultyParameter(DifficultyParam.StatusEffectGap.class) * 6 * (level - 1);
+				int minHunger = hungerStart - player.worldObj.getDifficultyParameter(DifficultyParam.StatusEffectGap.class) * 6 * level;
 				int hungerLevel = player.foodStats.getFoodLevel();
 				return maxHunger >= hungerLevel && minHunger < hungerLevel;
 			}
