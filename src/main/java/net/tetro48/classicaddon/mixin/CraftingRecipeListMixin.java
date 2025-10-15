@@ -77,13 +77,7 @@ public abstract class CraftingRecipeListMixin {
 	private static void addMortarRecipe(ItemStack input, ItemStack output, boolean canIronChisel) {
 		RecipeManager.addShapelessRecipe(output,
 				new Object[] {
-						input, Item.clay});
-		RecipeManager.addShapelessRecipe(output,
-				new Object[] {
-						input, BTWItems.netherSludge});
-		RecipeManager.addShapelessRecipe(output,
-				new Object[] {
-						input, Item.slimeBall});
+						input, BTWTags.mortars});
 		addUnmortarRecipe(output, input, canIronChisel);
 	}
 	@Unique
@@ -357,5 +351,17 @@ public abstract class CraftingRecipeListMixin {
 		}
 		RecipeManager.removeVanillaShapelessRecipe(new ItemStack(Item.flintAndSteel, 1), new Object[]{new ItemStack(BTWItems.ironNugget), new ItemStack(Item.flint)});
 		RecipeManager.addShapelessRecipe(new ItemStack(Item.flintAndSteel, 1), new Object[]{new ItemStack(Item.ingotIron), new ItemStack(Item.flint)});
+		RecipeManager.removeVanillaRecipe(new ItemStack(BTWBlocks.chest), new Object[]{
+				"###",
+				"#I#",
+				"###",
+				'#', BTWTags.woodSidings,
+				'I', Item.ingotIron});
+		RecipeManager.addRecipe(new ItemStack(BTWBlocks.chest), new Object[]{
+				"###",
+				"# #",
+				"###",
+				'#', BTWTags.woodSidings});
+
 	}
 }

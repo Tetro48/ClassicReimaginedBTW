@@ -75,6 +75,7 @@ public abstract class CrucibleRecipeListMixin {
 		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 7), new ItemStack[]{new ItemStack(Item.bucketMilk)});
 		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 7), new ItemStack[]{new ItemStack(BTWItems.cementBucket)});
 		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 7), new ItemStack[]{new ItemStack(BTWItems.milkChocolateBucket)});
+		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(Item.ingotIron, 1), new ItemStack[]{new ItemStack(BTWBlocks.chest)});
 
 		//adds tweaked recipes
 		RecipeManager.addStokedCrucibleRecipe(new ItemStack(Item.goldNugget, 8), new ItemStack[]{new ItemStack(BTWItems.ocularOfEnder)});
