@@ -129,6 +129,7 @@ public class ClassicAddon extends BTWAddon {
 		Difficulties.CLASSIC.modifyParam(DifficultyParam.ShouldLargeAnimalsKick.class, Boolean.parseBoolean(propertyValues.get("HCHoofsiesToggle")));
 		Difficulties.CLASSIC.modifyParam(DifficultyParam.AnimalKickStrengthMultiplier.class,
 				Boolean.parseBoolean(propertyValues.get("StrongerHoofsies")) ? 1f : 0.5f);
+		Difficulties.CLASSIC.modifyParam(DifficultyParam.ShouldHardcoreSpawnRadiusIncreaseWithProgress.class, Boolean.parseBoolean(propertyValues.get("ExpandableHardcoreSpawn")));
 		synchronizedConfigProperties.forEach(((propertyName, configProperty) -> {
 			configProperty.setInternalValue(propertyValues.get(propertyName));
 			configProperty.resetExternalValue();
@@ -141,27 +142,28 @@ public class ClassicAddon extends BTWAddon {
 		this.registerProperty("QuickHealToggle", "False", "This is a toggle for vMC 1.9+ regeneration system. False (Off) by default.");
 		this.registerProperty("QuickHealTicks", "40", "How quickly the regen occurs. 20 ticks = 1 second. 10 ticks is vanilla, 40 ticks is Tetro48's suggested value.");
 		this.registerProperty("CursedDifficultyMode", "False", "Allow changing BTW difficulty, but marking it cursed");
-		this.registerProperty("GloomToggle", "False", "This toggles gloom effect.");
+		this.registerProperty("GloomToggle", "False", "This toggles gloom effect. Default: False.");
 		this.registerPropertyClientOnly("VisualNewMoonBrightnessLevel", "0", "This is purely a visual setting... \n# 0: Pitch black. 1: A tiny bit of light");
-		this.registerProperty("IntentionalHungerRegenOffset", "True", "This shifts the regen stop region to be below 8.6 shanks instead of below 9 shanks.\n# This makes regen feel much more consistent, even if internally, it may not exactly match up.");
-		this.registerProperty("GuaranteedSeedDrop", "True", "This makes sure that crop seeds will always drop, no matter the growth stage, just like in modern vanilla.");
-		this.registerProperty("HempSeedDropFromTallGrass", "True", "This toggles the 1% drop chance for hemp seeds from tall grass");
+		this.registerProperty("IntentionalHungerRegenOffset", "True", "This shifts the regen stop region to be below 8.6 shanks instead of below 9 shanks.\n# This makes regen feel much more consistent, even if internally, it may not exactly match up. Default: True.");
+		this.registerProperty("GuaranteedSeedDrop", "True", "This makes sure that crop seeds will always drop, no matter the growth stage, just like in modern vanilla. Defaullt: True.");
+		this.registerProperty("HempSeedDropFromTallGrass", "True", "This toggles the 1% drop chance for hemp seeds from tall grass. Default: True.");
 		this.registerProperty("CanBabyAnimalEatLooseFood", "False",
-				" *** ANIMAL CONFIGS ***\n\n# A toggle to re-introduce the bug with baby animal eating off of ground. This only works while Animageddon is turned off.");
-		this.registerProperty("ChickenJockeyToggle", "False", "This toggles spawning of buggy chicken jockeys.");
-		this.registerProperty("HCHoofsiesToggle", "False", "This toggles the HC Hoofsies mechanic from BTW. This only affects the Classic+ difficulty.");
-		this.registerProperty("StrongerHoofsies", "False", "Toggling this on makes kicking animals deal 7 HP. This only affects the Classic+ difficulty.");
+				" *** ANIMAL CONFIGS ***\n\n# A toggle to re-introduce the bug with baby animal eating off of ground. This only works while Animageddon is turned off. Default: False.");
+		this.registerProperty("ChickenJockeyToggle", "False", "This toggles spawning of buggy chicken jockeys. Default: False.");
+		this.registerProperty("HCHoofsiesToggle", "False", "This toggles the HC Hoofsies mechanic from BTW. This only affects the Classic+ difficulty. Default: False.");
+		this.registerProperty("StrongerHoofsies", "False", "Toggling this on makes kicking animals deal 7 HP. This only affects the Classic+ difficulty. Default: False.");
+		this.registerProperty("ExpandableHardcoreSpawn", "False", "This toggle controls the Hardcore Spawn expansion based on game progression. Default: False.");
 		this.registerSynchronizedProperty("PassableLeaves", "False",
 				string -> passableLeaves = Boolean.parseBoolean(string),
-				" *** SYNCHRONIZED PROPERTIES ***\n\n# This toggles the passable leaves functionality.");
+				" *** SYNCHRONIZED PROPERTIES ***\n\n# This toggles the passable leaves functionality. Default: False.");
 		this.registerSynchronizedProperty("HardcoreSpawnToggle", "False",
 				string -> Difficulties.CLASSIC.modifyParam(DifficultyParam.ShouldPlayersHardcoreSpawn.class, Boolean.parseBoolean(string)),
-				"This toggles the HC Spawn mechanic from BTW. This only affects the Classic+ difficulty.");
+				"This toggles the HC Spawn mechanic from BTW. This only affects the Classic+ difficulty. Default: False.");
 		this.registerSynchronizedProperty("VanillaifyBuckets", "True",
 				string -> vanillaifyBuckets = Boolean.parseBoolean(string),
-				"This option re-introduces vanilla bucket mechanics. This makes screw pumps useless.");
+				"This option re-introduces vanilla bucket mechanics. This makes screw pumps useless. Default: True.");
 		this.registerSynchronizedProperty("YeetTooExpensive", "True",
-				string -> yeetTooExpensive = Boolean.parseBoolean(string), "Removes the Too Expensive! limit if enabled");
+				string -> yeetTooExpensive = Boolean.parseBoolean(string), "Removes the Too Expensive! limit if enabled. Default: True.");
 		this.registerSynchronizedProperty("PlanksFromHand", "2",
 				string -> planksHandChopped = MathHelper.clamp_int(Integer.parseInt(string), 1, 64),
 				"The amount of planks you get from just using logs on a grid. Default: 2");
@@ -176,10 +178,10 @@ public class ClassicAddon extends BTWAddon {
 				"The amount of planks you get from sawing planks. Default: 6");
 		this.registerSynchronizedProperty("WickerWeavingToggle", "False",
 				string -> wickerWeavingToggle = Boolean.parseBoolean(string),
-				" *** Silly Synchronized Configs *** \n\n# Wicker weaving crafting recipe toggle. This applies to all difficulties.");
+				" *** Silly Synchronized Configs *** \n\n# Wicker weaving crafting recipe toggle. This applies to all difficulties. Default: False.");
 		this.registerSynchronizedProperty("HardcoreStump", "False",
 				string -> hardcoreStump = Boolean.parseBoolean(string),
-				"Enabling this allows chisels to make work stumps from tree stumps. This applies to all difficulties.");
+				"Enabling this allows chisels to make work stumps from tree stumps. This applies to all difficulties. Default: False.");
 	}
 
 	public void registerSynchronizedProperty(String propertyName, String defaultValue, Consumer<String> callback, String comment) {

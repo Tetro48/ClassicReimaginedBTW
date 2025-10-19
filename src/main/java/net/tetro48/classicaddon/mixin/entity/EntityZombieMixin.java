@@ -11,8 +11,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EntityZombie.class)
-public abstract class EntityZombieMixin extends Entity {
+public abstract class EntityZombieMixin extends EntityLiving {
 	@Shadow public abstract void setChild(boolean par1);
+
+	@Shadow public abstract boolean isChild();
 
 	public EntityZombieMixin(World par1World) {
 		super(par1World);
@@ -44,5 +46,13 @@ public abstract class EntityZombieMixin extends Entity {
 				this.entityDropItem(itemstack, 0.0F);
 			}
 		}
+	}
+
+	@Override
+	public void entityLivingOnDeath(DamageSource source) {
+		boolean isBaby = this.isChild();
+		this.setChild(false);
+		super.entityLivingOnDeath(source);
+		this.setChild(isBaby);
 	}
 }
