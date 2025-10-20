@@ -4,21 +4,30 @@ import btw.client.gui.LockButton;
 import btw.community.classicaddon.ClassicAddon;
 import btw.world.util.difficulty.Difficulties;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.src.GuiButton;
-import net.minecraft.src.GuiCreateWorld;
-import net.minecraft.src.I18n;
+import net.minecraft.src.*;
+import net.tetro48.classicaddon.VanillaDifficultyWorldSetting;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(GuiCreateWorld.class)
-public abstract class GuiCreateWorldMixin {
+public abstract class GuiCreateWorldMixin extends GuiScreen {
 	@Shadow private int difficultyID;
 	@Shadow private GuiButton buttonDifficultyLevel;
 
 	@Shadow private LockButton buttonLockDifficulty;
+
+	@Shadow private GuiButton moreWorldOptions;
+	@Unique private GuiButton buttonVanillaDifficultyLevel;
+
+	@Unique private final String[] vanillaDifficultyNames = new String[] {"easy", "normal", "hard"};
+
+	@Unique private int vanillaDifficultyID = 2;
 
 	@Inject(method = "<init>", at = @At("RETURN"))
 	public void forceClassicOnInit(CallbackInfo ci) {
@@ -32,7 +41,25 @@ public abstract class GuiCreateWorldMixin {
 			buttonDifficultyLevel.width += 20;
 			buttonLockDifficulty.xPosition += 20;
 		}
+		this.moreWorldOptions.xPosition -= 80;
+		buttonVanillaDifficultyLevel = new GuiButton(16, this.width / 2 + 5, 187, 150, 20,
+				I18n.getStringParams("classicAddon.selectWorld.vanillaDifficulty", I18n.getString("options.difficulty.normal")));
+		this.buttonList.add(buttonVanillaDifficultyLevel);
 	}
+	@Inject(method = "actionPerformed", at = @At("HEAD"))
+	private void onButtonPress(GuiButton par1GuiButton, CallbackInfo ci) {
+		if (par1GuiButton.enabled) {
+			if (par1GuiButton.id == 16) {
+				vanillaDifficultyID = vanillaDifficultyID % 3 + 1;
+				buttonVanillaDifficultyLevel.displayString = I18n.getStringParams("classicAddon.selectWorld.vanillaDifficulty", I18n.getString("options.difficulty." + vanillaDifficultyNames[vanillaDifficultyID-1]));
+			}
+		}
+	}
+	@Inject(method = "actionPerformed", locals = LocalCapture.CAPTURE_FAILHARD, at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Minecraft;launchIntegratedServer(Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/src/WorldSettings;)V"))
+	private void beforeIntegratedServerStart(GuiButton par1GuiButton, CallbackInfo ci, long seed, String var4, EnumGameType gameType, WorldSettings settings) {
+		((VanillaDifficultyWorldSetting)(Object)settings).classicReimagined$setVanillaDifficultyID(this.vanillaDifficultyID);
+	}
+
 	@Inject(method = "updateButtonText", at = @At("RETURN"))
 	public void changeDifficultyText(CallbackInfo ci) {
 		if (difficultyID != Difficulties.CLASSIC.index) {

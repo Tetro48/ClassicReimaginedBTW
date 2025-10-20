@@ -1,10 +1,11 @@
 classicAddon.selectWorld.cursedDifficulty=Проклятый %s
+classicAddon.selectWorld.vanillaDifficulty=Сложность мобов: %s
 classicAddon.serverCheck.doesServerHaveCR1=Проверка наличия на этом сервере Classic Re-imagined...
 classicAddon.serverCheck.doesServerHaveCR2=Если на этом сервере установлена старая версия CR, это не сработает.
 classicAddon.serverCheck.kickTimer=Если сервер не ответит, что этот аддон установлен в течение %sс, вас выгонят из игры.
 classicAddon.selectWorld.nmCompat.nightmare=Кошмар
 classicAddon.selectWorld.nmCompat.baddream=Сон
-classicAddon.synchronizedConfigsI18n=Синхронизированные конфиги Classic Re-Imagined:
+classicAddon.synchronizedConfigsI18n=Синхронизированные конфиги Classic Re-imagined:
 classicAddon.synchronizedConfigsCommandHint=Введите /classicreimagined configs чтобы увидеть синхронизированные конфиги
 classicAddon.holdCompassForCoordinates=Держите компас чтобы смотреть координаты.
 
@@ -20,7 +21,7 @@ item.enchantedBook.languageUnfamiliar=Эта книга зачарована. П
 
 # Достижения
 
-achievementtab.true_classic_starter_guide=Руководство для начинающих по Classic Re-Imagined
+achievementtab.classic_reimagined_starter_guide=Руководство для начинающих по Classic Re-imagined
 
 achievement.btw.craft_stone_pickaxe=Обновка!
 achievement.btw.make_work_stump=Рабочий пень

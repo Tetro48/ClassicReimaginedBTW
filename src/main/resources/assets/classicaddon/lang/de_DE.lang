@@ -1,4 +1,5 @@
 classicAddon.selectWorld.cursedDifficulty=Bizarres %s
+classicAddon.selectWorld.vanillaDifficulty=Monster-Schwierigkeit: %s
 classicAddon.serverCheck.doesServerHaveCR1=Schaut nach Anzeichen das dieser server mit Classic Re-imagined läuft...
 classicAddon.serverCheck.doesServerHaveCR2=Wenn der Server mit einer alten Version von CR läuft, wird das nicht funktionieren.
 classicAddon.serverCheck.kickTimer=Wenn der Server nicht innerhalb %ss damit Antwortet das es dieses Addon hat, wirst du gekickt.
@@ -19,7 +20,7 @@ item.enchantedBook.languageUnfamiliar=Dieses Buch ist Verzaubert. Wende es mit e
 
 # Achievements stuff
 
-achievementtab.true_classic_starter_guide=Anfängerleitfaden zu Classic Re-imagined
+achievementtab.classic_reimagined_starter_guide=Anfängerleitfaden zu Classic Re-imagined
 
 achievement.btw.craft_stone_pickaxe=Technischer Fortschritt
 

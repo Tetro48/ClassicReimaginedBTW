@@ -19,6 +19,8 @@ import btw.item.items.ToolItem;
 import btw.item.tag.BTWTags;
 import btw.item.tag.Tag;
 import btw.item.tag.TagInstance;
+import btw.world.util.data.DataEntry;
+import btw.world.util.data.DataProvider;
 import btw.world.util.difficulty.Difficulties;
 import btw.world.util.difficulty.Difficulty;
 import btw.world.util.difficulty.DifficultyParam;
@@ -42,7 +44,7 @@ public class ClassicAddon extends BTWAddon {
 
 	public static Tag anyCobblestoneTag;
 
-	public static final AchievementTab CLASSIC_REIMAGINED_STARTER_GUIDE_ACHIEVEMENT_TAB = new AchievementTab("CLASSIC_REIMAGINED_starter_guide").setIcon(Block.grass);
+	public static final AchievementTab CLASSIC_REIMAGINED_STARTER_GUIDE_ACHIEVEMENT_TAB = new AchievementTab("classic_reimagined_starter_guide").setIcon(Block.grass);
 	public static Achievement<ItemStack> GET_WOOD_ACHIEVEMENT;
 	public static Achievement<ItemStack> GET_CRAFTING_TABLE_ACHIEVEMENT;
 	public static Achievement<ItemStack> GET_WOODEN_PICKAXE_ACHIEVEMENT;
@@ -53,6 +55,14 @@ public class ClassicAddon extends BTWAddon {
 	public static Achievement<ItemStack> GET_GLASS_BOTTLE_ACHIEVEMENT;
 	public static Achievement<ItemStack> GET_STONE_SWORD_ACHIEVEMENT;
 	public static Achievement<ItemStack> GET_BREAD_ACHIEVEMENT;
+
+	public static final DataEntry.WorldDataEntry<Integer> VANILLA_DIFFICULTY_LEVEL = DataProvider.getBuilder(Integer.class)
+			.name("vanilla_difficulty")
+			.defaultSupplier(() -> 2)
+			.readNBT(NBTTagCompound::getInteger)
+			.writeNBT(NBTTagCompound::setInteger)
+			.global()
+			.build();
 
 	public static int oldPlanksHandChopped;
 	public static int oldPlanksWithStoneAxe;
@@ -137,6 +147,7 @@ public class ClassicAddon extends BTWAddon {
 	}
 	@Override
 	public void preInitialize() {
+		VANILLA_DIFFICULTY_LEVEL.register();
 		synchronizedConfigProperties = new Hashtable<>();
 		synchronizedPropertyNames = new ArrayList<>(11);
 		this.registerProperty("QuickHealToggle", "False", "This is a toggle for vMC 1.9+ regeneration system. False (Off) by default.");
@@ -245,9 +256,9 @@ public class ClassicAddon extends BTWAddon {
 			@Override
 			public String getCommandUsage(ICommandSender iCommandSender) {
 				if (iCommandSender.canCommandSenderUseCommand(this.getRequiredPermissionLevel(), this.getCommandName())) {
-					return "/classicreimagined configs OR /classicreimagined set <param_name> <value>";
+					return "/classicreimagined configs OR /classicreimagined set <param_name> <value> OR /classicreimagined difficulty [vanilla difficulty level]";
 				}
-				return "/classicreimagined configs";
+				return "/classicreimagined configs OR /classicreimagined difficulty";
 			}
 
 			@Override
@@ -257,31 +268,41 @@ public class ClassicAddon extends BTWAddon {
 
 			@Override
 			public void processCommand(ICommandSender iCommandSender, String[] strings) {
-				if (strings.length > 0) {
-					if (strings[0].equals("configs")) {
-						iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("classicAddon.synchronizedConfigsI18n"));
-						synchronizedPropertyNames.forEach((propertyName) ->
-								iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromText(propertyName + ": " + synchronizedConfigProperties.get(propertyName).getInternalValue())));
-					} else if (strings[0].equals("set") && iCommandSender.canCommandSenderUseCommand(this.getRequiredPermissionLevel(), this.getCommandName())) {
-							SynchronizedConfigProperty configProperty = synchronizedConfigProperties.get(strings[1]);
-							if (configProperty == null) {
-								throw new WrongUsageException("Incorrect property name!");
-							}
-							if (strings.length < 3) {
-								throw new WrongUsageException("/classicreimagined set " + strings[1] + " <value>");
-							}
-							iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromText("You've set property " + strings[1] + " to: " + strings[2] + ". This is temporary, to have it be permanent, this must be done by the server owner/manager."));
-							notifyAdmins(iCommandSender, "Property " + strings[1] + " has been set to: " + strings[2] + ".");
-							configProperty.setInternalValue(strings[2]);
-							configProperty.resetExternalValue();
-							sendPacketToAllPlayers(getOnJoinPacket());
-							sendPacketToAllPlayers(new Packet3Chat(ChatMessageComponent.createFromText(strings[1] + " got changed to: " + strings[2])));
-
-					} else {
-						throw new WrongUsageException(getCommandUsage(iCommandSender));
-					}
+				if (strings.length == 0) {
+					throw new WrongUsageException(getCommandUsage(iCommandSender));
 				}
-				else {
+				if (strings[0].equals("configs")) {
+					iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("classicAddon.synchronizedConfigsI18n"));
+					synchronizedPropertyNames.forEach((propertyName) ->
+							iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromText(propertyName + ": " + synchronizedConfigProperties.get(propertyName).getInternalValue())));
+				} else if (strings[0].equals("difficulty")) {
+					if (strings.length == 1 || !iCommandSender.canCommandSenderUseCommand(this.getRequiredPermissionLevel(), this.getCommandName())) {
+						iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromText("Mob difficulty level is " + new String[]{"Easy", "Normal", "Hard"}[MinecraftServer.getServer().worldServers[0].getData(VANILLA_DIFFICULTY_LEVEL)]));
+						return;
+					}
+					int difficultyLevel = Integer.parseInt(strings[1]);
+					if (difficultyLevel <= 0 || difficultyLevel > 3) {
+						throw new CommandException("Not in vanilla range, excluding Peaceful.");
+					}
+					MinecraftServer.getServer().worldServers[0].setData(VANILLA_DIFFICULTY_LEVEL, difficultyLevel);
+					sendPacketToAllPlayers(new Packet3Chat(ChatMessageComponent.createFromText("Mob difficulty level is set to " + new String[]{"Easy", "Normal", "Hard"}[difficultyLevel-1])));
+				} else if (iCommandSender.canCommandSenderUseCommand(this.getRequiredPermissionLevel(), this.getCommandName())) {
+					if (strings[0].equals("set")) {
+						SynchronizedConfigProperty configProperty = synchronizedConfigProperties.get(strings[1]);
+						if (configProperty == null) {
+							throw new CommandException("Incorrect property name!");
+						}
+						if (strings.length < 3) {
+							throw new WrongUsageException("/classicreimagined set " + strings[1] + " <value>");
+						}
+						iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromText("You've set property " + strings[1] + " to: " + strings[2] + ". This is temporary, to have it be permanent, this must be done by the server owner/manager."));
+						notifyAdmins(iCommandSender, "Property " + strings[1] + " has been set to: " + strings[2] + ".");
+						configProperty.setInternalValue(strings[2]);
+						configProperty.resetExternalValue();
+						sendPacketToAllPlayers(getOnJoinPacket());
+						sendPacketToAllPlayers(new Packet3Chat(ChatMessageComponent.createFromText(strings[1] + " got changed to: " + strings[2])));
+					}
+				} else {
 					throw new WrongUsageException(getCommandUsage(iCommandSender));
 				}
 			}
@@ -290,9 +311,9 @@ public class ClassicAddon extends BTWAddon {
 			public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr) {
 				if (par2ArrayOfStr.length <= 1) {
 					if (par1ICommandSender.canCommandSenderUseCommand(this.getRequiredPermissionLevel(), this.getCommandName())) {
-						return getListOfStringsMatchingLastWord(par2ArrayOfStr, "configs", "set");
+						return getListOfStringsMatchingLastWord(par2ArrayOfStr, "configs", "difficulty", "set");
 					}
-					else return getListOfStringsMatchingLastWord(par2ArrayOfStr, "configs");
+					else return getListOfStringsMatchingLastWord(par2ArrayOfStr, "configs", "difficulty");
 				}
 				else if (par2ArrayOfStr.length == 2 && par2ArrayOfStr[0].equals("set")) {
 					String[] strings = synchronizedPropertyNames.toArray(new String[0]);
