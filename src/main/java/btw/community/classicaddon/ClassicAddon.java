@@ -277,7 +277,7 @@ public class ClassicAddon extends BTWAddon {
 							iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromText(propertyName + ": " + synchronizedConfigProperties.get(propertyName).getInternalValue())));
 				} else if (strings[0].equals("difficulty")) {
 					if (strings.length == 1 || !iCommandSender.canCommandSenderUseCommand(this.getRequiredPermissionLevel(), this.getCommandName())) {
-						iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromText("Mob difficulty level is " + new String[]{"Easy", "Normal", "Hard"}[MinecraftServer.getServer().worldServers[0].getData(VANILLA_DIFFICULTY_LEVEL)]));
+						iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromText("Mob difficulty level is " + new String[]{"Easy", "Normal", "Hard"}[MinecraftServer.getServer().worldServers[0].getData(VANILLA_DIFFICULTY_LEVEL)-1]));
 						return;
 					}
 					int difficultyLevel = Integer.parseInt(strings[1]);
