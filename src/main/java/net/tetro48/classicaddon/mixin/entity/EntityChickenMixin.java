@@ -72,7 +72,7 @@ public abstract class EntityChickenMixin extends EntityAnimal implements ForceDe
 			}
 			this.timeToLayEgg = 0L;
 		}
-		if (this.timeToLayEgg == 0) {
+		if (this.timeToLayEgg == 0 && !this.isChild()) {
 			long currentTime = WorldUtils.getOverworldTimeServerOnly();
 			this.timeToLayEgg = ((currentTime + 12000L) / 24000L + 1L) * 24000L;
 			this.timeToLayEgg += (-1450 + this.rand.nextInt(600));

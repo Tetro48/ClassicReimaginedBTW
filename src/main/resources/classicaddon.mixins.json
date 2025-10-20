@@ -114,6 +114,7 @@
     "items.BTWItemsMixin",
     "items.BucketItemEmptyMixin",
     "items.BucketItemLavaMixin",
+    "items.BucketItemMilkMixin",
     "items.BucketItemWaterMixin",
     "items.CocoaBeanItemMixin",
     "items.CreeperOysterItemMixin",
