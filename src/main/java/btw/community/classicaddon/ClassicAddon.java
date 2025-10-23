@@ -223,6 +223,7 @@ public class ClassicAddon extends BTWAddon {
 		this.initializeTags();
 		this.initializeAchievements();
 		this.initializeRecipes();
+		this.modifyItems();
 		this.revealItemsToEMI();
 		AddonHandler.logMessage(this.getName() + " Version " + this.getVersionString() + " Initializing...");
 		registerPacketHandler("classicaddon|onJoin", (payload, entityPlayer) -> {
@@ -576,5 +577,12 @@ public class ClassicAddon extends BTWAddon {
 		((ToolItem) Item.shovelStone).addCustomEfficiencyMultiplier(inverseStoneToolMultiplier);
 		((ToolItem) Item.hoeStone).addCustomEfficiencyMultiplier(inverseStoneToolMultiplier);
 		((ToolItem) BTWItems.sharpStone).addCustomEfficiencyMultiplier(inverseStoneToolMultiplier);
+	}
+
+	public void modifyItems() {
+		BTWItems.unbakedCake.setMaxStackSize(64);
+		BTWItems.unbakedCookies.setMaxStackSize(64);
+		BTWItems.unbakedPumpkinPie.setMaxStackSize(64);
+		Item.cake.setMaxStackSize(64);
 	}
 }

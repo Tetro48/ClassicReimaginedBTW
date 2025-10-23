@@ -124,6 +124,14 @@ public abstract class BTWItemsMixin {
 	private static int changeChowder(int par1) {
 		return 5;
 	}
+	@ModifyArg(method = "instantiateModItems", index = 1, at = @At(value = "INVOKE", target = "Lbtw/item/items/MushroomItem;<init>(IIFLjava/lang/String;I)V"))
+	private static int changeMushroom(int par1) {
+		return 3;
+	}
+	@ModifyArg(method = "instantiateModItems", index = 2, at = @At(value = "INVOKE", target = "Lbtw/item/items/MushroomItem;<init>(IIFLjava/lang/String;I)V"))
+	private static float changeMushroomSaturation(float fSaturationModifier) {
+		return 0.6f;
+	}
 	@ModifyArg(method = "instantiateModItems", index = 2, at = @At(ordinal = 2, value = "INVOKE", target = "Lbtw/item/items/SoupItem;<init>(IIFZLjava/lang/String;)V"))
 	private static float changeHeartyStewSaturation(float fSaturationModifier) {
 		return 1.75f;

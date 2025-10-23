@@ -14,6 +14,11 @@ public abstract class TradeListMixin {
 	private static int makeFarmerVillagersBuyNormalDirtInsteadOfLooseDirtYouDamned(int id) {
 		return Block.dirt.blockID;
 	}
+	@ModifyArgs(method = "addFarmerTrades", at = @At(ordinal = 14, value = "INVOKE", target = "Lbtw/entity/mob/villager/trade/TradeProvider$BuySellCountStep;itemCount(II)Lbtw/entity/mob/villager/trade/TradeProvider$FinalStep;"), remap = false)
+	private static void increaseAppleCount(Args args) {
+		args.set(0, (int)args.get(0) * 2);
+		args.set(1, (int)args.get(1) * 2);
+	}
 	@ModifyArgs(method = "addBlacksmithTrades", at = @At(value = "INVOKE", ordinal = 2, target = "Lbtw/entity/mob/villager/trade/TradeProvider$BuySellCountStep;itemCount(II)Lbtw/entity/mob/villager/trade/TradeProvider$FinalStep;"), remap = false)
 	private static void increaseIronNuggetPrice(Args args) {
 		args.set(0, (int)args.get(0) * 2);
