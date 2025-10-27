@@ -156,14 +156,14 @@ public class ClassicAddon extends BTWAddon {
 		this.registerProperty("GloomToggle", "False", "This toggles gloom effect. Default: False.");
 		this.registerPropertyClientOnly("VisualNewMoonBrightnessLevel", "0", "This is purely a visual setting... \n# 0: Pitch black. 1: A tiny bit of light");
 		this.registerProperty("IntentionalHungerRegenOffset", "True", "This shifts the regen stop region to be below 8.6 shanks instead of below 9 shanks.\n# This makes regen feel much more consistent, even if internally, it may not exactly match up. Default: True.");
-		this.registerProperty("GuaranteedSeedDrop", "True", "This makes sure that crop seeds will always drop, no matter the growth stage, just like in modern vanilla. Defaullt: True.");
+		this.registerProperty("GuaranteedSeedDrop", "True", "This makes sure that crop seeds will always drop, no matter the growth stage, just like in modern vanilla. Default: True.");
 		this.registerProperty("HempSeedDropFromTallGrass", "True", "This toggles the 1% drop chance for hemp seeds from tall grass. Default: True.");
+		this.registerProperty("ExpandableHardcoreSpawn", "False", "This toggle controls the Hardcore Spawn expansion based on game progression. Default: False.");
 		this.registerProperty("CanBabyAnimalEatLooseFood", "False",
 				" *** ANIMAL CONFIGS ***\n\n# A toggle to re-introduce the bug with baby animal eating off of ground. This only works while Animageddon is turned off. Default: False.");
 		this.registerProperty("ChickenJockeyToggle", "False", "This toggles spawning of buggy chicken jockeys. Default: False.");
 		this.registerProperty("HCHoofsiesToggle", "False", "This toggles the HC Hoofsies mechanic from BTW. This only affects the Classic+ difficulty. Default: False.");
 		this.registerProperty("StrongerHoofsies", "False", "Toggling this on makes kicking animals deal 7 HP. This only affects the Classic+ difficulty. Default: False.");
-		this.registerProperty("ExpandableHardcoreSpawn", "False", "This toggle controls the Hardcore Spawn expansion based on game progression. Default: False.");
 		this.registerSynchronizedProperty("PassableLeaves", "False",
 				string -> passableLeaves = Boolean.parseBoolean(string),
 				" *** SYNCHRONIZED PROPERTIES ***\n\n# This toggles the passable leaves functionality. Default: False.");
