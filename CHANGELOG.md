@@ -44,3 +44,10 @@
 - Flint and Steel now act like fire charges, with durability
 - Flint and Steel now require iron ingot instead of iron nugget
 - Increased amount of fireworks crafted from 1 to 3
+- Infernal Enchanters are unshackled
+- Chickens are reworked to have 33% chance to lay eggs every day, but when fed, which it lasts for 4 days, they're guaranteed to lay eggs every day
+- Mob Difficulty system is re-introduced, it is the vanilla difficulty level
+- All pigmen now have swords
+- A rare chance for diamond armor
+- Milk buckets stack to 16
+- Horses can now be ridden

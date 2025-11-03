@@ -84,6 +84,7 @@ public class ClassicAddon extends BTWAddon {
 	public static boolean intentionalHungerRegenOffset;
 	public static boolean canBabyAnimalEatLooseFood;
 	public static boolean hempSeedDropFromTallGrass;
+	public static boolean shouldBedsSetSpawn;
 	public static boolean passableLeaves;
 	public static boolean vanillaifyBuckets;
 	public static boolean yeetTooExpensive;
@@ -136,6 +137,7 @@ public class ClassicAddon extends BTWAddon {
 		intentionalHungerRegenOffset = Boolean.parseBoolean(propertyValues.get("IntentionalHungerRegenOffset"));
 		canBabyAnimalEatLooseFood = Boolean.parseBoolean(propertyValues.get("CanBabyAnimalEatLooseFood"));
 		hempSeedDropFromTallGrass = Boolean.parseBoolean(propertyValues.get("HempSeedDropFromTallGrass"));
+		shouldBedsSetSpawn = Boolean.parseBoolean(propertyValues.get("ShouldBedsSetSpawn"));
 		Difficulties.CLASSIC.modifyParam(DifficultyParam.ShouldLargeAnimalsKick.class, Boolean.parseBoolean(propertyValues.get("HCHoofsiesToggle")));
 		Difficulties.CLASSIC.modifyParam(DifficultyParam.AnimalKickStrengthMultiplier.class,
 				Boolean.parseBoolean(propertyValues.get("StrongerHoofsies")) ? 1f : 0.5f);
@@ -159,6 +161,7 @@ public class ClassicAddon extends BTWAddon {
 		this.registerProperty("GuaranteedSeedDrop", "True", "This makes sure that crop seeds will always drop, no matter the growth stage, just like in modern vanilla. Default: True.");
 		this.registerProperty("HempSeedDropFromTallGrass", "True", "This toggles the 1% drop chance for hemp seeds from tall grass. Default: True.");
 		this.registerProperty("ExpandableHardcoreSpawn", "False", "This toggle controls the Hardcore Spawn expansion based on game progression. Default: False.");
+		this.registerProperty("ShouldBedsSetSpawn", "False", "Enabling this allows a bed to set your spawn. This is implemented in a slightly janky way, ala fixed /setspawn. Default: False.");
 		this.registerProperty("CanBabyAnimalEatLooseFood", "False",
 				" *** ANIMAL CONFIGS ***\n\n# A toggle to re-introduce the bug with baby animal eating off of ground. This only works while Animageddon is turned off. Default: False.");
 		this.registerProperty("ChickenJockeyToggle", "False", "This toggles spawning of buggy chicken jockeys. Default: False.");
