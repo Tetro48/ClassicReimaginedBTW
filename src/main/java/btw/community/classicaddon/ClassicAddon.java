@@ -90,6 +90,8 @@ public class ClassicAddon extends BTWAddon {
 	public static boolean yeetTooExpensive;
 	public static boolean wickerWeavingToggle;
 	public static boolean hardcoreStump;
+	public static boolean degranularizeHungerSystem;
+	public static boolean modernExhaustionLevels;
 
 	public static boolean isServerRunningThisAddon = false;
 
@@ -138,6 +140,8 @@ public class ClassicAddon extends BTWAddon {
 		canBabyAnimalEatLooseFood = Boolean.parseBoolean(propertyValues.get("CanBabyAnimalEatLooseFood"));
 		hempSeedDropFromTallGrass = Boolean.parseBoolean(propertyValues.get("HempSeedDropFromTallGrass"));
 		shouldBedsSetSpawn = Boolean.parseBoolean(propertyValues.get("ShouldBedsSetSpawn"));
+		degranularizeHungerSystem = Boolean.parseBoolean(propertyValues.get("DegranularizeHungerSystem"));
+		modernExhaustionLevels = Boolean.parseBoolean(propertyValues.get("ModernExhaustionValues"));
 		Difficulties.CLASSIC.modifyParam(DifficultyParam.ShouldLargeAnimalsKick.class, Boolean.parseBoolean(propertyValues.get("HCHoofsiesToggle")));
 		Difficulties.CLASSIC.modifyParam(DifficultyParam.AnimalKickStrengthMultiplier.class,
 				Boolean.parseBoolean(propertyValues.get("StrongerHoofsies")) ? 1f : 0.5f);
@@ -152,6 +156,8 @@ public class ClassicAddon extends BTWAddon {
 		VANILLA_DIFFICULTY_LEVEL.register();
 		synchronizedConfigProperties = new Hashtable<>();
 		synchronizedPropertyNames = new ArrayList<>(11);
+		this.registerProperty("DegranularizeHungerSystem", "False", "Enabling this makes the granular hunger system act like the vanilla hunger system.");
+		this.registerProperty("ModernExhaustionValues", "False", "This is a toggle for the modern exhaustion values, best suited for an addon like BTWG.");
 		this.registerProperty("QuickHealToggle", "False", "This is a toggle for vMC 1.9+ regeneration system. False (Off) by default.");
 		this.registerProperty("QuickHealTicks", "40", "How quickly the regen occurs. 20 ticks = 1 second. 10 ticks is vanilla, 40 ticks is Tetro48's suggested value.");
 		this.registerProperty("CursedDifficultyMode", "False", "Allow changing BTW difficulty, but marking it cursed");

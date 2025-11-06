@@ -23,6 +23,8 @@ public abstract class FoodStatsMixin {
 
 	@Shadow public abstract void addExhaustion(float par1);
 
+	@Shadow private float foodExhaustionLevel;
+
 	@Inject(method = "<init>", at = @At("TAIL"))
 	public void startWithSomeFat(CallbackInfo ci) {
 		this.foodSaturationLevel = 5F;
@@ -36,8 +38,33 @@ public abstract class FoodStatsMixin {
 		return this.foodLevel >= getHungerRegenCutoff();
 	}
 	@ModifyConstant(method = "onUpdate", constant = @Constant(floatValue = 1.33F))
-	private float increasePrecision(float constant) {
+	private float setExhaustionDrainForHunger(float constant) {
+		if (ClassicAddon.degranularizeHungerSystem) {
+			return 4F;
+		}
 		return ONE_AND_ONE_THIRD;
+	}
+	@ModifyConstant(method = "onUpdate", constant = @Constant(floatValue = 0.5F))
+	private float setExhaustionDrainForSaturation(float constant) {
+		if (ClassicAddon.degranularizeHungerSystem) {
+			return 4F;
+		}
+		return constant;
+	}
+	@ModifyConstant(method = "onUpdate", constant = @Constant(floatValue = 0.125F))
+	private float setSaturationDrain(float constant) {
+		if (ClassicAddon.degranularizeHungerSystem) {
+			return 1F;
+		}
+		return constant;
+	}
+	@Inject(method = "onUpdate", at = @At(value = "FIELD", ordinal = 2, target = "Lnet/minecraft/src/FoodStats;foodLevel:I"))
+	private void exhaustionDrainCorrection(EntityPlayer player, CallbackInfo ci) {
+		foodExhaustionLevel -= ONE_AND_ONE_THIRD - 1.33F;
+		if (ClassicAddon.degranularizeHungerSystem) {
+			foodLevel -= 2;
+			foodExhaustionLevel -= ONE_AND_ONE_THIRD * 2;
+		}
 	}
 	@Inject(method = "onUpdate", at = @At("RETURN"))
 	public void introduceVanillaHealMechanic(EntityPlayer player, CallbackInfo ci) {

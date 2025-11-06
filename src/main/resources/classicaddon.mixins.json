@@ -8,6 +8,7 @@
     "ContainerRepairMixin",
     "CraftingRecipeListMixin",
     "CrucibleRecipeListMixin",
+    "DamageSourceMixin",
     "EmiBTWPluginMixin",
     "EmiFoodRecipeMixin",
     "EmiVanillaPluginMixin",
