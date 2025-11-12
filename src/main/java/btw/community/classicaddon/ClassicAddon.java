@@ -14,6 +14,7 @@ import btw.crafting.manager.SawCraftingManager;
 import btw.crafting.manager.SoulforgeCraftingManager;
 import btw.crafting.recipe.RecipeManager;
 import btw.crafting.recipe.types.customcrafting.LogChoppingRecipe;
+import btw.entity.mob.villager.trade.TradeProvider;
 import btw.item.BTWItems;
 import btw.item.items.ToolItem;
 import btw.item.tag.BTWTags;
@@ -232,6 +233,7 @@ public class ClassicAddon extends BTWAddon {
 		this.initializeTags();
 		this.initializeAchievements();
 		this.initializeRecipes();
+		this.initializeTrades();
 		this.modifyItems();
 		this.revealItemsToEMI();
 		AddonHandler.logMessage(this.getName() + " Version " + this.getVersionString() + " Initializing...");
@@ -487,6 +489,11 @@ public class ClassicAddon extends BTWAddon {
 						"# #",
 						"###", '#', ClassicAddon.anyCobblestoneTag});
 		FurnaceRecipes.smelting().addSmelting(Block.sand.blockID, new ItemStack(Block.glass), 0f, 2);
+	}
+
+	public void initializeTrades() {
+		TradeProvider.getBuilder().name(loc("buy_iron_blocks")).profession(3).level(5).buy().item(Block.blockIron.blockID).itemCount(4, 6).weight(6f).addToTradeList();
+
 	}
 
 	public void revealItemsToEMI() {
