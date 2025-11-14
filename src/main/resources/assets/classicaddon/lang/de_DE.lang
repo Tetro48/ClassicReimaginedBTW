@@ -9,8 +9,8 @@ classicAddon.synchronizedConfigsI18n=Synchronisierte Configs von Classic Re-Imag
 classicAddon.holdCompassForCoordinates=Halte einen Kompass um Koordinaten anzuzeigen.
 
 difficulty.btw.classic.description=Die vanillafizierte BTW-Erfahrung.
-difficulty.btw.classic.description2=Dessen Herausforderungsniveau enspricht dem
-difficulty.btw.classic.description3=von Vanilla, was nicht viel ist.
+difficulty.btw.classic.description2=Dessen Herausforderungsniveau enspricht
+difficulty.btw.classic.description3=dem von Vanilla, was nicht viel ist.
 
 disconnect.failedCheckForCR=Du wurdest vom Classic Re-imagined Addon Gekickt
 
