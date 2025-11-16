@@ -6,7 +6,7 @@ classicAddon.serverCheck.kickTimer=Если сервер не ответит, ч
 classicAddon.selectWorld.nmCompat.nightmare=Кошмар
 classicAddon.selectWorld.nmCompat.baddream=Сон
 classicAddon.synchronizedConfigsI18n=Синхронизированные конфиги Classic Re-imagined:
-classicAddon.synchronizedConfigsCommandHint=Введите /classicreimagined configs чтобы увидеть синхронизированные конфиги
+classicAddon.synchronizedConfigsCommandHint=Введите "/classicreimagined configs" чтобы увидеть синхронизированные конфиги
 classicAddon.holdCompassForCoordinates=Держите компас чтобы смотреть координаты.
 
 difficulty.btw.classic.description=Ваниллифицированный BTW.

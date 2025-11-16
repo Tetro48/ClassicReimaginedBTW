@@ -5,7 +5,8 @@ classicAddon.serverCheck.doesServerHaveCR2=Wenn der Server mit einer alten Versi
 classicAddon.serverCheck.kickTimer=Wenn der Server nicht innerhalb %ss damit Antwortet das es dieses Addon hat, wirst du gekickt.
 classicAddon.selectWorld.nmCompat.nightmare=Albtraum
 classicAddon.selectWorld.nmCompat.baddream=Traum
-classicAddon.synchronizedConfigsI18n=Synchronisierte Configs von Classic Re-Imagined:
+classicAddon.synchronizedConfigsI18n=Synchronisierte Configs von Classic Re-imagined:
+classicAddon.synchronizedConfigsCommandHint=Gib "/classicreimagined configs" ein um Synchronisierte Configs anzuzeigen
 classicAddon.holdCompassForCoordinates=Halte einen Kompass um Koordinaten anzuzeigen.
 
 difficulty.btw.classic.description=Die vanillafizierte BTW-Erfahrung.
