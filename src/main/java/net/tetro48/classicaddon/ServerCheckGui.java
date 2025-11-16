@@ -13,6 +13,7 @@ public class ServerCheckGui extends GuiScreen {
 		ticksUntilKick = 200;
 	}
 
+	@Override
 	protected void actionPerformed(GuiButton guiButton) {
 		if (guiButton.id == 0) {
 			this.mc.theWorld.sendQuittingDisconnectingPacket();
@@ -23,8 +24,10 @@ public class ServerCheckGui extends GuiScreen {
 	}
 
 	//stop players from doing "ESC" trick
+	@Override
 	protected void keyTyped(char par1, int par2) {}
 
+	@Override
 	public void updateScreen() {
 		if (!ClassicAddon.isServerRunningThisAddon) {
 			this.ticksUntilKick--;
@@ -40,12 +43,14 @@ public class ServerCheckGui extends GuiScreen {
 		}
 	}
 
+	@Override
 	public void initGui() {
 		this.buttonList.clear();
 		this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120 + 12, I18n.getString("menu.disconnect")));
 	}
 
 
+	@Override
 	public void drawScreen(int i, int j, float f) {
 		if (!ClassicAddon.isServerRunningThisAddon) {
 			this.drawDefaultBackground();

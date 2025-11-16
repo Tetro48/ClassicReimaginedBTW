@@ -85,6 +85,7 @@
     "blocks.PotatoBlockMixin",
     "blocks.RoughStoneBlockMixin",
     "blocks.SandAndGravelSlabBlockMixin",
+    "blocks.SaplingBlockMixin",
     "blocks.SnowCoverBlockMixin",
     "blocks.StoneBrickStairsBlockMixin",
     "blocks.SugarCaneBlockBaseMixin",
