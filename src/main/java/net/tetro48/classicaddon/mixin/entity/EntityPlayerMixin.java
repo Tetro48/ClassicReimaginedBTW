@@ -81,4 +81,8 @@ public abstract class EntityPlayerMixin extends EntityLivingBase {
 		respawnLocation.posY = spawnChunk.posY;
 		respawnLocation.posZ = spawnChunk.posZ;
 	}
+	@Inject(method = "isValidOngoingAttackTargetForSquid", at = @At("HEAD"), cancellable = true)
+	private void makeSquidNotAttackPlayer(CallbackInfoReturnable<Boolean> cir) {
+		cir.setReturnValue(false);
+	}
 }

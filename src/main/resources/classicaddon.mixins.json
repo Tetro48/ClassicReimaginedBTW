@@ -107,6 +107,7 @@
     "entity.EntitySheepMixin",
     "entity.EntitySlimeMixin",
     "entity.EntitySpiderMixin",
+    "entity.EntityVillagerMixin",
     "entity.EntityWitchMixin",
     "entity.EntityWolfMixin",
     "entity.EntityZombieMixin",

@@ -56,4 +56,9 @@ public abstract class EntityAnimalMixin extends EntityAgeable {
 	private void noPanicking(EntityPlayer player, CallbackInfo ci) {
 		if (!ClassicAddon.animageddonToggle) ci.cancel();
 	}
+
+	@Inject(method = "isSecondaryTargetForSquid", at = @At("HEAD"), cancellable = true)
+	private void makeSquidNotAttackAnimals(CallbackInfoReturnable<Boolean> cir) {
+		cir.setReturnValue(false);
+	}
 }
