@@ -1,6 +1,6 @@
 package net.tetro48.classicaddon.mixin.blocks;
 
-import btw.block.blocks.FallingSlabBlock;
+import api.block.blocks.FallingSlabBlock;
 import btw.block.blocks.SandAndGravelSlabBlock;
 import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;

@@ -200,11 +200,11 @@ public abstract class BTWItemsMixin {
 	private static int changeBurnedMeat(int par1) {
 		return 3;
 	}
-	@ModifyArg(method = "instantiateModItems", index = 1, at = @At(ordinal = 0, value = "INVOKE", target = "Lbtw/item/items/SeedFoodItem;<init>(IIFI)V"))
+	@ModifyArg(method = "instantiateModItems", index = 1, at = @At(ordinal = 0, value = "INVOKE", target = "Lapi/item/items/SeedFoodItem;<init>(IIFI)V"))
 	private static int changeCarrot(int par1) {
 		return 9;
 	}
-	@ModifyArg(method = "instantiateModItems", index = 2, at = @At(ordinal = 0, value = "INVOKE", target = "Lbtw/item/items/SeedFoodItem;<init>(IIFI)V"))
+	@ModifyArg(method = "instantiateModItems", index = 2, at = @At(ordinal = 0, value = "INVOKE", target = "Lapi/item/items/SeedFoodItem;<init>(IIFI)V"))
 	private static float changeCarrotSaturation(float fSaturationModifier) {
 		return 1.2f;
 	}

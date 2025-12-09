@@ -7,7 +7,7 @@ import btw.crafting.recipe.RecipeManager;
 import btw.crafting.recipe.types.customcrafting.ConditionalRecipe;
 import btw.crafting.recipe.types.customcrafting.WoolBlockRecipe;
 import btw.item.BTWItems;
-import btw.item.tag.BTWTags;
+import btw.item.BTWTags;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
@@ -355,13 +355,13 @@ public abstract class CraftingRecipeListMixin {
 				"###",
 				"#I#",
 				"###",
-				'#', BTWTags.woodSidings,
+				'#', BTWTags.woodenSidings,
 				'I', Item.ingotIron});
 		RecipeManager.addRecipe(new ItemStack(BTWBlocks.chest), new Object[]{
 				"###",
 				"# #",
 				"###",
-				'#', BTWTags.woodSidings});
+				'#', BTWTags.woodenSidings});
 
 	}
 }

@@ -1,6 +1,6 @@
 package net.tetro48.classicaddon.mixin.blocks;
 
-import btw.block.blocks.DailyGrowthCropsBlock;
+import api.block.blocks.DailyGrowthCropsBlock;
 import btw.block.blocks.PotatoBlock;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;

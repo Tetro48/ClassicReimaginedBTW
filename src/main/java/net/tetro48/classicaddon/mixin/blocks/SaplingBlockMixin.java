@@ -1,6 +1,6 @@
 package net.tetro48.classicaddon.mixin.blocks;
 
-import btw.block.blocks.DailyGrowthCropsBlock;
+import api.block.blocks.DailyGrowthCropsBlock;
 import btw.block.blocks.SaplingBlock;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.World;

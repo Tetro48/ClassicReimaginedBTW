@@ -1,8 +1,8 @@
 package net.tetro48.classicaddon.mixin.entity;
 
+import api.world.difficulty.DifficultyParam;
 import btw.block.BTWBlocks;
 import btw.community.classicaddon.ClassicAddon;
-import btw.world.util.difficulty.DifficultyParam;
 import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -74,12 +74,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase {
 		if (ClassicAddon.shouldBedsSetSpawn && cir.getReturnValue() == EnumStatus.OK && this.worldObj.getBlockId(x, y, z) != BTWBlocks.bedroll.blockID) {
 			setSpawnChunk(new ChunkCoordinates(x, y + 1, z), true, this.dimension);
 		}
-	}
-	@Inject(method = "getValidatedRespawnCoordinates", at = @At(ordinal = 17, value = "FIELD", target = "Lnet/minecraft/src/EntityPlayer;spawnChunk:Lnet/minecraft/src/ChunkCoordinates;"))
-	private void attemptBugFix(World newWorld, ChunkCoordinates respawnLocation, CallbackInfoReturnable<Integer> cir) {
-		respawnLocation.posX = spawnChunk.posX;
-		respawnLocation.posY = spawnChunk.posY;
-		respawnLocation.posZ = spawnChunk.posZ;
 	}
 	@Inject(method = "isValidOngoingAttackTargetForSquid", at = @At("HEAD"), cancellable = true)
 	private void makeSquidNotAttackPlayer(CallbackInfoReturnable<Boolean> cir) {

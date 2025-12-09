@@ -1,7 +1,7 @@
 package net.tetro48.classicaddon.mixin.items;
 
-import btw.item.items.HoeItem;
-import btw.item.items.ToolItem;
+import api.item.items.HoeItem;
+import api.item.items.ToolItem;
 import net.minecraft.src.Block;
 import net.minecraft.src.EnumToolMaterial;
 import org.spongepowered.asm.mixin.Mixin;

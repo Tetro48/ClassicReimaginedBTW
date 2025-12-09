@@ -1,6 +1,6 @@
 package net.tetro48.classicaddon.mixin.items;
 
-import btw.item.items.ShovelItem;
+import api.item.items.ShovelItem;
 import btw.item.items.ShovelItemStone;
 import net.minecraft.src.EnumToolMaterial;
 import org.spongepowered.asm.mixin.Mixin;

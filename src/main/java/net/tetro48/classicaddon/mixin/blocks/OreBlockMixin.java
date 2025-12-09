@@ -1,6 +1,6 @@
 package net.tetro48.classicaddon.mixin.blocks;
 
-import btw.block.blocks.OreBlock;
+import api.block.blocks.OreBlock;
 import net.minecraft.src.BlockOre;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.World;

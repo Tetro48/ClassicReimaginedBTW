@@ -1,7 +1,7 @@
 package net.tetro48.classicaddon.mixin.blocks;
 
+import api.block.blocks.CropsBlock;
 import btw.block.blocks.CarrotBlockFlowers;
-import btw.block.blocks.CropsBlock;
 import btw.community.classicaddon.ClassicAddon;
 import btw.item.BTWItems;
 import net.minecraft.src.ItemStack;

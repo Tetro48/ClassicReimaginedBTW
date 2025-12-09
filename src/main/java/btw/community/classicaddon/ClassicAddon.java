@@ -1,34 +1,35 @@
 package btw.community.classicaddon;
 
-import btw.AddonHandler;
-import btw.BTWAddon;
-import btw.achievement.AchievementProvider;
-import btw.achievement.AchievementTab;
-import btw.achievement.event.BTWAchievementEvents;
+import api.BTWAddon;
+import api.AddonHandler;
+import api.achievement.AchievementEvents;
+import api.achievement.AchievementProvider;
+import api.achievement.AchievementTab;
+import api.client.debug.DebugInfoSection;
+import api.client.debug.DebugRegistry;
+import api.client.debug.DebugRegistryUtils;
+import api.config.AddonConfig;
+import api.entity.mob.villager.TradeProvider;
+import api.item.items.ToolItem;
+import api.item.tag.Tag;
+import api.item.tag.TagInstance;
+import api.world.data.DataEntry;
+import api.world.data.DataProvider;
+import api.world.difficulty.Difficulty;
+import api.world.difficulty.DifficultyParam;
 import btw.block.BTWBlocks;
-import btw.client.gui.debug.BTWDebugRegistry;
-import btw.client.gui.debug.DebugInfoSection;
-import btw.client.gui.debug.DebugRegistryUtils;
 import btw.crafting.manager.CauldronCraftingManager;
 import btw.crafting.manager.SawCraftingManager;
 import btw.crafting.manager.SoulforgeCraftingManager;
 import btw.crafting.recipe.RecipeManager;
 import btw.crafting.recipe.types.customcrafting.LogChoppingRecipe;
-import btw.entity.mob.villager.trade.TradeProvider;
 import btw.item.BTWItems;
-import btw.item.items.ToolItem;
-import btw.item.tag.BTWTags;
-import btw.item.tag.Tag;
-import btw.item.tag.TagInstance;
-import btw.world.util.data.DataEntry;
-import btw.world.util.data.DataProvider;
-import btw.world.util.difficulty.Difficulties;
-import btw.world.util.difficulty.Difficulty;
-import btw.world.util.difficulty.DifficultyParam;
+import btw.item.BTWTags;
+import btw.world.BTWDifficulties;
 import emi.dev.emi.emi.runtime.EmiReloadManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.*;
-import net.tetro48.classicaddon.SynchronizedConfigProperty;
+import net.tetro48.classicaddon.ModifiableConfigProperty;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -96,8 +97,8 @@ public class ClassicAddon extends BTWAddon {
 
 	public static boolean isServerRunningThisAddon = false;
 
-	private static Hashtable<String, SynchronizedConfigProperty> synchronizedConfigProperties;
-	private static List<String> synchronizedPropertyNames;
+	private static Hashtable<String, ModifiableConfigProperty<?>> modifiableConfigProperties;
+	private static List<String> modifiablePropertyNames;
 
 	public ClassicAddon() {
 		super();
@@ -113,10 +114,12 @@ public class ClassicAddon extends BTWAddon {
 	public Packet250CustomPayload getOnJoinPacket() {
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		DataOutputStream dataStream = new DataOutputStream(byteStream);
-		synchronizedConfigProperties.forEach((propertyName, configProperty) -> {
+		modifiableConfigProperties.forEach((propertyName, configProperty) -> {
 			try {
-				dataStream.writeUTF(propertyName);
-				dataStream.writeUTF(configProperty.getInternalValue());
+				if (configProperty.canSync()) {
+					dataStream.writeUTF(propertyName);
+					configProperty.writeToDataStream(dataStream);
+				}
 			}
 			catch (Exception e) {
 				e.printStackTrace();
@@ -126,99 +129,185 @@ public class ClassicAddon extends BTWAddon {
 	}
 
 	@Override
-	public void handleConfigProperties(Map<String, String> propertyValues) {
-		quickHealToggle = Boolean.parseBoolean(propertyValues.get("QuickHealToggle"));
-		quickHealTicks = Integer.parseInt(propertyValues.get("QuickHealTicks"));
-		cursedDifficultyMode = Boolean.parseBoolean(propertyValues.get("CursedDifficultyMode"));
-		animageddonToggle = Boolean.parseBoolean(propertyValues.get("AnimageddonToggle"));
-		gloomToggle = Boolean.parseBoolean(propertyValues.get("GloomToggle"));
-		if (!MinecraftServer.getIsServer()) {
-			visualNewMoonBrightnessLevel = Integer.parseInt(propertyValues.get("VisualNewMoonBrightnessLevel"));
-		}
-		chickenJockeyToggle = Boolean.parseBoolean(propertyValues.get("ChickenJockeyToggle"));
-		guaranteedSeedDrop = Boolean.parseBoolean(propertyValues.get("GuaranteedSeedDrop"));
-		intentionalHungerRegenOffset = Boolean.parseBoolean(propertyValues.get("IntentionalHungerRegenOffset"));
-		canBabyAnimalEatLooseFood = Boolean.parseBoolean(propertyValues.get("CanBabyAnimalEatLooseFood"));
-		hempSeedDropFromTallGrass = Boolean.parseBoolean(propertyValues.get("HempSeedDropFromTallGrass"));
-		shouldBedsSetSpawn = Boolean.parseBoolean(propertyValues.get("ShouldBedsSetSpawn"));
-		degranularizeHungerSystem = Boolean.parseBoolean(propertyValues.get("DegranularizeHungerSystem"));
-		modernExhaustionLevels = Boolean.parseBoolean(propertyValues.get("ModernExhaustionValues"));
-		Difficulties.CLASSIC.modifyParam(DifficultyParam.ShouldLargeAnimalsKick.class, Boolean.parseBoolean(propertyValues.get("HCHoofsiesToggle")));
-		Difficulties.CLASSIC.modifyParam(DifficultyParam.AnimalKickStrengthMultiplier.class,
-				Boolean.parseBoolean(propertyValues.get("StrongerHoofsies")) ? 1f : 0.5f);
-		Difficulties.CLASSIC.modifyParam(DifficultyParam.ShouldHardcoreSpawnRadiusIncreaseWithProgress.class, Boolean.parseBoolean(propertyValues.get("ExpandableHardcoreSpawn")));
-		synchronizedConfigProperties.forEach(((propertyName, configProperty) -> {
-			configProperty.setInternalValue(propertyValues.get(propertyName));
+	public void handleConfigProperties(AddonConfig addonConfig) {
+		modifiableConfigProperties.forEach(((propertyName, configProperty) -> {
+			configProperty.setInternalValueToAddonConfig();
 			configProperty.resetExternalValue();
 		}));
 	}
+
+	@Override
+	public void registerConfigProperties(AddonConfig config) {
+		config.registerCategoryComment("hunger-system", "*** HUNGER SYSTEM CONFIGS ***");
+		this.createModifiableProperty(config, "hunger-system.degranularize-hunger-system", false,
+				bool -> degranularizeHungerSystem = bool,
+				"Enabling this makes the granular hunger system act like the vanilla hunger system.").register();
+		config.updatePath("DegranularizeHungerSystem", "hunger-system.degranularize-hunger-system");
+		this.createModifiableProperty(config, "hunger-system.modern-exhaustion-values", false,
+				bool -> modernExhaustionLevels = bool,
+				"This is a toggle for the modern exhaustion values, best suited for an addon like BTWG.").register();
+		config.updatePath("ModernExhaustionValues", "hunger-system.modern-exhaustion-values");
+		this.createModifiableProperty(config, "hunger-system.quick-heal-toggle", false,
+				bool -> quickHealToggle = bool,
+				"This is a toggle for vMC 1.9+ regeneration system. False (Off) by default.").register();
+		config.updatePath("QuickHealToggle", "hunger-system.quick-heal-toggle");
+		this.createModifiableProperty(config, "hunger-system.quick-heal-ticks", 40,
+				integer -> quickHealTicks = integer,
+				"How quickly the regen occurs. 20 ticks = 1 second. 10 ticks is vanilla, 40 ticks is Tetro48's suggested value.")
+				.setMinMax(1, Integer.MAX_VALUE).register();
+		config.updatePath("QuickHealTicks", "hunger-system.quick-heal-ticks");
+		this.createModifiableProperty(config, "hunger-system.hunger-regen-offset-toggle", true,
+						bool -> intentionalHungerRegenOffset = bool,
+						"This shifts the regen stop region to be below 8.6 shanks instead of below 9 shanks.", "This makes regen feel much more consistent, even if internally, it may not exactly match up. Default: True.")
+				.register();
+		config.updatePath("IntentionalHungerRegenOffset", "hunger-system.hunger-regen-offset-toggle");
+
+		config.registerCategoryComment("difficulty", "*** MISC DIFFICULTY CONFIGS ***");
+		this.createModifiableProperty(config, "difficulty.cursed-difficulty-mode", false,
+				bool -> cursedDifficultyMode = bool,
+				"Allow changing BTW difficulty, but marking it cursed").register();
+		config.updatePath("CursedDifficultyMode", "difficulty.cursed-difficulty-mode");
+		if (!MinecraftServer.getIsServer()) {
+			this.createModifiableProperty(config, "client.new-moon-brightness-level", 0,
+					intValue -> visualNewMoonBrightnessLevel = intValue,
+					"This is purely a visual setting...", "0: Pitch black. 1: A tiny bit of light")
+					.setMinMax(0, 1).register();
+			config.updatePath("VisualNewMoonBrightnessLevel", "client.new-moon-brightness-level");
+		}
+
+		config.registerCategoryComment("world", "*** WORLD CONFIGS ***");
+		this.createModifiableProperty(config, "world.gloom-toggle", false,
+				bool -> gloomToggle = bool, "This toggles gloom effect. Default: False.")
+				.register();
+		config.updatePath("GloomToggle", "world.gloom-toggle");
+		this.createModifiableProperty(config, "world.guaranteed-seed-drop", true,
+				bool -> guaranteedSeedDrop = bool,
+				"This makes sure that crop seeds will always drop, no matter the growth stage, just like in modern vanilla. Default: True.")
+				.register();
+		config.updatePath("GuaranteedSeedDrop", "world.guaranteed-seed-drop");
+		this.createModifiableProperty(config, "world.hemp-seed-drop", true,
+				bool -> hempSeedDropFromTallGrass = bool,
+				"This toggles the 1% drop chance for hemp seeds from tall grass. Default: True.")
+				.register();
+		config.updatePath("HempSeedDropFromTallGrass", "world.hemp-seed-drop");
+		this.createModifiableProperty(config, "world.expandable-hcs", false,
+				bool -> BTWDifficulties.CLASSIC.modifyParam(DifficultyParam.ShouldHardcoreSpawnRadiusIncreaseWithProgress.class, bool),
+				"This toggle controls the Hardcore Spawn expansion based on game progression. Default: False.")
+				.register();
+		config.updatePath("ExpandableHardcoreSpawn", "world.expandable-hcs");
+		this.createModifiableProperty(config, "world.bed-spawn-point-toggle", false,
+				bool -> shouldBedsSetSpawn = bool,
+				"Enabling this allows a bed to set your spawn. This is implemented in a slightly janky way, ala fixed /setspawn. Default: False.")
+				.register();
+		config.updatePath("ShouldBedsSetSpawn", "world.bed-spawn-point-toggle");
+
+		config.registerCategoryComment("mobs", "*** MOB CONFIGS ***");
+		this.createModifiableProperty(config, "mobs.animageddon", false,
+				bool -> animageddonToggle = bool,
+				"A toggle for all of the BTW's Animageddon. Default: False.")
+				.register();
+		this.createModifiableProperty(config, "mobs.do-baby-animals-eat-loose-food", false,
+				bool -> canBabyAnimalEatLooseFood = bool,
+				"A toggle to re-introduce baby animal eating food off of ground. This only works while Animageddon is turned off. Default: False.")
+				.register();
+		config.updatePath("CanBabyAnimalEatLooseFood", "mobs.do-baby-animals-eat-loose-food");
+		this.createModifiableProperty(config, "mobs.chicken-jockey", false,
+				bool -> chickenJockeyToggle = bool,
+				"This toggles spawning of buggy chicken jockeys. Default: False.")
+				.register();
+		config.updatePath("ChickenJockeyToggle", "mobs.chicken-jockey");
+		this.createModifiableProperty(config, "mobs.hoofsies-toggle", false,
+				bool -> BTWDifficulties.CLASSIC.modifyParam(DifficultyParam.ShouldLargeAnimalsKick.class, bool),
+				"This toggles the HC Hoofsies mechanic from BTW. This only affects the Classic+ difficulty. Default: False.")
+				.register();
+		config.updatePath("HCHoofsiesToggle", "mobs.hoofsies-toggle");
+		this.createModifiableProperty(config, "mobs.hoofsies-strength", 1d,
+				floatValue -> BTWDifficulties.CLASSIC.modifyParam(DifficultyParam.AnimalKickStrengthMultiplier.class, (float)(double)floatValue),
+				"Strength multiplier of 1 makes kicking animals deal 7 HP. Strength multiplier of 0.5 makes kicking animals deal 3 HP (rounded down). This only affects the Classic+ difficulty. Default: False.")
+				.setMinMax(0.1d, 10d).register();
+		config.updatePath("StrongerHoofsies", "mobs.hoofsies-strength");
+
+		config.registerCategoryComment("synchronized", "*** SYNCHRONIZED CONFIGS ***");
+		this.createSynchronizedProperty(config, "synchronized.world.passable-leaves", false,
+				bool -> passableLeaves = bool,
+				"This toggles the passable leaves functionality. Default: False.")
+				.register();
+		config.updatePath("PassableLeaves", "synchronized.world.passable-leaves");
+		this.createSynchronizedProperty(config, "synchronized.world.hcs-toggle", false,
+				bool -> BTWDifficulties.CLASSIC.modifyParam(DifficultyParam.ShouldPlayersHardcoreSpawn.class, bool),
+				"This toggles the HC Spawn mechanic from BTW. This only affects the Classic+ difficulty. Default: False.")
+				.register();
+		config.updatePath("HardcoreSpawnToggle", "synchronized.world.hcs-toggle");
+		this.createSynchronizedProperty(config, "synchronized.world.vanilla-buckets", true,
+				bool -> vanillaifyBuckets = bool,
+				"This option re-introduces vanilla bucket mechanics. This makes screw pumps useless. Default: True.")
+				.register();
+		config.updatePath("VanillaifyBuckets", "synchronized.world.vanilla-buckets");
+		this.createSynchronizedProperty(config, "synchronized.anvil.yeet-too-expensive", true,
+				bool -> yeetTooExpensive = bool, "Removes the Too Expensive! limit if enabled. Default: True.")
+				.register();
+		config.updatePath("YeetTooExpensive", "synchronized.anvil.yeet-too-expensive");
+		this.createSynchronizedProperty(config, "synchronized.crafting.hand-planks", 2,
+				integer -> planksHandChopped = MathHelper.clamp_int(integer, 1, 64),
+				"The amount of planks you get from just using logs on a grid. Default: 2")
+				.setMinMax(1, 64).register();
+		config.updatePath("PlanksFromHand", "synchronized.crafting.hand-planks");
+		this.createSynchronizedProperty(config, "synchronized.crafting.stone-axe-planks", 3,
+				integer -> planksWithStoneAxe = MathHelper.clamp_int(integer, 1, 64),
+				"The amount of planks you get with stone axe. Default: 3")
+				.setMinMax(1, 64).register();
+		config.updatePath("PlanksWithStoneAxe", "synchronized.crafting.stone-axe-planks");
+		this.createSynchronizedProperty(config, "synchronized.crafting.iron-axe-planks", 4,
+				integer -> planksWithIronAxes = MathHelper.clamp_int(integer, 1, 64),
+				"The amount of planks you get with iron or better axe. Default: 4")
+				.setMinMax(1, 64).register();
+		config.updatePath("PlanksWithIronAxes", "synchronized.crafting.iron-axe-planks");
+		this.createSynchronizedProperty(config, "synchronized.crafting.saw-planks", 6,
+				integer -> planksWithSaw = MathHelper.clamp_int(integer, 1, 64),
+				"The amount of planks you get from sawing logs. Default: 6")
+				.setMinMax(1, 64).register();
+		config.updatePath("PlanksWithSaw", "synchronized.crafting.saw-planks");
+
+		config.registerCategoryComment("synchronized.silly", "*** Silly Synchronized Configs ***");
+		this.createSynchronizedProperty(config, "synchronized.silly.crafting.wicker-weaving", false,
+				bool -> wickerWeavingToggle = bool,
+				"Wicker weaving crafting recipe toggle. This applies to all difficulties. Default: False.")
+				.register();
+		config.updatePath("WickerWeavingToggle", "synchronized.silly.crafting.wicker-weaving");
+		this.createSynchronizedProperty(config, "synchronized.silly.world.hc-stump", false,
+				bool -> hardcoreStump = bool,
+				"Enabling this allows chisels to make work stumps from tree stumps. This applies to all difficulties. Default: False.")
+				.register();
+		config.updatePath("HardcoreStump", "synchronized.silly.world.hc-stump");
+	}
+
 	@Override
 	public void preInitialize() {
 		VANILLA_DIFFICULTY_LEVEL.register();
-		synchronizedConfigProperties = new Hashtable<>();
-		synchronizedPropertyNames = new ArrayList<>(11);
-		this.registerProperty("DegranularizeHungerSystem", "False", "Enabling this makes the granular hunger system act like the vanilla hunger system.");
-		this.registerProperty("ModernExhaustionValues", "False", "This is a toggle for the modern exhaustion values, best suited for an addon like BTWG.");
-		this.registerProperty("QuickHealToggle", "False", "This is a toggle for vMC 1.9+ regeneration system. False (Off) by default.");
-		this.registerProperty("QuickHealTicks", "40", "How quickly the regen occurs. 20 ticks = 1 second. 10 ticks is vanilla, 40 ticks is Tetro48's suggested value.");
-		this.registerProperty("CursedDifficultyMode", "False", "Allow changing BTW difficulty, but marking it cursed");
-		this.registerProperty("GloomToggle", "False", "This toggles gloom effect. Default: False.");
-		this.registerPropertyClientOnly("VisualNewMoonBrightnessLevel", "0", "This is purely a visual setting... \n# 0: Pitch black. 1: A tiny bit of light");
-		this.registerProperty("IntentionalHungerRegenOffset", "True", "This shifts the regen stop region to be below 8.6 shanks instead of below 9 shanks.\n# This makes regen feel much more consistent, even if internally, it may not exactly match up. Default: True.");
-		this.registerProperty("GuaranteedSeedDrop", "True", "This makes sure that crop seeds will always drop, no matter the growth stage, just like in modern vanilla. Default: True.");
-		this.registerProperty("HempSeedDropFromTallGrass", "True", "This toggles the 1% drop chance for hemp seeds from tall grass. Default: True.");
-		this.registerProperty("ExpandableHardcoreSpawn", "False", "This toggle controls the Hardcore Spawn expansion based on game progression. Default: False.");
-		this.registerProperty("ShouldBedsSetSpawn", "False", "Enabling this allows a bed to set your spawn. This is implemented in a slightly janky way, ala fixed /setspawn. Default: False.");
-		this.registerProperty("CanBabyAnimalEatLooseFood", "False",
-				" *** ANIMAL CONFIGS ***\n\n# A toggle to re-introduce the bug with baby animal eating off of ground. This only works while Animageddon is turned off. Default: False.");
-		this.registerProperty("ChickenJockeyToggle", "False", "This toggles spawning of buggy chicken jockeys. Default: False.");
-		this.registerProperty("HCHoofsiesToggle", "False", "This toggles the HC Hoofsies mechanic from BTW. This only affects the Classic+ difficulty. Default: False.");
-		this.registerProperty("StrongerHoofsies", "False", "Toggling this on makes kicking animals deal 7 HP. This only affects the Classic+ difficulty. Default: False.");
-		this.registerSynchronizedProperty("PassableLeaves", "False",
-				string -> passableLeaves = Boolean.parseBoolean(string),
-				" *** SYNCHRONIZED PROPERTIES ***\n\n# This toggles the passable leaves functionality. Default: False.");
-		this.registerSynchronizedProperty("HardcoreSpawnToggle", "False",
-				string -> Difficulties.CLASSIC.modifyParam(DifficultyParam.ShouldPlayersHardcoreSpawn.class, Boolean.parseBoolean(string)),
-				"This toggles the HC Spawn mechanic from BTW. This only affects the Classic+ difficulty. Default: False.");
-		this.registerSynchronizedProperty("VanillaifyBuckets", "True",
-				string -> vanillaifyBuckets = Boolean.parseBoolean(string),
-				"This option re-introduces vanilla bucket mechanics. This makes screw pumps useless. Default: True.");
-		this.registerSynchronizedProperty("YeetTooExpensive", "True",
-				string -> yeetTooExpensive = Boolean.parseBoolean(string), "Removes the Too Expensive! limit if enabled. Default: True.");
-		this.registerSynchronizedProperty("PlanksFromHand", "2",
-				string -> planksHandChopped = MathHelper.clamp_int(Integer.parseInt(string), 1, 64),
-				"The amount of planks you get from just using logs on a grid. Default: 2");
-		this.registerSynchronizedProperty("PlanksWithStoneAxe", "3",
-				string -> planksWithStoneAxe = MathHelper.clamp_int(Integer.parseInt(string), 1, 64),
-				"The amount of planks you get with stone axe. Default: 3");
-		this.registerSynchronizedProperty("PlanksWithIronAxes", "4",
-				string -> planksWithIronAxes = MathHelper.clamp_int(Integer.parseInt(string), 1, 64),
-				"The amount of planks you get with iron or better axe. Default: 4");
-		this.registerSynchronizedProperty("PlanksWithSaw", "6",
-				string -> planksWithSaw = MathHelper.clamp_int(Integer.parseInt(string), 1, 64),
-				"The amount of planks you get from sawing planks. Default: 6");
-		this.registerSynchronizedProperty("WickerWeavingToggle", "False",
-				string -> wickerWeavingToggle = Boolean.parseBoolean(string),
-				" *** Silly Synchronized Configs *** \n\n# Wicker weaving crafting recipe toggle. This applies to all difficulties. Default: False.");
-		this.registerSynchronizedProperty("HardcoreStump", "False",
-				string -> hardcoreStump = Boolean.parseBoolean(string),
-				"Enabling this allows chisels to make work stumps from tree stumps. This applies to all difficulties. Default: False.");
+		modifiableConfigProperties = new Hashtable<>();
+		modifiablePropertyNames = new ArrayList<>(11);
+		BTWDifficulties.CLASSIC.modifyParam(DifficultyParam.HungerIntensiveActionCostMultiplier.class, 1f);
 	}
 
-	public void registerSynchronizedProperty(String propertyName, String defaultValue, Consumer<String> callback, String comment) {
-		this.registerProperty(propertyName, defaultValue, comment);
-		synchronizedConfigProperties.put(propertyName, new SynchronizedConfigProperty(propertyName, defaultValue, callback));
-		synchronizedPropertyNames.add(propertyName);
+	public <T> ModifiableConfigProperty<T> createModifiableProperty(AddonConfig config, String propertyName, T defaultValue, Consumer<T> callback, String... comments) {
+		return createModifiableProperty(config, propertyName,defaultValue, false, callback, comments);
+	}
+	public <T> ModifiableConfigProperty<T> createSynchronizedProperty(AddonConfig config, String propertyName, T defaultValue, Consumer<T> callback, String comments) {
+		return createModifiableProperty(config, propertyName,defaultValue, true, callback, comments);
+	}
+	private <T> ModifiableConfigProperty<T> createModifiableProperty(AddonConfig config, String propertyName, T defaultValue, boolean sync, Consumer<T> callback, String... comments) {
+		if (!modifiablePropertyNames.contains(propertyName))
+		{
+			ModifiableConfigProperty<T> configProperty = new ModifiableConfigProperty<T>(config, propertyName, defaultValue, true, callback, comments);
+			modifiableConfigProperties.put(propertyName, configProperty);
+			modifiablePropertyNames.add(propertyName);
+			return configProperty;
+		}
+		else return (ModifiableConfigProperty<T>) modifiableConfigProperties.get(propertyName);
 	}
 
 	public static void resetAllSynchronizedPropertyValues() {
-		synchronizedConfigProperties.forEach((k, v) -> v.resetExternalValue());
-	}
-
-	public void registerPropertyClientOnly(String propertyName, String defaultValue, String comment) {
-		if (!MinecraftServer.getIsServer()) {
-			this.registerProperty(propertyName, defaultValue, comment);
-		}
+		modifiableConfigProperties.forEach((k, v) -> v.resetExternalValue());
 	}
 
 	public static void sendPacketToAllPlayers(Packet packet) {
@@ -244,14 +333,14 @@ public class ClassicAddon extends BTWAddon {
 				try {
 					while (dataStream.available() > 0) {
 						String propertyName = dataStream.readUTF();
-						SynchronizedConfigProperty configProperty = synchronizedConfigProperties.get(propertyName);
-						String stringValue = dataStream.readUTF();
+						ModifiableConfigProperty<?> configProperty = modifiableConfigProperties.get(propertyName);
 						if (configProperty != null) {
-							configProperty.setExternalValue(stringValue);
+							configProperty.setExternalValueFromDataStream(dataStream);
 						}
 					}
 				} catch (Exception ignored) {}
-				modifyPlankRecipes();
+//				//TODO: Fix this function
+//				modifyPlankRecipes();
 				// post-load only
 				if (isServerRunningThisAddon) {
 					EmiReloadManager.reload();
@@ -285,8 +374,8 @@ public class ClassicAddon extends BTWAddon {
 				}
 				if (strings[0].equals("configs")) {
 					iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("classicAddon.synchronizedConfigsI18n"));
-					synchronizedPropertyNames.forEach((propertyName) ->
-							iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromText(propertyName + ": " + synchronizedConfigProperties.get(propertyName).getInternalValue())));
+					modifiablePropertyNames.forEach((propertyName) ->
+							iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey(propertyName).addText(": " + modifiableConfigProperties.get(propertyName).getInternalValue())));
 				} else if (strings[0].equals("difficulty")) {
 					if (strings.length == 1 || !iCommandSender.canCommandSenderUseCommand(this.getRequiredPermissionLevel(), this.getCommandName())) {
 						iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromText("Mob difficulty level is " + new String[]{"Easy", "Normal", "Hard"}[MinecraftServer.getServer().worldServers[0].getData(VANILLA_DIFFICULTY_LEVEL)-1]));
@@ -300,16 +389,15 @@ public class ClassicAddon extends BTWAddon {
 					sendPacketToAllPlayers(new Packet3Chat(ChatMessageComponent.createFromText("Mob difficulty level is set to " + new String[]{"Easy", "Normal", "Hard"}[difficultyLevel-1])));
 				} else if (iCommandSender.canCommandSenderUseCommand(this.getRequiredPermissionLevel(), this.getCommandName())) {
 					if (strings[0].equals("set")) {
-						SynchronizedConfigProperty configProperty = synchronizedConfigProperties.get(strings[1]);
+						ModifiableConfigProperty<?> configProperty = modifiableConfigProperties.get(strings[1]);
 						if (configProperty == null) {
 							throw new CommandException("Incorrect property name!");
 						}
 						if (strings.length < 3) {
 							throw new WrongUsageException("/classicreimagined set " + strings[1] + " <value>");
 						}
-						iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromText("You've set property " + strings[1] + " to: " + strings[2] + ". This is temporary, to have it be permanent, this must be done by the server owner/manager."));
 						notifyAdmins(iCommandSender, "Property " + strings[1] + " has been set to: " + strings[2] + ".");
-						configProperty.setInternalValue(strings[2]);
+						configProperty.parseSetInternalValue(strings[2]);
 						configProperty.resetExternalValue();
 						sendPacketToAllPlayers(getOnJoinPacket());
 						sendPacketToAllPlayers(new Packet3Chat(ChatMessageComponent.createFromText(strings[1] + " got changed to: " + strings[2])));
@@ -328,14 +416,23 @@ public class ClassicAddon extends BTWAddon {
 					else return getListOfStringsMatchingLastWord(par2ArrayOfStr, "configs", "difficulty");
 				}
 				else if (par2ArrayOfStr.length == 2 && par2ArrayOfStr[0].equals("set")) {
-					String[] strings = synchronizedPropertyNames.toArray(new String[0]);
+					String[] strings = modifiablePropertyNames.toArray(new String[0]);
 					return getListOfStringsMatchingLastWord(par2ArrayOfStr, strings);
 				}
 				return null;
 			}
 		});
 		SoulforgeCraftingManager.getInstance().addRecipe(new ItemStack(BTWBlocks.dragonVessel),
-				new Object[]{"IGGI", "IUUI", "IHHI", "IIII", 'I', BTWItems.soulforgedSteelIngot, 'G', Block.fenceIron, 'U', BTWItems.urn, 'H', new ItemStack(BTWBlocks.aestheticOpaque, 1, 3)});
+				new Object[]{
+						"IGGI",
+						"IUUI",
+						"IHHI",
+						"IIII",
+						'I', BTWItems.soulforgedSteelIngot,
+						'G', Block.fenceIron,
+						'U', BTWItems.urn,
+						'H', new ItemStack(BTWBlocks.aestheticOpaque, 1, 3)}
+		);
 		CauldronCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.heartyStew, 5), new ItemStack[]{new ItemStack(BTWItems.boiledPotato), new ItemStack(BTWItems.cookedCarrot), new ItemStack(BTWItems.brownMushroom, 3), new ItemStack(BTWItems.flour), new ItemStack(BTWItems.cookedMysteryMeat), new ItemStack(Item.bowlEmpty, 5)});
 	}
 
@@ -343,7 +440,7 @@ public class ClassicAddon extends BTWAddon {
 	public void postInitialize() {
 		super.postInitialize();
 		DebugInfoSection coordinateInfoSection = DebugRegistryUtils.registerSection(loc("coordinates"), DebugRegistryUtils.Side.LEFT);
-		coordinateInfoSection.orderSectionWithPriority(BTWDebugRegistry.chunksServerSectionID, 1);
+		coordinateInfoSection.orderSection(DebugRegistry.chunksServerSectionID, 1);
 		coordinateInfoSection.addEntry((mc, isExtendedDebug) -> {
 			if (!isExtendedDebug && ClassicAddon.isServerRunningThisAddon) {
 				boolean isPlayerHoldingCompass = mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().itemID == Item.compass.itemID;
@@ -367,7 +464,7 @@ public class ClassicAddon extends BTWAddon {
 					direction = "+X";
 					string4 = "E";
 				}
-				return Optional.of(String.format(java.util.Locale.ROOT, "XYZ: %.3f / %.3f / %.3f", mc.thePlayer.posX, mc.thePlayer.boundingBox.minY, mc.thePlayer.posZ) + "\n"
+				return Optional.of(String.format(Locale.ROOT, "XYZ: %.3f / %.3f / %.3f", mc.thePlayer.posX, mc.thePlayer.boundingBox.minY, mc.thePlayer.posZ) + "\n"
 						+ String.format(Locale.ROOT, "Facing: %s (%s) (%.1f / %.1f)", direction, string4, yaw, MathHelper.wrapAngleTo180_float(mc.thePlayer.rotationPitch)));
 			}
 			return Optional.empty();
@@ -375,7 +472,7 @@ public class ClassicAddon extends BTWAddon {
 	}
 
 	public void initializeAchievements() {
-		AchievementProvider.NameStep<ItemStack> builder = AchievementProvider.getBuilder(BTWAchievementEvents.ItemEvent.class);
+		AchievementProvider.NameStep<ItemStack> builder = AchievementProvider.getBuilder(AchievementEvents.ItemEvent.class);
 		GET_WOOD_ACHIEVEMENT = builder.name(loc("mine_wood"))
 				.icon(Block.wood)
 				.displayLocation(-2, 0)
@@ -452,7 +549,10 @@ public class ClassicAddon extends BTWAddon {
 	}
 
 	public void initializeTags() {
-		looseCobblestonesTag = Tag.of(loc("loose_cobblestones"), new ItemStack(BTWBlocks.looseCobblestone, 1, 0), new ItemStack(BTWBlocks.looseCobblestone, 1, 4), new ItemStack(BTWBlocks.looseCobblestone, 1, 8));
+		looseCobblestonesTag = Tag.of(loc("loose_cobblestones"),
+				new ItemStack(BTWBlocks.looseCobblestone, 1, 0),
+				new ItemStack(BTWBlocks.looseCobblestone, 1, 4),
+				new ItemStack(BTWBlocks.looseCobblestone, 1, 8));
 		anyCobblestoneTag = Tag.of(loc("any_cobblestone"), looseCobblestonesTag, BTWTags.cobblestones);
 	}
 

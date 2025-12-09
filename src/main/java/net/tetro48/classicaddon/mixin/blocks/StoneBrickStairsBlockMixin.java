@@ -1,8 +1,7 @@
 package net.tetro48.classicaddon.mixin.blocks;
 
+import api.block.blocks.StairsBlock;
 import btw.block.BTWBlocks;
-import btw.block.blocks.CobblestoneStairsBlock;
-import btw.block.blocks.StairsBlock;
 import btw.block.blocks.StoneBrickStairsBlock;
 import net.minecraft.src.Block;
 import net.minecraft.src.EntityPlayer;

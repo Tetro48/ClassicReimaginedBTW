@@ -1,6 +1,6 @@
 package net.tetro48.classicaddon.mixin.entity;
 
-import btw.world.util.WorldUtils;
+import api.world.WorldUtils;
 import net.minecraft.src.*;
 import net.tetro48.classicaddon.ForceDespawnableEntity;
 import org.spongepowered.asm.mixin.Mixin;

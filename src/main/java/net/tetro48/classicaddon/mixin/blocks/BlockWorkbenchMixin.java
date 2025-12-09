@@ -1,6 +1,6 @@
 package net.tetro48.classicaddon.mixin.blocks;
 
-import btw.block.util.Flammability;
+import api.block.util.Flammability;
 import net.minecraft.src.Block;
 import net.minecraft.src.BlockWorkbench;
 import net.minecraft.src.CreativeTabs;

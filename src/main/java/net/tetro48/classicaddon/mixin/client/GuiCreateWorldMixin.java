@@ -2,7 +2,7 @@ package net.tetro48.classicaddon.mixin.client;
 
 import btw.client.gui.LockButton;
 import btw.community.classicaddon.ClassicAddon;
-import btw.world.util.difficulty.Difficulties;
+import btw.world.BTWDifficulties;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.src.*;
 import net.tetro48.classicaddon.VanillaDifficultyWorldSetting;
@@ -31,7 +31,7 @@ public abstract class GuiCreateWorldMixin extends GuiScreen {
 
 	@Inject(method = "<init>", at = @At("RETURN"))
 	public void forceClassicOnInit(CallbackInfo ci) {
-		difficultyID = Difficulties.CLASSIC.index;
+		difficultyID = BTWDifficulties.CLASSIC.index;
 	}
 
 	@Inject(method = "initGui", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/GuiCreateWorld;updateButtonText()V"))
@@ -62,13 +62,13 @@ public abstract class GuiCreateWorldMixin extends GuiScreen {
 
 	@Inject(method = "updateButtonText", at = @At("RETURN"))
 	public void changeDifficultyText(CallbackInfo ci) {
-		if (difficultyID != Difficulties.CLASSIC.index) {
-			this.buttonDifficultyLevel.displayString = I18n.getString("selectWorld.difficulty") + ": " + I18n.getStringParams("classicAddon.selectWorld.cursedDifficulty", Difficulties.DIFFICULTY_LIST.get(this.difficultyID).getLocalizedName());
+		if (difficultyID != BTWDifficulties.CLASSIC.index) {
+			this.buttonDifficultyLevel.displayString = I18n.getString("selectWorld.difficulty") + ": " + I18n.getStringParams("classicAddon.selectWorld.cursedDifficulty", BTWDifficulties.DIFFICULTY_LIST.get(this.difficultyID).getLocalizedName());
 			if (FabricLoader.getInstance().isModLoaded("nightmare_mode")) {
-				if (difficultyID == Difficulties.HOSTILE.index) {
+				if (difficultyID == BTWDifficulties.HOSTILE.index) {
 					this.buttonDifficultyLevel.displayString = I18n.getString("selectWorld.difficulty") + ": " + I18n.getStringParams("classicAddon.selectWorld.cursedDifficulty", I18n.getString("classicAddon.selectWorld.nmCompat.nightmare"));
 				}
-				else if (difficultyID == Difficulties.STANDARD.index) {
+				else if (difficultyID == BTWDifficulties.STANDARD.index) {
 					this.buttonDifficultyLevel.displayString = I18n.getString("selectWorld.difficulty") + ": " + I18n.getStringParams("classicAddon.selectWorld.cursedDifficulty", I18n.getString("classicAddon.selectWorld.nmCompat.baddream"));
 				}
 			}
@@ -77,8 +77,9 @@ public abstract class GuiCreateWorldMixin extends GuiScreen {
 			this.buttonDifficultyLevel.displayString += "+";
 		}
 	}
-	@Inject(method = "func_82288_a", at = @At("TAIL"))
-	public void hideDifficultyLock(boolean par1, CallbackInfo ci) {
-		buttonLockDifficulty.drawButton = !par1;
-	}
+	// TODO: fix this for a full 3.0 release
+//	@Inject(method = "func_82288_a", at = @At("TAIL"))
+//	public void hideDifficultyLock(boolean par1, CallbackInfo ci) {
+//		buttonLockDifficulty.drawButton = !par1;
+//	}
 }

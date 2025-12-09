@@ -1,6 +1,6 @@
 package net.tetro48.classicaddon.mixin.blocks;
 
-import btw.block.blocks.CropsBlock;
+import api.block.blocks.CropsBlock;
 import btw.block.blocks.PlantsBlock;
 import btw.community.classicaddon.ClassicAddon;
 import net.minecraft.src.Material;

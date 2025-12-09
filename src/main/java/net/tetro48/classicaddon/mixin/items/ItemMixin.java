@@ -26,7 +26,7 @@ public abstract class ItemMixin implements InterfaceItemEMI {
 		return (Item)(Object)this;
 	}
 
-	@ModifyArg(method = "<clinit>", index = 2, at = @At(ordinal = 0, value = "INVOKE", target = "Lbtw/item/items/PickaxeItem;<init>(ILnet/minecraft/src/EnumToolMaterial;I)V"))
+	@ModifyArg(method = "<clinit>", index = 2, at = @At(ordinal = 0, value = "INVOKE", target = "Lapi/item/items/PickaxeItem;<init>(ILnet/minecraft/src/EnumToolMaterial;I)V"))
 	private static int changeWoodPickDurability(int par1) {
 		return 59;
 	}
@@ -94,19 +94,19 @@ public abstract class ItemMixin implements InterfaceItemEMI {
 	private static float changeChickenCookedSaturation(float par3) {
 		return 1.2f;
 	}
-	@ModifyArg(method = "<clinit>", index = 1, at = @At(ordinal = 1, value = "INVOKE", target = "Lbtw/item/items/SeedFoodItem;<init>(IIFI)V"))
+	@ModifyArg(method = "<clinit>", index = 1, at = @At(ordinal = 1, value = "INVOKE", target = "Lapi/item/items/SeedFoodItem;<init>(IIFI)V"))
 	private static int changeRawPotato(int par1) {
 		return 6;
 	}
-	@ModifyArg(method = "<clinit>", index = 2, at = @At(ordinal = 1, value = "INVOKE", target = "Lbtw/item/items/SeedFoodItem;<init>(IIFI)V"))
+	@ModifyArg(method = "<clinit>", index = 2, at = @At(ordinal = 1, value = "INVOKE", target = "Lapi/item/items/SeedFoodItem;<init>(IIFI)V"))
 	private static float changeRawPotatoSaturation(float fSaturationModifier) {
 		return 0.6f;
 	}
-	@ModifyArg(method = "<clinit>", index = 1, at = @At(ordinal = 2, value = "INVOKE", target = "Lbtw/item/items/SeedFoodItem;<init>(IIFI)V"))
+	@ModifyArg(method = "<clinit>", index = 1, at = @At(ordinal = 2, value = "INVOKE", target = "Lapi/item/items/SeedFoodItem;<init>(IIFI)V"))
 	private static int changeRawCarrot(int par1) {
 		return 9;
 	}
-	@ModifyArg(method = "<clinit>", index = 2, at = @At(ordinal = 2, value = "INVOKE", target = "Lbtw/item/items/SeedFoodItem;<init>(IIFI)V"))
+	@ModifyArg(method = "<clinit>", index = 2, at = @At(ordinal = 2, value = "INVOKE", target = "Lapi/item/items/SeedFoodItem;<init>(IIFI)V"))
 	private static float changeRawCarrotSaturation(float fSaturationModifier) {
 		return 0.6f;
 	}
@@ -146,7 +146,7 @@ public abstract class ItemMixin implements InterfaceItemEMI {
 	private static float changeMelonSliceSaturation(float fSaturationModifier) {
 		return 0.6f;
 	}
-	@ModifyArg(method = "<clinit>", index = 1, at = @At(ordinal = 0, value = "INVOKE", target = "Lbtw/item/items/SeedFoodItem;<init>(IIFI)V"))
+	@ModifyArg(method = "<clinit>", index = 1, at = @At(ordinal = 0, value = "INVOKE", target = "Lapi/item/items/SeedFoodItem;<init>(IIFI)V"))
 	private static int changePumpkinSeeds(int par1) {
 		return 2;
 	}

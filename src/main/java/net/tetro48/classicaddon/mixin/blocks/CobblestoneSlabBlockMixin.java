@@ -34,11 +34,11 @@ public abstract class CobblestoneSlabBlockMixin extends Block {
 	public void makeItDropItself(CallbackInfoReturnable<Integer> cir) {
 		cir.setReturnValue(BTWBlocks.cobblestoneSlab.blockID);
 	}
+	@Inject(method = "damageDropped", at = @At("RETURN"), cancellable = true)
+	public void dropCorrectStrataCobble(int metadata, CallbackInfoReturnable<Integer> cir) {
+		cir.setReturnValue(this.getStrata(metadata));
+	}
 	public int damageDropped(int metadata) {
 		return this.getStrata(metadata) & 3;
-	}
-	@Inject(method = "getHarvestToolLevel", at = @At("RETURN"), cancellable = true)
-	public void makeItMineableByAnyPickaxe(IBlockAccess blockAccess, int i, int j, int k, CallbackInfoReturnable<Integer> cir) {
-		cir.setReturnValue(0);
 	}
 }

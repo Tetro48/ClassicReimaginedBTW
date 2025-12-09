@@ -1,11 +1,10 @@
 package net.tetro48.classicaddon.mixin.blocks;
 
+import api.world.WorldUtils;
 import btw.block.BTWBlocks;
 import btw.block.blocks.AnvilBlock;
 import btw.block.model.AnvilModel;
 import btw.block.model.BlockModel;
-import btw.client.render.util.RenderUtils;
-import btw.world.util.WorldUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.src.*;

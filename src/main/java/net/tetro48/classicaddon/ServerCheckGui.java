@@ -32,7 +32,7 @@ public class ServerCheckGui extends GuiScreen {
 		if (!ClassicAddon.isServerRunningThisAddon) {
 			this.ticksUntilKick--;
 			if (this.ticksUntilKick <= 0) {
-				Packet255KickDisconnect kickDisconnect = new Packet255KickDisconnect("Kicked by Classic Re-Imagined addon");
+				Packet255KickDisconnect kickDisconnect = new Packet255KickDisconnect("Kicked by Classic Re-imagined addon");
 				this.mc.getNetHandler().quitWithPacket(kickDisconnect);
 				this.mc.loadWorld(null);
 				this.mc.displayGuiScreen(new GuiDisconnected(new GuiMultiplayer(new GuiMainMenu()), "disconnect.timeout", "disconnect.failedCheckForCR"));

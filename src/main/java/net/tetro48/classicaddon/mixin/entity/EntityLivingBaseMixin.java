@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(EntityLivingBase.class)
 public abstract class EntityLivingBaseMixin {
-	@Redirect(method = "getSpeedModifier", at = @At(value = "INVOKE", target = "Lbtw/world/util/WorldUtils;isGroundCoverOnBlock(Lnet/minecraft/src/IBlockAccess;III)Z"))
+	@Redirect(method = "getSpeedModifier", at = @At(value = "INVOKE", target = "Lapi/world/WorldUtils;isGroundCoverOnBlock(Lnet/minecraft/src/IBlockAccess;III)Z"))
 	private boolean noSlowdownFromGroundCovers(IBlockAccess blockAbove, int blockAccess, int i, int j) {
 		return false;
 	}

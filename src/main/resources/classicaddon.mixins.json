@@ -22,7 +22,7 @@
     "MaterialMixin",
     "PistonPackingRecipeListMixin",
     "PlayerControllerMPMixin",
-    "PlayerStatusEffectsMixin",
+    "BTWPlayerStatusesMixin",
     "RecipeFireworksMixin",
     "SawRecipeListMixin",
     "SmeltingRecipeListMixin",

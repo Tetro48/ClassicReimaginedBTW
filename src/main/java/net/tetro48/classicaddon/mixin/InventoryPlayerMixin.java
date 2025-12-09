@@ -1,9 +1,9 @@
 package net.tetro48.classicaddon.mixin;
 
+import api.item.items.HoeItem;
 import btw.block.blocks.WorkStumpBlock;
 import btw.community.classicaddon.ClassicAddon;
 import btw.item.items.ChiselItem;
-import btw.item.items.HoeItem;
 import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

@@ -1,6 +1,6 @@
 package net.tetro48.classicaddon.mixin.blocks;
 
-import btw.block.blocks.FullBlock;
+import api.block.blocks.FullBlock;
 import net.minecraft.src.BlockStone;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.Material;

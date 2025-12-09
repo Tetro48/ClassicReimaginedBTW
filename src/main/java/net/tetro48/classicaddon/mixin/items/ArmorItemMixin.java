@@ -1,6 +1,6 @@
 package net.tetro48.classicaddon.mixin.items;
 
-import btw.item.items.ArmorItem;
+import api.item.items.ArmorItem;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

@@ -1,10 +1,10 @@
 package net.tetro48.classicaddon.mixin.blocks;
 
+import api.block.blocks.FullBlock;
+import api.item.items.HoeItem;
+import api.world.BlockPos;
 import btw.block.BTWBlocks;
 import btw.block.blocks.FarmlandBlock;
-import btw.block.blocks.FullBlock;
-import btw.item.items.HoeItem;
-import btw.world.util.BlockPos;
 import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;

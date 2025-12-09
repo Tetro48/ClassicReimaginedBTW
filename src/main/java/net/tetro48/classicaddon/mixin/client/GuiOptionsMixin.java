@@ -1,7 +1,7 @@
 package net.tetro48.classicaddon.mixin.client;
 
-import btw.world.util.difficulty.Difficulties;
-import btw.world.util.difficulty.Difficulty;
+import api.world.difficulty.Difficulty;
+import btw.world.BTWDifficulties;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.*;
@@ -18,13 +18,13 @@ public abstract class GuiOptionsMixin {
 		Difficulty difficulty = MinecraftServer.getServer().worldServers[0].worldInfo.getDifficulty();
 		var6.displayString = I18n.getString("selectWorld.difficulty") + ": " + difficulty.getLocalizedName();
 		var6.width += 20;
-		if (difficulty != Difficulties.CLASSIC) {
+		if (difficulty != BTWDifficulties.CLASSIC) {
 			var6.displayString = I18n.getString("selectWorld.difficulty") + ": " + I18n.getStringParams("classicAddon.selectWorld.cursedDifficulty", difficulty.getLocalizedName());
 			if (FabricLoader.getInstance().isModLoaded("nightmare_mode")) {
-				if (difficulty == Difficulties.HOSTILE) {
+				if (difficulty == BTWDifficulties.HOSTILE) {
 					var6.displayString = I18n.getString("selectWorld.difficulty") + ": " + I18n.getStringParams("classicAddon.selectWorld.cursedDifficulty", I18n.getString("classicAddon.selectWorld.nmCompat.nightmare"));
 				}
-				else if (difficulty == Difficulties.STANDARD) {
+				else if (difficulty == BTWDifficulties.STANDARD) {
 					var6.displayString = I18n.getString("selectWorld.difficulty") + ": " + I18n.getStringParams("classicAddon.selectWorld.cursedDifficulty", I18n.getString("classicAddon.selectWorld.nmCompat.baddream"));
 				}
 			}
@@ -40,13 +40,13 @@ public abstract class GuiOptionsMixin {
 		}
 		Difficulty difficulty = MinecraftServer.getServer().worldServers[0].worldInfo.getDifficulty();
 		par1GuiButton.displayString = I18n.getString("selectWorld.difficulty") + ": " + difficulty.getLocalizedName();
-		if (difficulty != Difficulties.CLASSIC) {
+		if (difficulty != BTWDifficulties.CLASSIC) {
 			par1GuiButton.displayString = I18n.getString("selectWorld.difficulty") + ": " + I18n.getStringParams("classicAddon.selectWorld.cursedDifficulty", difficulty.getLocalizedName());
 			if (FabricLoader.getInstance().isModLoaded("nightmare_mode")) {
-				if (difficulty == Difficulties.HOSTILE) {
+				if (difficulty == BTWDifficulties.HOSTILE) {
 					par1GuiButton.displayString = I18n.getString("selectWorld.difficulty") + ": " + I18n.getStringParams("classicAddon.selectWorld.cursedDifficulty", I18n.getString("classicAddon.selectWorld.nmCompat.nightmare"));
 				}
-				else if (difficulty == Difficulties.STANDARD) {
+				else if (difficulty == BTWDifficulties.STANDARD) {
 					par1GuiButton.displayString = I18n.getString("selectWorld.difficulty") + ": " + I18n.getStringParams("classicAddon.selectWorld.cursedDifficulty", I18n.getString("classicAddon.selectWorld.nmCompat.baddream"));
 				}
 			}
