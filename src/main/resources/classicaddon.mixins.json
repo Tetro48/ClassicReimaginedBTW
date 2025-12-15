@@ -4,6 +4,7 @@
   "package": "net.tetro48.classicaddon.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "BTWPlayerStatusesMixin",
     "BTWTagsMixin",
     "ContainerRepairMixin",
     "CraftingRecipeListMixin",
@@ -22,7 +23,6 @@
     "MaterialMixin",
     "PistonPackingRecipeListMixin",
     "PlayerControllerMPMixin",
-    "BTWPlayerStatusesMixin",
     "RecipeFireworksMixin",
     "SawRecipeListMixin",
     "SmeltingRecipeListMixin",
@@ -142,6 +142,7 @@
     "items.StumpRemoverItemMixin"
   ],
   "client": [
+    "GuiTextFieldAccessor",
     "client.GuiCreateWorldMixin",
     "client.GuiIngameMenuMixin",
     "client.GuiIngameMixin",

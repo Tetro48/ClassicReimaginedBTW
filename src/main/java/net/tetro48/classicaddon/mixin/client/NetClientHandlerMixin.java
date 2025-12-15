@@ -3,7 +3,7 @@ package net.tetro48.classicaddon.mixin.client;
 import net.minecraft.src.GuiScreen;
 import net.minecraft.src.Minecraft;
 import net.minecraft.src.NetClientHandler;
-import net.tetro48.classicaddon.ServerCheckGui;
+import net.tetro48.classicaddon.gui.ServerCheckGui;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;

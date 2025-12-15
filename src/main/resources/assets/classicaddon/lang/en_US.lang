@@ -1,3 +1,4 @@
+classicAddon.configTitle=Classic Re-imagined Config
 classicAddon.selectWorld.cursedDifficulty=Cursed %s
 classicAddon.selectWorld.vanillaDifficulty=Mob Difficulty: %s
 classicAddon.serverCheck.doesServerHaveCR1=Checking for signs that this server is running Classic Re-imagined...
@@ -90,7 +91,7 @@ mobs.chicken-jockey.desc=This toggles spawning of buggy chicken jockeys. Default
 mobs.hoofsies-toggle=Hardcore Hoofsies
 mobs.hoofsies-toggle.desc=This toggles the HC Hoofsies mechanic from BTW. This only affects the Classic+ difficulty. Default: False.
 mobs.hoofsies-strength=Strength of Hoofsies
-mobs.hoofsies-strength.desc=Strength multiplier of 1 makes kicking animals deal 7 HP. Strength multiplier of 0.5 makes kicking animals deal 3 HP (rounded down). This only affects the Classic+ difficulty. Default: False.
+mobs.hoofsies-strength.desc=Strength multiplier of 1 makes kicking animals deal 7 HP. Strength multiplier of 0.5 makes kicking animals deal 3 HP (rounded down). This only affects the Classic+ difficulty. Default: 1.0.
 synchronized.world.passable-leaves=Passable Leaves
 synchronized.world.passable-leaves.desc=This toggles the passable leaves functionality. Default: False.
 synchronized.world.hcs-toggle=Hardcore Spawn for Classic+

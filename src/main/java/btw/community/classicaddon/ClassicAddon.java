@@ -30,11 +30,9 @@ import emi.dev.emi.emi.runtime.EmiReloadManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.*;
 import net.tetro48.classicaddon.ModifiableConfigProperty;
+import net.tetro48.classicaddon.gui.ConfigGUI;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.*;
 import java.util.*;
 import java.util.Locale;
 import java.util.function.Consumer;
@@ -99,6 +97,7 @@ public class ClassicAddon extends BTWAddon {
 
 	private static Hashtable<String, ModifiableConfigProperty<?>> modifiableConfigProperties;
 	private static List<String> modifiablePropertyNames;
+	public static AddonConfig addonConfig;
 
 	public ClassicAddon() {
 		super();
@@ -138,6 +137,7 @@ public class ClassicAddon extends BTWAddon {
 
 	@Override
 	public void registerConfigProperties(AddonConfig config) {
+		this.addonConfig = config;
 		config.registerCategoryComment("hunger-system", "*** HUNGER SYSTEM CONFIGS ***");
 		this.createModifiableProperty(config, "hunger-system.degranularize-hunger-system", false,
 				bool -> degranularizeHungerSystem = bool,
@@ -223,7 +223,7 @@ public class ClassicAddon extends BTWAddon {
 		config.updatePath("HCHoofsiesToggle", "mobs.hoofsies-toggle");
 		this.createModifiableProperty(config, "mobs.hoofsies-strength", 1d,
 				floatValue -> BTWDifficulties.CLASSIC.modifyParam(DifficultyParam.AnimalKickStrengthMultiplier.class, (float)(double)floatValue),
-				"Strength multiplier of 1 makes kicking animals deal 7 HP. Strength multiplier of 0.5 makes kicking animals deal 3 HP (rounded down). This only affects the Classic+ difficulty. Default: False.")
+				"Strength multiplier of 1 makes kicking animals deal 7 HP. Strength multiplier of 0.5 makes kicking animals deal 3 HP (rounded down). This only affects the Classic+ difficulty. Default: 1.0.")
 				.setMinMax(0.1d, 10d).register();
 		config.updatePath("StrongerHoofsies", "mobs.hoofsies-strength");
 
@@ -310,6 +310,12 @@ public class ClassicAddon extends BTWAddon {
 		modifiableConfigProperties.forEach((k, v) -> v.resetExternalValue());
 	}
 
+	public static ModifiableConfigProperty<?>[] getModifiableConfigPropertiesAsArray() {
+		ArrayList<ModifiableConfigProperty<?>> configPropertyArrayList = new ArrayList();
+		modifiablePropertyNames.forEach((string) -> configPropertyArrayList.add(modifiableConfigProperties.get(string)));
+		return configPropertyArrayList.toArray(ModifiableConfigProperty[]::new);
+	}
+
 	public static void sendPacketToAllPlayers(Packet packet) {
 		for (Object player : MinecraftServer.getServer().getConfigurationManager().playerEntityList) {
 			if (player instanceof EntityPlayerMP) {
@@ -347,6 +353,17 @@ public class ClassicAddon extends BTWAddon {
 			}
 			isServerRunningThisAddon = true;
 		});
+		registerPacketHandler("classicaddon|openConfig", (payload, entityPlayer) -> {
+			if (payload.length > 0) {
+				ByteArrayInputStream inputStream = new ByteArrayInputStream(payload.data);
+				DataInputStream dataStream = new DataInputStream(inputStream);
+				try {
+					if (!MinecraftServer.getIsServer()) {
+						Minecraft.getMinecraft().displayGuiScreen(new ConfigGUI(null, dataStream.readBoolean()));
+					}
+				} catch (Exception ignored) {}
+			}
+		});
 		this.registerAddonCommand(new CommandBase() {
 			@Override
 			public String getCommandName() {
@@ -356,9 +373,9 @@ public class ClassicAddon extends BTWAddon {
 			@Override
 			public String getCommandUsage(ICommandSender iCommandSender) {
 				if (iCommandSender.canCommandSenderUseCommand(this.getRequiredPermissionLevel(), this.getCommandName())) {
-					return "/classicreimagined configs OR /classicreimagined set <param_name> <value> OR /classicreimagined difficulty [vanilla difficulty level]";
+					return "/classicreimagined configs [open] OR /classicreimagined set <param_name> <value> OR /classicreimagined difficulty [vanilla difficulty level]";
 				}
-				return "/classicreimagined configs OR /classicreimagined difficulty";
+				return "/classicreimagined configs [open] OR /classicreimagined difficulty";
 			}
 
 			@Override
@@ -372,6 +389,15 @@ public class ClassicAddon extends BTWAddon {
 					throw new WrongUsageException(getCommandUsage(iCommandSender));
 				}
 				if (strings[0].equals("configs")) {
+					 if (strings.length == 2 && strings[1].equals("open")) {
+						ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+						DataOutputStream dataStream = new DataOutputStream(byteStream);
+						try {
+							dataStream.writeBoolean(iCommandSender.canCommandSenderUseCommand(this.getRequiredPermissionLevel(), this.getCommandName()));
+						} catch (Exception ignored) {}
+						getCommandSenderAsPlayer(iCommandSender).playerNetServerHandler.sendPacketToPlayer(new Packet250CustomPayload("classicaddon|openConfig", byteStream.toByteArray()));
+						return;
+					}
 					iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("classicAddon.synchronizedConfigsI18n"));
 					modifiablePropertyNames.forEach((propertyName) ->
 							iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey(propertyName).addText(": " + modifiableConfigProperties.get(propertyName).getInternalValue())));
@@ -414,6 +440,8 @@ public class ClassicAddon extends BTWAddon {
 					}
 					else return getListOfStringsMatchingLastWord(par2ArrayOfStr, "configs", "difficulty");
 				}
+				else if (par2ArrayOfStr.length == 2 && par2ArrayOfStr[0].equals("configs"))
+					return getListOfStringsMatchingLastWord(par2ArrayOfStr, "open");
 				else if (par2ArrayOfStr.length == 2 && par2ArrayOfStr[0].equals("set")) {
 					String[] strings = modifiablePropertyNames.toArray(new String[0]);
 					return getListOfStringsMatchingLastWord(par2ArrayOfStr, strings);

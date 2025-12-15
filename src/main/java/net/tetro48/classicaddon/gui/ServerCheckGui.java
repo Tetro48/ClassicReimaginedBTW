@@ -1,4 +1,4 @@
-package net.tetro48.classicaddon;
+package net.tetro48.classicaddon.gui;
 
 import btw.community.classicaddon.ClassicAddon;
 import net.minecraft.src.*;
