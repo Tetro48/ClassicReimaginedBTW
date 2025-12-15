@@ -298,7 +298,7 @@ public class ClassicAddon extends BTWAddon {
 	private <T> ModifiableConfigProperty<T> createModifiableProperty(AddonConfig config, String propertyName, T defaultValue, boolean sync, Consumer<T> callback, String... comments) {
 		if (!modifiablePropertyNames.contains(propertyName))
 		{
-			ModifiableConfigProperty<T> configProperty = new ModifiableConfigProperty<T>(config, propertyName, defaultValue, true, callback, comments);
+			ModifiableConfigProperty<T> configProperty = new ModifiableConfigProperty<T>(config, propertyName, defaultValue, sync, callback, comments);
 			modifiableConfigProperties.put(propertyName, configProperty);
 			modifiablePropertyNames.add(propertyName);
 			return configProperty;
@@ -339,8 +339,7 @@ public class ClassicAddon extends BTWAddon {
 						}
 					}
 				} catch (Exception ignored) {}
-//				//TODO: Fix this function
-//				modifyPlankRecipes();
+				modifyPlankRecipes();
 				// post-load only
 				if (isServerRunningThisAddon) {
 					EmiReloadManager.reload();

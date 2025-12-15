@@ -78,8 +78,8 @@ public abstract class GuiCreateWorldMixin extends GuiScreen {
 		}
 	}
 	// TODO: fix this for a full 3.0 release
-//	@Inject(method = "func_82288_a", at = @At("TAIL"))
-//	public void hideDifficultyLock(boolean par1, CallbackInfo ci) {
-//		buttonLockDifficulty.drawButton = !par1;
-//	}
+	@Inject(method = "func_82288_a", at = @At("TAIL"))
+	public void hideDifficultyLock(boolean par1, CallbackInfo ci) {
+		buttonLockDifficulty.drawButton = !par1;
+	}
 }
