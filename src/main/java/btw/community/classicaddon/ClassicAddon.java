@@ -137,7 +137,7 @@ public class ClassicAddon extends BTWAddon {
 
 	@Override
 	public void registerConfigProperties(AddonConfig config) {
-		this.addonConfig = config;
+		addonConfig = config;
 		config.registerCategoryComment("hunger-system", "*** HUNGER SYSTEM CONFIGS ***");
 		this.createModifiableProperty(config, "hunger-system.degranularize-hunger-system", false,
 				bool -> degranularizeHungerSystem = bool,
