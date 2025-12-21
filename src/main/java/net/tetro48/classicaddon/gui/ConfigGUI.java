@@ -3,6 +3,7 @@ package net.tetro48.classicaddon.gui;
 import btw.community.classicaddon.ClassicAddon;
 import com.mojang.blaze3d.platform.Lighting;
 import net.minecraft.src.*;
+import net.tetro48.classicaddon.ConfigPropertyShell;
 import net.tetro48.classicaddon.gui.widget.ConfigOptionListWidget;
 import org.lwjgl.opengl.GL11;
 
@@ -15,17 +16,20 @@ public class ConfigGUI extends GuiScreen {
 	private GuiScreen previous;
 	private String title;
 	private boolean permissions;
-	public ConfigGUI(GuiScreen guiScreen, boolean permissions) {
+	private ConfigPropertyShell[] configProperties;
+
+	public ConfigGUI(GuiScreen guiScreen, boolean permissions, ConfigPropertyShell... configProperties) {
 		super();
 		this.previous = guiScreen;
 		this.title = I18n.getString("classicAddon.configTitle");
 		this.permissions = permissions;
+		this.configProperties = configProperties;
 	}
 
 	@Override
 	public void initGui() {
 		this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height - 24, I18n.getString("gui.done")));
-		this.list = new ConfigOptionListWidget(this.mc, this.width, this.height, 32, this.height - 32, 25, permissions, ClassicAddon.getModifiableConfigPropertiesAsArray());
+		this.list = new ConfigOptionListWidget(this.mc, this.width, this.height, 32, this.height - 32, 25, permissions, configProperties);
 	}
 
 	@Override

@@ -4,7 +4,7 @@ import btw.community.classicaddon.ClassicAddon;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.*;
-import net.tetro48.classicaddon.ModifiableConfigProperty;
+import net.tetro48.classicaddon.ConfigPropertyShell;
 import net.tetro48.classicaddon.gui.widget.entries.EntryListWidget;
 import net.tetro48.classicaddon.mixin.GuiTextFieldAccessor;
 import org.jetbrains.annotations.Nullable;
@@ -17,27 +17,29 @@ public class ConfigOptionListWidget extends EntryListWidget {
 	private final Minecraft minecraft;
 	private final List<Entry> entries = new ArrayList<>();
 
+	private static final ResourceLocation synchronizedConfigIcon = new ResourceLocation("classicaddon", "textures/gui/synchronized_config_icon.png");
+
 	private int nextId;
 	public List<String> tooltip;
 	public GuiTextField lastTextField;
-	public ModifiableConfigProperty lastConfigProperty;
+	public ConfigPropertyShell lastConfigProperty;
 
-	public ConfigOptionListWidget(Minecraft minecraft, int width, int height, int yStart, int yEnd, int entryHeight, boolean permissions, ModifiableConfigProperty ... options) {
+	public ConfigOptionListWidget(Minecraft minecraft, int width, int height, int yStart, int yEnd, int entryHeight, boolean permissions, ConfigPropertyShell ... options) {
 		super(minecraft, width, height, yStart, yEnd, entryHeight);
 		this.minecraft = minecraft;
 //        this.centerAlongY = false;
 		for (int i = 0; i < options.length; i++) {
-			ModifiableConfigProperty option = options[i];
+			ConfigPropertyShell option = options[i];
 			this.entries.add(new Entry(width, option, permissions));
 		}
 	}
 
 	@Nullable
-	private static GuiButton createWidget(final Minecraft minecraft, int id, int x, int y, int width, final @Nullable ModifiableConfigProperty option) {
+	private static GuiButton createWidget(final Minecraft minecraft, int id, int x, int y, int width, final @Nullable ConfigPropertyShell option) {
 		if (option == null) {
 			return null;
 		}
-		GuiButton button = new GuiSmallButton(id, x, y, null, option.getExternalValue().toString());
+		GuiButton button = new GuiSmallButton(id, x, y, null, option.getInternalValue().toString());
 		button.width = width;
 		return button;
 	}
@@ -66,6 +68,17 @@ public class ConfigOptionListWidget extends EntryListWidget {
 		return mouseY >= this.top && mouseY <= this.bottom && mouseX >= this.right && mouseX <= this.left;
 	}
 
+	public void drawTexturedModalRect(BufferBuilder bufferBuilder, int par1, int par2, int par3, int par4, int par5, int par6) {
+		float var7 = 0.0625F;
+		float var8 = 0.0625F;
+		bufferBuilder.startDrawingQuads();
+		bufferBuilder.addVertexWithUV(par1, par2 + par6, 0, (double)(par3) * var7, (double)(par4 + par6) * var8);
+		bufferBuilder.addVertexWithUV(par1 + par5, par2 + par6, 0, (double)(par3 + par5) * var7, (double)(par4 + par6) * var8);
+		bufferBuilder.addVertexWithUV(par1 + par5, par2, 0, (double)(par3 + par5) * var7, (double)par4 * var8);
+		bufferBuilder.addVertexWithUV(par1, par2, 0, (double)(par3) * var7, (double)par4 * var8);
+		bufferBuilder.draw();
+	}
+
 	@Override
 	protected void drawSlot(int i, int j, int k, int l, Tessellator tessellator) {
 
@@ -73,7 +86,7 @@ public class ConfigOptionListWidget extends EntryListWidget {
 
 	public final class Entry implements EntryListWidget.Entry {
 		@Nullable
-		private final ModifiableConfigProperty configProperty;
+		private final ConfigPropertyShell configProperty;
 		@Nullable
 		private final GuiButton booleanButton;
 		private final GuiTextField textField;
@@ -81,7 +94,7 @@ public class ConfigOptionListWidget extends EntryListWidget {
 		private boolean previousTextFieldFocus;
 
 
-		public Entry(int x, @Nullable ModifiableConfigProperty option, boolean permissions) {
+		public Entry(int x, @Nullable ConfigPropertyShell option, boolean permissions) {
 			if (option.getInternalValue() instanceof Boolean) {
 				booleanButton = ConfigOptionListWidget.createWidget(minecraft, nextId++, x / 2, 0, 100, option);
 				booleanButton.enabled = permissions;
@@ -99,15 +112,21 @@ public class ConfigOptionListWidget extends EntryListWidget {
 
 		@Override
 		public void render(int index, int x, int y, int width, int height, BufferBuilder bufferBuilder, int mouseX, int mouseY, boolean hovered) {
-			mc.fontRenderer.drawStringWithShadow(I18n.getString(configProperty.getPropertyName()), 15, y, 0xFFFFFF);
-			GL11.glTranslatef(15, y + 10, 0);
-			GL11.glScalef(0.5f, 0.5f, 0.5f);
+			bufferBuilder.start();
 			List<String> descriptionStringList = mc.fontRenderer.listFormattedStringToWidth(I18n.getString(configProperty.getPropertyName()+".desc"), width);
+			int listLines = descriptionStringList.size();
+			if (configProperty.canSync()) {
+				minecraft.getTextureManager().bindTexture(synchronizedConfigIcon);
+				drawTexturedModalRect(bufferBuilder, 0, y, 0, 0, 16, 16);
+			}
+			GL11.glTranslatef(15, y + 15f - (listLines * 2.5f), 0);
+			mc.fontRenderer.drawStringWithShadow(I18n.getString(configProperty.getPropertyName()), 0, -10, 0xFFFFFF);
+			GL11.glScalef(0.5f, 0.5f, 0.5f);
 			for (int i = 0; i < descriptionStringList.size(); i++) {
 				mc.fontRenderer.drawStringWithShadow(descriptionStringList.get(i), 0, i * 10, 0x7F7F7F);
 			}
 			GL11.glScalef(2f, 2f, 2f);
-			GL11.glTranslatef(-15, -y - 10, 0);
+			GL11.glTranslatef(-15, -y - 15f + (listLines * 2.5f), 0);
 			if (hovered) {
 				tooltip = mc.fontRenderer.listFormattedStringToWidth(I18n.getString(configProperty.propertyName + ".desc"), width);
 			}
@@ -120,6 +139,7 @@ public class ConfigOptionListWidget extends EntryListWidget {
 				((GuiTextFieldAccessor)this.textField).setYPos(y);
 				this.textField.drawTextBox();
 			}
+			bufferBuilder.end();
 		}
 
 		@Override

@@ -10,15 +10,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ModifiableConfigProperty<T> {
+public class ModifiableConfigProperty<T> extends ConfigPropertyShell<T> {
 	private final AddonConfig addonConfig;
 	private T externalValue;
-	private T internalValue;
-	private T min;
-	private T max;
-	public String propertyName;
 	public List<String> comments;
-	protected boolean sync;
 	public Consumer<T> callback;
 
 	public ModifiableConfigProperty(AddonConfig config, String propertyName, T defaultValue, Consumer<T> callback) {
@@ -26,11 +21,9 @@ public class ModifiableConfigProperty<T> {
 	}
 
 	public ModifiableConfigProperty(AddonConfig config, String propertyName, T defaultValue, boolean sync, Consumer<T> callback, String... comments) {
+		super(propertyName, sync, defaultValue);
 		this.addonConfig = config;
 		this.externalValue = defaultValue;
-		this.internalValue = defaultValue;
-		this.propertyName = propertyName;
-		this.sync = sync;
 		this.callback = callback;
 		this.comments = Lists.newArrayList(comments);
 	}
@@ -93,93 +86,23 @@ public class ModifiableConfigProperty<T> {
 	public T getExternalValue() {
 		return this.externalValue;
 	}
-	public T getInternalValue() {
-		return this.internalValue;
-	}
+
 	public void setInternalValue(T newValue) {
-		this.internalValue = newValue;
-		if (min != null && max != null) {
-			if (newValue instanceof Double doubleValue) {
-				newValue = doubleValue < (double)min ? min : doubleValue > (double)max ? max : newValue;
-			}
-			if (newValue instanceof Long longInt) {
-				newValue = longInt < (long)min ? min : longInt > (long)max ? max : newValue;
-			}
-			if (newValue instanceof Integer integer) {
-				newValue = (T)(Integer)MathHelper.clamp_int(integer, (int)min, (int)max);
-			}
-		}
+		super.setInternalValue(newValue);
 		this.setAddonConfigValue(newValue);
 	}
 
-	public void parseSetInternalValue(String str) {
-		if (this.internalValue instanceof Long) {
-			setInternalValue((T) (Long) Long.parseLong(str));
+	public void setExternalValueFromDataStream(DataInputStream dataStream) {
+		try {
+			this.externalValue = (T) readFromDataStream(dataStream);
 		}
-		if (this.internalValue instanceof Integer) {
-			this.setInternalValue((T) (Integer) Integer.parseInt(str));
-		}
-		if (this.internalValue instanceof Double) {
-			this.setInternalValue((T) (Double) Double.parseDouble(str));
-		}
-		if (this.internalValue instanceof Boolean) {
-			this.setInternalValue((T) (Boolean) Boolean.parseBoolean(str));
-		}
-		if (this.internalValue instanceof String) {
-			this.setInternalValue((T) str);
+		catch (Exception e) {
+
 		}
 	}
 
 	public void setInternalValueToAddonConfig() {
 		this.internalValue = getAddonConfigValue();
-	}
-
-	public void writeToDataStream(DataOutputStream dataStream) throws IOException {
-
-		if (internalValue instanceof Long longInt) {
-			dataStream.writeLong(longInt);
-		}
-		if (internalValue instanceof Integer integer) {
-			dataStream.writeLong(integer);
-		}
-		if (internalValue instanceof Double doubleValue) {
-			dataStream.writeDouble(doubleValue);
-		}
-		if (internalValue instanceof Boolean bool) {
-			dataStream.writeBoolean(bool);
-		}
-		if (internalValue instanceof String string) {
-			dataStream.writeUTF(string);
-		}
-	}
-
-	public T readFromDataStream(DataInputStream dataStream) throws IOException {
-		T value = null;
-		if (internalValue instanceof Long) {
-			value = (T)(Object) dataStream.readLong();
-		}
-		if (internalValue instanceof Integer) {
-			value = (T)(Object) dataStream.readInt();
-		}
-		if (internalValue instanceof Double) {
-			value = (T)(Object) dataStream.readDouble();
-		}
-		if (internalValue instanceof Boolean) {
-			value = (T)(Object) dataStream.readBoolean();
-		}
-		if (internalValue instanceof String) {
-			value = (T) dataStream.readUTF();
-		}
-		return value;
-	}
-
-	public void setExternalValueFromDataStream(DataInputStream dataStream) {
-		try {
-			this.externalValue = readFromDataStream(dataStream);
-		}
-		catch (Exception e) {
-
-		}
 	}
 
 	public void setExternalValue(T newValue) {
@@ -191,13 +114,7 @@ public class ModifiableConfigProperty<T> {
 		this.max = max;
 		return this;
 	}
-	public boolean canSync() {
-		return sync;
-	}
 	public void resetExternalValue() {
 		setExternalValue(this.internalValue);
-	}
-	public String getPropertyName() {
-		return this.propertyName;
 	}
 }

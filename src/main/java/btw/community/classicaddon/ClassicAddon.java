@@ -29,6 +29,7 @@ import btw.world.BTWDifficulties;
 import emi.dev.emi.emi.runtime.EmiReloadManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.*;
+import net.tetro48.classicaddon.ConfigPropertyShell;
 import net.tetro48.classicaddon.ModifiableConfigProperty;
 import net.tetro48.classicaddon.gui.ConfigGUI;
 
@@ -353,15 +354,21 @@ public class ClassicAddon extends BTWAddon {
 			}
 			isServerRunningThisAddon = true;
 		});
-		registerPacketHandler("classicaddon|openConfig", (payload, entityPlayer) -> {
-			if (payload.length > 0) {
+		registerPacketHandler("classicaddon|openCfg", (payload, entityPlayer) -> {
+			if (payload.length > 0 && !MinecraftServer.getIsServer()) {
 				ByteArrayInputStream inputStream = new ByteArrayInputStream(payload.data);
 				DataInputStream dataStream = new DataInputStream(inputStream);
 				try {
-					if (!MinecraftServer.getIsServer()) {
-						Minecraft.getMinecraft().displayGuiScreen(new ConfigGUI(null, dataStream.readBoolean()));
+					boolean permissions = dataStream.readBoolean();
+					List<ConfigPropertyShell> configPropertyShells = new ArrayList<>(30);
+					while (dataStream.available() > 0) {
+						String propertyName = dataStream.readUTF();
+						configPropertyShells.add(new ConfigPropertyShell(propertyName, dataStream.readBoolean(), ConfigPropertyShell.readFromDataStream(dataStream)));
 					}
-				} catch (Exception ignored) {}
+					Minecraft.getMinecraft().displayGuiScreen(new ConfigGUI(null, permissions, configPropertyShells.toArray(ConfigPropertyShell[]::new)));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		this.registerAddonCommand(new CommandBase() {
@@ -395,12 +402,33 @@ public class ClassicAddon extends BTWAddon {
 						try {
 							dataStream.writeBoolean(iCommandSender.canCommandSenderUseCommand(this.getRequiredPermissionLevel(), this.getCommandName()));
 						} catch (Exception ignored) {}
-						getCommandSenderAsPlayer(iCommandSender).playerNetServerHandler.sendPacketToPlayer(new Packet250CustomPayload("classicaddon|openConfig", byteStream.toByteArray()));
+						modifiableConfigProperties.forEach((propertyName, configProperty) -> {
+							try {
+								dataStream.writeUTF(propertyName);
+								dataStream.writeBoolean(configProperty.canSync());
+								configProperty.writeToDataStream(dataStream);
+							}
+							catch (Exception e) {
+								e.printStackTrace();
+							}
+						});
+						getCommandSenderAsPlayer(iCommandSender).playerNetServerHandler.sendPacketToPlayer(new Packet250CustomPayload("classicaddon|openCfg", byteStream.toByteArray()));
 						return;
 					}
+					iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("classicAddon.configsI18n"));
+					modifiablePropertyNames.forEach((propertyName) -> {
+						ModifiableConfigProperty<?> configProperty = modifiableConfigProperties.get(propertyName);
+						if (!configProperty.canSync()) {
+							iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey(propertyName).addText(": " + configProperty.getInternalValue()));
+						}
+					});
 					iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("classicAddon.synchronizedConfigsI18n"));
-					modifiablePropertyNames.forEach((propertyName) ->
-							iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey(propertyName).addText(": " + modifiableConfigProperties.get(propertyName).getInternalValue())));
+					modifiablePropertyNames.forEach((propertyName) -> {
+						ModifiableConfigProperty<?> configProperty = modifiableConfigProperties.get(propertyName);
+						if (configProperty.canSync()) {
+							iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey(propertyName).addText(": " + configProperty.getInternalValue()));
+						}
+					});
 				} else if (strings[0].equals("difficulty")) {
 					if (strings.length == 1 || !iCommandSender.canCommandSenderUseCommand(this.getRequiredPermissionLevel(), this.getCommandName())) {
 						iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromText("Mob difficulty level is " + new String[]{"Easy", "Normal", "Hard"}[MinecraftServer.getServer().worldServers[0].getData(VANILLA_DIFFICULTY_LEVEL)-1]));
