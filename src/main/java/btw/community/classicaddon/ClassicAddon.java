@@ -466,38 +466,39 @@ public class ClassicAddon extends BTWAddon {
 	@Override
 	public void postInitialize() {
 		super.postInitialize();
-		DebugInfoSection coordinateInfoSection = DebugRegistryUtils.registerSection(loc("coordinates"), DebugRegistryUtils.Side.LEFT);
-		coordinateInfoSection.orderSection(DebugRegistry.chunksServerSectionID, 1);
-		coordinateInfoSection.addEntry((mc, isExtendedDebug) -> {
-			if (!isExtendedDebug && ClassicAddon.isServerRunningThisAddon) {
-				boolean isPlayerHoldingCompass = mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().itemID == Item.compass.itemID;
-				if (!isPlayerHoldingCompass) {
-					return Optional.of("§c" + I18n.getString("classicAddon.holdCompassForCoordinates"));
+		if (!MinecraftServer.getIsServer()) {
+			DebugInfoSection coordinateInfoSection = DebugRegistryUtils.registerSection(loc("coordinates"), DebugRegistryUtils.Side.LEFT);
+			coordinateInfoSection.orderSection(DebugRegistry.chunksServerSectionID, 1);
+			coordinateInfoSection.addEntry((mc, isExtendedDebug) -> {
+				if (!isExtendedDebug && ClassicAddon.isServerRunningThisAddon) {
+					boolean isPlayerHoldingCompass = mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().itemID == Item.compass.itemID;
+					if (!isPlayerHoldingCompass) {
+						return Optional.of("§c" + I18n.getString("classicAddon.holdCompassForCoordinates"));
+					}
+					String direction;
+					String string4;
+					float yaw = MathHelper.wrapAngleTo180_float(mc.thePlayer.rotationYaw);
+					int directionID = MathHelper.floor_double(yaw / 90.0d + 0.5d) & 3;
+					if (directionID == 0) {
+						direction = "+Z";
+						string4 = "S";
+					} else if (directionID == 1) {
+						direction = "-X";
+						string4 = "W";
+					} else if (directionID == 2) {
+						direction = "-Z";
+						string4 = "N";
+					} else {
+						direction = "+X";
+						string4 = "E";
+					}
+					return Optional.of(String.format(Locale.ROOT, "XYZ: %.3f / %.3f / %.3f", mc.thePlayer.posX, mc.thePlayer.boundingBox.minY, mc.thePlayer.posZ) + "\n"
+							+ String.format(Locale.ROOT, "Facing: %s (%s) (%.1f / %.1f)", direction, string4, yaw, MathHelper.wrapAngleTo180_float(mc.thePlayer.rotationPitch)));
 				}
-				String direction;
-				String string4;
-				float yaw = MathHelper.wrapAngleTo180_float(mc.thePlayer.rotationYaw);
-				int directionID = MathHelper.floor_double(yaw / 90.0d + 0.5d) & 3;
-				if (directionID == 0) {
-					direction = "+Z";
-					string4 = "S";
-				} else if (directionID == 1) {
-					direction = "-X";
-					string4 = "W";
-				} else if (directionID == 2) {
-					direction = "-Z";
-					string4 = "N";
-				} else {
-					direction = "+X";
-					string4 = "E";
-				}
-				return Optional.of(String.format(Locale.ROOT, "XYZ: %.3f / %.3f / %.3f", mc.thePlayer.posX, mc.thePlayer.boundingBox.minY, mc.thePlayer.posZ) + "\n"
-						+ String.format(Locale.ROOT, "Facing: %s (%s) (%.1f / %.1f)", direction, string4, yaw, MathHelper.wrapAngleTo180_float(mc.thePlayer.rotationPitch)));
-			}
-			return Optional.empty();
-		});
+				return Optional.empty();
+			});
+		}
 	}
-
 	public void initializeAchievements() {
 		AchievementProvider.NameStep<ItemStack> builder = AchievementProvider.getBuilder(AchievementEvents.ItemEvent.class);
 		GET_WOOD_ACHIEVEMENT = builder.name(loc("mine_wood"))
