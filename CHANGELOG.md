@@ -51,3 +51,4 @@
 - A rare chance for diamond armor
 - Milk buckets stack to 16
 - Horses can now be ridden
+- Squids are passive (hopefully)
