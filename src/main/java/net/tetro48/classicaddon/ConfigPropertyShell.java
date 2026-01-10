@@ -2,16 +2,10 @@ package net.tetro48.classicaddon;
 
 import net.minecraft.src.MathHelper;
 
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
 public class ConfigPropertyShell<T> {
-	public static final String STRING_TYPE_LONG = "typeLong";
-	public static final String STRING_TYPE_INT = "typeInt";
-	public static final String STRING_TYPE_DOUBLE = "typeDouble";
-	public static final String STRING_TYPE_BOOL = "typeBool";
-	public static final String STRING_TYPE_STRING = "typeString";
 	public String propertyName;
 	protected T internalValue;
 	public T min;
@@ -66,47 +60,7 @@ public class ConfigPropertyShell<T> {
 	}
 
 	public void writeToDataStream(DataOutputStream dataStream) throws IOException {
-		if (internalValue instanceof Long longInt) {
-			dataStream.writeUTF(STRING_TYPE_LONG);
-			dataStream.writeLong(longInt);
-		}
-		if (internalValue instanceof Integer integer) {
-			dataStream.writeUTF(STRING_TYPE_INT);
-			dataStream.writeInt(integer);
-		}
-		if (internalValue instanceof Double doubleValue) {
-			dataStream.writeUTF(STRING_TYPE_DOUBLE);
-			dataStream.writeDouble(doubleValue);
-		}
-		if (internalValue instanceof Boolean bool) {
-			dataStream.writeUTF(STRING_TYPE_BOOL);
-			dataStream.writeBoolean(bool);
-		}
-		if (internalValue instanceof String string) {
-			dataStream.writeUTF(STRING_TYPE_STRING);
-			dataStream.writeUTF(string);
-		}
-	}
-
-	public static Object readFromDataStream(DataInputStream dataStream) throws IOException {
-		String typeString = dataStream.readUTF();
-		Object value = null;
-		if (typeString.equals(STRING_TYPE_LONG)) {
-			value = dataStream.readLong();
-		}
-		if (typeString.equals(STRING_TYPE_INT)) {
-			value = dataStream.readInt();
-		}
-		if (typeString.equals(STRING_TYPE_DOUBLE)) {
-			value = dataStream.readDouble();
-		}
-		if (typeString.equals(STRING_TYPE_BOOL)) {
-			value = dataStream.readBoolean();
-		}
-		if (typeString.equals(STRING_TYPE_STRING)) {
-			value = dataStream.readUTF();
-		}
-		return value;
+		dataStream.writeUTF(internalValue.toString());
 	}
 
 	public ConfigPropertyShell<T> setMinMax(T min, T max) {

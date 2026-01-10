@@ -72,10 +72,6 @@ public class ConfigGUI extends GuiScreen {
 	public void actionPerformed(GuiButton button) {
 		switch (button.id) {
 			case DONE:
-				if (this.list.lastTextField != null) {
-					this.list.lastConfigProperty.parseSetInternalValue(this.list.lastTextField.getText());
-					Minecraft.getMinecraft().getNetHandler().addToSendQueue(new Packet3Chat("/classicreimagined set " + this.list.lastConfigProperty.getPropertyName() + " " + this.list.lastConfigProperty.getInternalValue()));
-				}
 				this.mc.displayGuiScreen(this.previous);
 				break;
 		}
@@ -83,7 +79,10 @@ public class ConfigGUI extends GuiScreen {
 
 	@Override
 	public void onGuiClosed() {
-		ClassicAddon.addonConfig.readAndWriteConfig();
+		if (this.list.lastTextField != null) {
+			this.list.lastConfigProperty.parseSetInternalValue(this.list.lastTextField.getText());
+			Minecraft.getMinecraft().getNetHandler().addToSendQueue(new Packet3Chat("/classicreimagined set " + this.list.lastConfigProperty.getPropertyName() + " " + this.list.lastConfigProperty.getInternalValue()));
+		}
 	}
 
 	protected void renderTooltip(String text, int x, int y) {

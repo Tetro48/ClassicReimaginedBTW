@@ -56,7 +56,7 @@ public class ConfigOptionListWidget extends EntryListWidget {
 
 	@Override
 	public int getRowWidth() {
-		return 400;
+		return width;
 	}
 
 	@Override
@@ -99,36 +99,40 @@ public class ConfigOptionListWidget extends EntryListWidget {
 				booleanButton = ConfigOptionListWidget.createWidget(minecraft, nextId++, x / 2, 0, 100, option);
 				booleanButton.enabled = permissions;
 				textField = null;
-				configProperty = option;
 			}
 			else {
 				booleanButton = null;
 				textField = new GuiTextField(mc.fontRenderer,x / 2, 0, 100, 20);
 				textField.setText(option.getInternalValue().toString());
 				textField.setEnabled(permissions);
-				configProperty = option;
 			}
+			configProperty = option;
 		}
 
 		@Override
 		public void render(int index, int x, int y, int width, int height, BufferBuilder bufferBuilder, int mouseX, int mouseY, boolean hovered) {
 			bufferBuilder.start();
-			List<String> descriptionStringList = mc.fontRenderer.listFormattedStringToWidth(I18n.getString(configProperty.getPropertyName()+".desc"), width);
+			List<String> descriptionStringList = mc.fontRenderer.listFormattedStringToWidth(I18n.getString(configProperty.getPropertyName()+".desc"), width - 40);
 			int listLines = descriptionStringList.size();
 			if (configProperty.canSync()) {
 				minecraft.getTextureManager().bindTexture(synchronizedConfigIcon);
+				GL11.glColor3d(1d, 1d, 1d);
 				drawTexturedModalRect(bufferBuilder, 0, y, 0, 0, 16, 16);
 			}
-			GL11.glTranslatef(15, y + 15f - (listLines * 2.5f), 0);
+			GL11.glTranslatef(18, y + 15f - (listLines * 2.5f), 0);
 			mc.fontRenderer.drawStringWithShadow(I18n.getString(configProperty.getPropertyName()), 0, -10, 0xFFFFFF);
 			GL11.glScalef(0.5f, 0.5f, 0.5f);
 			for (int i = 0; i < descriptionStringList.size(); i++) {
 				mc.fontRenderer.drawStringWithShadow(descriptionStringList.get(i), 0, i * 10, 0x7F7F7F);
 			}
 			GL11.glScalef(2f, 2f, 2f);
-			GL11.glTranslatef(-15, -y - 15f + (listLines * 2.5f), 0);
+			GL11.glTranslatef(-18, -y - 15f + (listLines * 2.5f), 0);
 			if (hovered) {
-				tooltip = mc.fontRenderer.listFormattedStringToWidth(I18n.getString(configProperty.propertyName + ".desc"), width);
+				tooltip = mc.fontRenderer.listFormattedStringToWidth(I18n.getString(configProperty.propertyName + ".desc"), width - 40);
+			}
+			if (mouseX < 16 && mouseY > y && mouseY < y + slotHeight && configProperty.canSync()) {
+				tooltip = mc.fontRenderer.listFormattedStringToWidth(I18n.getStringParams(
+						"classicAddon.synchronizedConfigIndicator", I18n.getString(configProperty.propertyName)), width - 40);
 			}
 			if (this.booleanButton != null) {
 				this.booleanButton.yPosition = y;

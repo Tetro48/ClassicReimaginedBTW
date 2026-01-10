@@ -10,6 +10,7 @@ classicAddon.synchronizedConfigsI18n=Synchronized Configs from Classic Re-imagin
 classicAddon.configsI18n=Configs from Classic Re-imagined:
 classicAddon.synchronizedConfigsCommandHint=Type "/classicreimagined configs" to see all configs
 classicAddon.holdCompassForCoordinates=Hold a compass to view coordinates.
+classicAddon.synchronizedConfigIndicator=[%s] is a synchronized config
 
 difficulty.btw.classic.description=The vanillafied BTW experience.
 difficulty.btw.classic.description2=Its challenge level is equivalent
@@ -112,4 +113,4 @@ synchronized.crafting.saw-planks.desc=The amount of planks you get from sawing l
 synchronized.silly.crafting.wicker-weaving=Wicker Weaving toggle
 synchronized.silly.crafting.wicker-weaving.desc=Wicker weaving crafting recipe toggle. This applies to all difficulties. Default: False.
 synchronized.silly.world.hc-stump=Hardcore Stump
-synchronized.silly.world.hc-stump.desc=Enabling this allows chisels to make work stumps from tree stumps. This applies to all difficulties. Default: False
+synchronized.silly.world.hc-stump.desc=Enabling this allows chisels to make work stumps from tree stumps. This applies to all difficulties. Default: False.

@@ -1,3 +1,4 @@
+classicAddon.configTitle=Конфигурация Classic Re-imagined
 classicAddon.selectWorld.cursedDifficulty=Проклятый %s
 classicAddon.selectWorld.vanillaDifficulty=Сложность мобов: %s
 classicAddon.serverCheck.doesServerHaveCR1=Проверка наличия на этом сервере Classic Re-imagined...
@@ -6,8 +7,10 @@ classicAddon.serverCheck.kickTimer=Если сервер не ответит, ч
 classicAddon.selectWorld.nmCompat.nightmare=Кошмар
 classicAddon.selectWorld.nmCompat.baddream=Сон
 classicAddon.synchronizedConfigsI18n=Синхронизированные конфиги Classic Re-imagined:
+classicAddon.configsI18n=Конфиги Classic Re-imagined:
 classicAddon.synchronizedConfigsCommandHint=Введите "/classicreimagined configs" чтобы увидеть синхронизированные конфиги
 classicAddon.holdCompassForCoordinates=Держите компас чтобы смотреть координаты.
+classicAddon.synchronizedConfigIndicator=[%s] является синхронизированным конфигом.
 
 difficulty.btw.classic.description=Ваниллифицированный BTW.
 difficulty.btw.classic.description2=Его сложность эквивалентен
@@ -53,3 +56,60 @@ classicAddon.furnace.info=Печи можно разместить где уго
 
 tag.classicaddon.loose_cobblestones=Рыхлые булыжники
 tag.classicaddon.any_cobblestone=Любые булыжники
+
+# Config stuff
+
+hunger-system.degranularize-hunger-system=Де-гранулировать систему голода
+hunger-system.degranularize-hunger-system.desc=Включение этой опции заставляет гранулированную систему голода работать как стандартная система голода.
+hunger-system.modern-exhaustion-values=Современные значения истощения
+hunger-system.modern-exhaustion-values.desc=Это переключатель для современных значений истощения, лучше всего подходящий для такого дополнения, как BTWG.
+hunger-system.quick-heal-toggle=Переключатель современной регенерации
+hunger-system.quick-heal-toggle.desc=Это переключатель для системы регенерации vMC 1.9+. По умолчанию - False (выключено).
+hunger-system.quick-heal-ticks=Тиков до современной регенерации
+hunger-system.quick-heal-ticks.desc=Как быстро происходит регенерация. 20 тиков = 1 секунда. 10 тиков — стандартное значение, 40 тиков — рекомендуемое значение от Tetro48.
+hunger-system.hunger-regen-offset-toggle=Смещение восстановления здоровья от голода
+hunger-system.hunger-regen-offset-toggle.desc=Этот параметр сдвигает область остановки восстановления здоровья ниже 8,6 шанков вместо 9. Это делает восстановление более стабильным, даже если внутренне оно может не совсем совпадать. По умолчанию: True.
+difficulty.cursed-difficulty-mode=Проклятая сложность
+difficulty.cursed-difficulty-mode.desc=Разрешить изменение сложности BTW, но пометит её как проклятую
+client.new-moon-brightness-level=Уровень яркости новолуния
+client.new-moon-brightness-level.desc=Это чисто визуальная настройка... 0: Полная тьма. 1: Немного света
+world.gloom-toggle=Переключение эффекта мрака
+world.gloom-toggle.desc=Этот параметр включает/выключает эффект мрака. По умолчанию: False.
+world.guaranteed-seed-drop=Гарантированное выпадение семян
+world.guaranteed-seed-drop.desc=Этот параметр гарантирует, что семена всегда будут выпадать, независимо от стадии роста, как в современной ванильной версии игры. По умолчанию: True.
+world.hemp-seed-drop=Шанс выпадения семян конопли из высокой травы
+world.hemp-seed-drop.desc=Этот параметр включает 1%-ный шанс выпадения семян конопли из высокой травы. По умолчанию: True.
+world.expandable-hcs=Расширяемая зона хардкорного спавна
+world.expandable-hcs.desc=Этот параметр управляет расширением зоны хардкорного спавна в зависимости от прогресса игры. По умолчанию: False.
+world.bed-spawn-point-toggle=Точка появления от кровати
+world.bed-spawn-point-toggle.desc=Включение этой опции позволяет кровати устанавливать точку вашего появления. Реализовано немного неуклюже, по типу команды /setspawn. По умолчанию: False.
+mobs.animageddon=Animageddon
+mobs.animageddon.desc=Переключатель для всего Animageddon в BTW. По умолчанию: False.
+mobs.do-baby-animals-eat-loose-food=Едят ли детеныши животных еду, лежащую на земле?
+mobs.do-baby-animals-eat-loose-food.desc=Переключатель для повторного введения возможности для детенышей животных есть еду, лежащую на земле. Работает только при выключенном Animageddon. По умолчанию: False.
+mobs.chicken-jockey=Зомби-наездники
+mobs.chicken-jockey.desc=Этот параметр включает/выключает появление забагованных зомби-наездников. По умолчанию: False.
+mobs.hoofsies-toggle=Хардкорные копыта
+mobs.hoofsies-toggle.desc=Этот параметр включает/выключает механику хардкорных копыт из BTW. Это влияет только на сложность Classic+. По умолчанию: False.
+mobs.hoofsies-strength=Сила копыт
+mobs.hoofsies-strength.desc=Множитель силы в 1 делает так, что пинающие животные наносят 7 HP. Множитель силы в 0.5 делает так, что пинающие животные наносят 3 HP (округлено в меньшую сторону). Это влияет только на сложность Classic+. По умолчанию: 1.0.
+synchronized.world.passable-leaves=Проходимые листья
+synchronized.world.passable-leaves.desc=Включает/выключает функцию проходимых листьев. По умолчанию: False.
+synchronized.world.hcs-toggle=Хардкорный спавн для Classic+
+synchronized.world.hcs-toggle.desc=Включает/выключает механику хардкорного спавна из BTW. Это влияет только на сложность Classic+. По умолчанию: False.
+synchronized.world.vanilla-buckets=Ванилльные ведра
+synchronized.world.vanilla-buckets.desc=Эта опция возвращает механику ведер из ваниллы. Это делает шнековые насосы бесполезными. По умолчанию: True.
+synchronized.anvil.yeet-too-expensive=Выкинуть Слишком дорого
+synchronized.anvil.yeet-too-expensive.desc=Снимает ограничение от стоимости уровней в наковальне, если включено. По умолчанию: True.
+synchronized.crafting.hand-planks=Доски, получаемые при ручной рубке
+synchronized.crafting.hand-planks.desc=Количество досок, получаемых просто при использовании бревен на сетке. По умолчанию: 2. Диапазон: 1-64
+synchronized.crafting.stone-axe-planks=Доски, получаемые при рубке каменным топором
+synchronized.crafting.stone-axe-planks.desc=Количество досок, получаемых каменным топором. По умолчанию: 3. Диапазон: 1-64
+synchronized.crafting.iron-axe-planks=Доски, получаемые при рубке железным топором
+synchronized.crafting.iron-axe-planks.desc=Количество досок, получаемых железным или более мощным топором. По умолчанию: 4. Диапазон: 1-64
+synchronized.crafting.saw-planks=Доски, получаемые при распиловке бревен
+synchronized.crafting.saw-planks.desc=Количество досок, получаемых при распиловке бревен. По умолчанию: 6. Диапазон: 1-64
+synchronized.silly.crafting.wicker-weaving=Переключатель прогрессивного плетения
+synchronized.silly.crafting.wicker-weaving.desc=Переключатель рецепта прогрессивного плетения. Применяется ко всем уровням сложности. По умолчанию: False.
+synchronized.silly.world.hc-stump=Хардкорный пень
+synchronized.silly.world.hc-stump.desc=Включение этой опции позволяет стамескам изготавливать рабочие пни из пней деревьев. Применяется ко всем уровням сложности. По умолчанию: False.

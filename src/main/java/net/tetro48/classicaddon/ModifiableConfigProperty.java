@@ -2,16 +2,13 @@ package net.tetro48.classicaddon;
 
 import api.config.AddonConfig;
 import com.google.common.collect.Lists;
-import net.minecraft.src.MathHelper;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.List;
 import java.util.function.Consumer;
 
 public class ModifiableConfigProperty<T> extends ConfigPropertyShell<T> {
-	private final AddonConfig addonConfig;
+	public AddonConfig addonConfig;
 	private T externalValue;
 	public List<String> comments;
 	public Consumer<T> callback;
@@ -35,31 +32,31 @@ public class ModifiableConfigProperty<T> extends ConfigPropertyShell<T> {
 
 	public void setAddonConfigValue(T newValue) {
 		if (newValue instanceof Integer integer) {
-			if (min != null && max != null) {
-				this.addonConfig.registerInt(propertyName, integer, (int)min, (int)max, comments);
-			} else {
-				this.addonConfig.registerInt(propertyName, integer, comments);
+			if (min == null || max == null) {
+				min = (T)(Object)Integer.MIN_VALUE;
+				max = (T)(Object)Integer.MAX_VALUE;
 			}
+			this.addonConfig.registerInt(propertyName, integer, (Integer)min, (Integer)max, Lists.newArrayList(comments));
 		}
 		if (newValue instanceof Long longInt) {
-			if (min != null && max != null) {
-				this.addonConfig.registerLong(propertyName, longInt, (long)min, (long)max, comments);
-			} else {
-				this.addonConfig.registerLong(propertyName, longInt, comments);
+			if (min == null || max == null) {
+				min = (T)(Object)Long.MIN_VALUE;
+				max = (T)(Object)Long.MAX_VALUE;
 			}
+			this.addonConfig.registerLong(propertyName, longInt, (Long)min, (Long)max, Lists.newArrayList(comments));
 		}
 		if (newValue instanceof Double doubleValue) {
-			if (min != null && max != null) {
-				this.addonConfig.registerDouble(propertyName, doubleValue, (double)min, (double)max, comments);
-			} else {
-				this.addonConfig.registerDouble(propertyName, doubleValue, comments);
+			if (min == null || max == null) {
+				min = (T)(Object)Double.MIN_VALUE;
+				max = (T)(Object)Double.MAX_VALUE;
 			}
+			this.addonConfig.registerDouble(propertyName, doubleValue, (double)min, (double)max, Lists.newArrayList(comments));
 		}
 		if (newValue instanceof String string) {
-			this.addonConfig.registerString(propertyName, string, comments);
+			this.addonConfig.registerString(propertyName, string, Lists.newArrayList(comments));
 		}
 		if (newValue instanceof Boolean bool) {
-			this.addonConfig.registerBoolean(propertyName, bool, comments);
+			this.addonConfig.registerBoolean(propertyName, bool, Lists.newArrayList(comments));
 		}
 	}
 
@@ -89,15 +86,33 @@ public class ModifiableConfigProperty<T> extends ConfigPropertyShell<T> {
 
 	public void setInternalValue(T newValue) {
 		super.setInternalValue(newValue);
-		this.setAddonConfigValue(newValue);
+//		this.setAddonConfigValue(newValue);
 	}
 
 	public void setExternalValueFromDataStream(DataInputStream dataStream) {
 		try {
-			this.externalValue = (T) readFromDataStream(dataStream);
+			parseSetExternalValue(dataStream.readUTF());
 		}
 		catch (Exception e) {
 
+		}
+	}
+
+	public void parseSetExternalValue(String str) {
+		if (this.internalValue instanceof Long) {
+			this.setExternalValue((T) (Long) Long.parseLong(str));
+		}
+		if (this.internalValue instanceof Integer) {
+			this.setExternalValue((T) (Integer) Integer.parseInt(str));
+		}
+		if (this.internalValue instanceof Double) {
+			this.setExternalValue((T) (Double) Double.parseDouble(str));
+		}
+		if (this.internalValue instanceof Boolean) {
+			this.setExternalValue((T) (Boolean) Boolean.parseBoolean(str));
+		}
+		if (this.internalValue instanceof String) {
+			this.setExternalValue((T) str);
 		}
 	}
 

@@ -98,7 +98,6 @@ public class ClassicAddon extends BTWAddon {
 
 	private static Hashtable<String, ModifiableConfigProperty<?>> modifiableConfigProperties;
 	private static List<String> modifiablePropertyNames;
-	public static AddonConfig addonConfig;
 
 	public ClassicAddon() {
 		super();
@@ -138,7 +137,6 @@ public class ClassicAddon extends BTWAddon {
 
 	@Override
 	public void registerConfigProperties(AddonConfig config) {
-		addonConfig = config;
 		config.registerCategoryComment("hunger-system", "*** HUNGER SYSTEM CONFIGS ***");
 		this.createModifiableProperty(config, "hunger-system.degranularize-hunger-system", false,
 				bool -> degranularizeHungerSystem = bool,
@@ -280,6 +278,7 @@ public class ClassicAddon extends BTWAddon {
 				"Enabling this allows chisels to make work stumps from tree stumps. This applies to all difficulties. Default: False.")
 				.register();
 		config.updatePath("HardcoreStump", "synchronized.silly.world.hc-stump");
+//		config.registerBoolean("synchronized.silly.world.hc-stump", false,"Enabling this allows chisels to make work stumps from tree stumps. This applies to all difficulties. Default: False.");
 	}
 
 	@Override
@@ -291,20 +290,24 @@ public class ClassicAddon extends BTWAddon {
 	}
 
 	public <T> ModifiableConfigProperty<T> createModifiableProperty(AddonConfig config, String propertyName, T defaultValue, Consumer<T> callback, String... comments) {
-		return createModifiableProperty(config, propertyName,defaultValue, false, callback, comments);
+		return createModifiableProperty(config, propertyName, defaultValue, false, callback, comments);
 	}
-	public <T> ModifiableConfigProperty<T> createSynchronizedProperty(AddonConfig config, String propertyName, T defaultValue, Consumer<T> callback, String comments) {
-		return createModifiableProperty(config, propertyName,defaultValue, true, callback, comments);
+	public <T> ModifiableConfigProperty<T> createSynchronizedProperty(AddonConfig config, String propertyName, T defaultValue, Consumer<T> callback, String... comments) {
+		return createModifiableProperty(config, propertyName, defaultValue, true, callback, comments);
 	}
 	private <T> ModifiableConfigProperty<T> createModifiableProperty(AddonConfig config, String propertyName, T defaultValue, boolean sync, Consumer<T> callback, String... comments) {
+		ModifiableConfigProperty<T> configProperty;
 		if (!modifiablePropertyNames.contains(propertyName))
 		{
-			ModifiableConfigProperty<T> configProperty = new ModifiableConfigProperty<T>(config, propertyName, defaultValue, sync, callback, comments);
+			configProperty = new ModifiableConfigProperty<>(config, propertyName, defaultValue, sync, callback, comments);
 			modifiableConfigProperties.put(propertyName, configProperty);
 			modifiablePropertyNames.add(propertyName);
-			return configProperty;
 		}
-		else return (ModifiableConfigProperty<T>) modifiableConfigProperties.get(propertyName);
+		else {
+			configProperty = (ModifiableConfigProperty<T>) modifiableConfigProperties.get(propertyName);
+			configProperty.addonConfig = config;
+		}
+		return configProperty;
 	}
 
 	public static void resetAllSynchronizedPropertyValues() {
@@ -340,9 +343,10 @@ public class ClassicAddon extends BTWAddon {
 				try {
 					while (dataStream.available() > 0) {
 						String propertyName = dataStream.readUTF();
+						String configValue = dataStream.readUTF();
 						ModifiableConfigProperty<?> configProperty = modifiableConfigProperties.get(propertyName);
 						if (configProperty != null) {
-							configProperty.setExternalValueFromDataStream(dataStream);
+							configProperty.parseSetExternalValue(configValue);
 						}
 					}
 				} catch (Exception ignored) {}
@@ -362,8 +366,18 @@ public class ClassicAddon extends BTWAddon {
 					boolean permissions = dataStream.readBoolean();
 					List<ConfigPropertyShell> configPropertyShells = new ArrayList<>(30);
 					while (dataStream.available() > 0) {
+						//this order of operations is important.
 						String propertyName = dataStream.readUTF();
-						configPropertyShells.add(new ConfigPropertyShell(propertyName, dataStream.readBoolean(), ConfigPropertyShell.readFromDataStream(dataStream)));
+						boolean isSync = dataStream.readBoolean();
+						String configValue = dataStream.readUTF();
+						Object processedValue;
+						if (configValue.equalsIgnoreCase("true") || configValue.equalsIgnoreCase("false")) {
+							processedValue = Boolean.parseBoolean(configValue);
+						}
+						else {
+							processedValue = configValue;
+						}
+						configPropertyShells.add(new ConfigPropertyShell(propertyName, isSync, processedValue));
 					}
 					Minecraft.getMinecraft().displayGuiScreen(new ConfigGUI(null, permissions, configPropertyShells.toArray(ConfigPropertyShell[]::new)));
 				} catch (Exception e) {
