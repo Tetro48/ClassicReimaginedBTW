@@ -334,7 +334,9 @@ public class ClassicAddon extends BTWAddon {
 		this.initializeRecipes();
 		this.initializeTrades();
 		this.modifyItems();
-		this.revealItemsToEMI();
+		if (!MinecraftServer.getIsServer()) {
+			this.revealItemsToEMI();
+		}
 		AddonHandler.logMessage(this.getName() + " Version " + this.getVersionString() + " Initializing...");
 		registerPacketHandler("classicaddon|onJoin", (payload, entityPlayer) -> {
 			if (payload.length > 0) {
