@@ -52,3 +52,4 @@
 - Milk buckets stack to 16
 - Horses can now be ridden
 - Squids are passive (hopefully)
+- Vanilla Hoppers are back, with the cost of several soulforged steel ingots!

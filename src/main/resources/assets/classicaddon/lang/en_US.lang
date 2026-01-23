@@ -22,6 +22,9 @@ item.fireworks.name=Firework Rocket
 item.enchantedBook.name=Enchanted Book
 item.enchantedBook.languageUnfamiliar=This book is enchanted. Apply it to an item with an anvil!
 
+tile.hopper.name=Soulforged Steel Hopper
+container.hopper=Soulforged Steel Hopper
+
 # Achievements stuff
 
 achievementtab.classic_reimagined_starter_guide=Starter Guide to Classic Re-imagined

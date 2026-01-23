@@ -40,6 +40,7 @@
     "blocks.BlockFurnaceMixin",
     "blocks.BlockGrassMixin",
     "blocks.BlockGravelMixin",
+    "blocks.BlockHopperMixin",
     "blocks.BlockLeavesBaseMixin",
     "blocks.BlockLeavesMixin",
     "blocks.BlockLogMixin",

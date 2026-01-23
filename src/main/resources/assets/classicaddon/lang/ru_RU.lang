@@ -22,6 +22,9 @@ item.fireworks.name=Фейерверк
 item.enchantedBook.name=Зачарованная книга
 item.enchantedBook.languageUnfamiliar=Эта книга зачарована. Примените чары к предмету с помощью наковальни!
 
+tile.hopper.name=Воронка из закалённой стали душ
+container.hopper=Воронка из закалённой стали душ
+
 # Достижения
 
 achievementtab.classic_reimagined_starter_guide=Руководство для начинающих по Classic Re-imagined

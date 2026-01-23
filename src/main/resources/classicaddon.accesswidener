@@ -17,4 +17,5 @@ accessible field net/minecraft/src/GuiSlot field_77243_s Z
 accessible field net/minecraft/src/GuiSlot showSelectionBox Z
 accessible field net/minecraft/src/GuiTextField yPos I
 accessible method net/minecraft/src/FontRenderer trimStringNewline (Ljava/lang/String;)Ljava/lang/String;
+accessible method net/minecraft/src/RenderBlocks renderBlockHopper (Lnet/minecraft/src/BlockHopper;III)Z
 accessible method net/minecraft/src/Tessellator <init> (I)V

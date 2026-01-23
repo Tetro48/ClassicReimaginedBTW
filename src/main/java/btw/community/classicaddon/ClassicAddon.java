@@ -148,7 +148,7 @@ public class ClassicAddon extends BTWAddon {
 		config.updatePath("ModernExhaustionValues", "hunger-system.modern-exhaustion-values");
 		this.createModifiableProperty(config, "hunger-system.quick-heal-toggle", false,
 				bool -> quickHealToggle = bool,
-				"This is a toggle for vMC 1.9+ regeneration system. False (Off) by default.").register();
+				"This is a toggle for vMC 1.9+ regeneration system.").register();
 		config.updatePath("QuickHealToggle", "hunger-system.quick-heal-toggle");
 		this.createModifiableProperty(config, "hunger-system.quick-heal-ticks", 40,
 				integer -> quickHealTicks = integer,
@@ -157,7 +157,7 @@ public class ClassicAddon extends BTWAddon {
 		config.updatePath("QuickHealTicks", "hunger-system.quick-heal-ticks");
 		this.createModifiableProperty(config, "hunger-system.hunger-regen-offset-toggle", true,
 						bool -> intentionalHungerRegenOffset = bool,
-						"This shifts the regen stop region to be below 8.6 shanks instead of below 9 shanks.", "This makes regen feel much more consistent, even if internally, it may not exactly match up. Default: True.")
+						"This shifts the regen stop region to be below 8.6 shanks instead of below 9 shanks.", "This makes regen feel much more consistent, even if internally, it may not exactly match up.")
 				.register();
 		config.updatePath("IntentionalHungerRegenOffset", "hunger-system.hunger-regen-offset-toggle");
 
@@ -176,109 +176,108 @@ public class ClassicAddon extends BTWAddon {
 
 		config.registerCategoryComment("world", "*** WORLD CONFIGS ***");
 		this.createModifiableProperty(config, "world.gloom-toggle", false,
-				bool -> gloomToggle = bool, "This toggles gloom effect. Default: False.")
+				bool -> gloomToggle = bool, "This toggles gloom effect.")
 				.register();
 		config.updatePath("GloomToggle", "world.gloom-toggle");
 		this.createModifiableProperty(config, "world.guaranteed-seed-drop", true,
 				bool -> guaranteedSeedDrop = bool,
-				"This makes sure that crop seeds will always drop, no matter the growth stage, just like in modern vanilla. Default: True.")
+				"This makes sure that crop seeds will always drop, no matter the growth stage, just like in modern vanilla.")
 				.register();
 		config.updatePath("GuaranteedSeedDrop", "world.guaranteed-seed-drop");
 		this.createModifiableProperty(config, "world.hemp-seed-drop", true,
 				bool -> hempSeedDropFromTallGrass = bool,
-				"This toggles the 1% drop chance for hemp seeds from tall grass. Default: True.")
+				"This toggles the 1% drop chance for hemp seeds from tall grass.")
 				.register();
 		config.updatePath("HempSeedDropFromTallGrass", "world.hemp-seed-drop");
 		this.createModifiableProperty(config, "world.expandable-hcs", false,
 				bool -> BTWDifficulties.CLASSIC.modifyParam(DifficultyParam.ShouldHardcoreSpawnRadiusIncreaseWithProgress.class, bool),
-				"This toggle controls the Hardcore Spawn expansion based on game progression. Default: False.")
+				"This toggle controls the Hardcore Spawn expansion based on game progression.")
 				.register();
 		config.updatePath("ExpandableHardcoreSpawn", "world.expandable-hcs");
 		this.createModifiableProperty(config, "world.bed-spawn-point-toggle", false,
 				bool -> shouldBedsSetSpawn = bool,
-				"Enabling this allows a bed to set your spawn. This is implemented in a slightly janky way, ala fixed /setspawn. Default: False.")
+				"Enabling this allows a bed to set your spawn. This is implemented in a slightly janky way, ala fixed /setspawn.")
 				.register();
 		config.updatePath("ShouldBedsSetSpawn", "world.bed-spawn-point-toggle");
 
 		config.registerCategoryComment("mobs", "*** MOB CONFIGS ***");
 		this.createModifiableProperty(config, "mobs.animageddon", false,
 				bool -> animageddonToggle = bool,
-				"A toggle for all of the BTW's Animageddon. Default: False.")
+				"A toggle for all of the BTW's Animageddon.")
 				.register();
 		this.createModifiableProperty(config, "mobs.do-baby-animals-eat-loose-food", false,
 				bool -> canBabyAnimalEatLooseFood = bool,
-				"A toggle to re-introduce baby animal eating food off of ground. This only works while Animageddon is turned off. Default: False.")
+				"A toggle to re-introduce baby animal eating food off of ground. This only works while Animageddon is turned off.")
 				.register();
 		config.updatePath("CanBabyAnimalEatLooseFood", "mobs.do-baby-animals-eat-loose-food");
 		this.createModifiableProperty(config, "mobs.chicken-jockey", false,
 				bool -> chickenJockeyToggle = bool,
-				"This toggles spawning of buggy chicken jockeys. Default: False.")
+				"This toggles spawning of buggy chicken jockeys.")
 				.register();
 		config.updatePath("ChickenJockeyToggle", "mobs.chicken-jockey");
 		this.createModifiableProperty(config, "mobs.hoofsies-toggle", false,
 				bool -> BTWDifficulties.CLASSIC.modifyParam(DifficultyParam.ShouldLargeAnimalsKick.class, bool),
-				"This toggles the HC Hoofsies mechanic from BTW. This only affects the Classic+ difficulty. Default: False.")
+				"This toggles the HC Hoofsies mechanic from BTW. This only affects the Classic+ difficulty.")
 				.register();
 		config.updatePath("HCHoofsiesToggle", "mobs.hoofsies-toggle");
 		this.createModifiableProperty(config, "mobs.hoofsies-strength", 1d,
 				floatValue -> BTWDifficulties.CLASSIC.modifyParam(DifficultyParam.AnimalKickStrengthMultiplier.class, (float)(double)floatValue),
-				"Strength multiplier of 1 makes kicking animals deal 7 HP. Strength multiplier of 0.5 makes kicking animals deal 3 HP (rounded down). This only affects the Classic+ difficulty. Default: 1.0.")
+				"Strength multiplier of 1 makes kicking animals deal 7 HP. Strength multiplier of 0.5 makes kicking animals deal 3 HP (rounded down). This only affects the Classic+ difficulty.")
 				.setMinMax(0.1d, 10d).register();
 		config.updatePath("StrongerHoofsies", "mobs.hoofsies-strength");
 
 		config.registerCategoryComment("synchronized", "*** SYNCHRONIZED CONFIGS ***");
 		this.createSynchronizedProperty(config, "synchronized.world.passable-leaves", false,
 				bool -> passableLeaves = bool,
-				"This toggles the passable leaves functionality. Default: False.")
+				"This toggles the passable leaves functionality.")
 				.register();
 		config.updatePath("PassableLeaves", "synchronized.world.passable-leaves");
 		this.createSynchronizedProperty(config, "synchronized.world.hcs-toggle", false,
 				bool -> BTWDifficulties.CLASSIC.modifyParam(DifficultyParam.ShouldPlayersHardcoreSpawn.class, bool),
-				"This toggles the HC Spawn mechanic from BTW. This only affects the Classic+ difficulty. Default: False.")
+				"This toggles the HC Spawn mechanic from BTW. This only affects the Classic+ difficulty.")
 				.register();
 		config.updatePath("HardcoreSpawnToggle", "synchronized.world.hcs-toggle");
 		this.createSynchronizedProperty(config, "synchronized.world.vanilla-buckets", true,
 				bool -> vanillaifyBuckets = bool,
-				"This option re-introduces vanilla bucket mechanics. This makes screw pumps useless. Default: True.")
+				"This option re-introduces vanilla bucket mechanics. This makes screw pumps useless.")
 				.register();
 		config.updatePath("VanillaifyBuckets", "synchronized.world.vanilla-buckets");
 		this.createSynchronizedProperty(config, "synchronized.anvil.yeet-too-expensive", true,
-				bool -> yeetTooExpensive = bool, "Removes the Too Expensive! limit if enabled. Default: True.")
+				bool -> yeetTooExpensive = bool, "Removes the Too Expensive! limit if enabled.")
 				.register();
 		config.updatePath("YeetTooExpensive", "synchronized.anvil.yeet-too-expensive");
 		this.createSynchronizedProperty(config, "synchronized.crafting.hand-planks", 2,
 				integer -> planksHandChopped = MathHelper.clamp_int(integer, 1, 64),
-				"The amount of planks you get from just using logs on a grid. Default: 2")
+				"The amount of planks you get from just using logs on a grid.")
 				.setMinMax(1, 64).register();
 		config.updatePath("PlanksFromHand", "synchronized.crafting.hand-planks");
 		this.createSynchronizedProperty(config, "synchronized.crafting.stone-axe-planks", 3,
 				integer -> planksWithStoneAxe = MathHelper.clamp_int(integer, 1, 64),
-				"The amount of planks you get with stone axe. Default: 3")
+				"The amount of planks you get with stone axe.")
 				.setMinMax(1, 64).register();
 		config.updatePath("PlanksWithStoneAxe", "synchronized.crafting.stone-axe-planks");
 		this.createSynchronizedProperty(config, "synchronized.crafting.iron-axe-planks", 4,
 				integer -> planksWithIronAxes = MathHelper.clamp_int(integer, 1, 64),
-				"The amount of planks you get with iron or better axe. Default: 4")
+				"The amount of planks you get with iron or better axe.")
 				.setMinMax(1, 64).register();
 		config.updatePath("PlanksWithIronAxes", "synchronized.crafting.iron-axe-planks");
 		this.createSynchronizedProperty(config, "synchronized.crafting.saw-planks", 6,
 				integer -> planksWithSaw = MathHelper.clamp_int(integer, 1, 64),
-				"The amount of planks you get from sawing logs. Default: 6")
+				"The amount of planks you get from sawing logs.")
 				.setMinMax(1, 64).register();
 		config.updatePath("PlanksWithSaw", "synchronized.crafting.saw-planks");
 
 		config.registerCategoryComment("synchronized.silly", "*** Silly Synchronized Configs ***");
 		this.createSynchronizedProperty(config, "synchronized.silly.crafting.wicker-weaving", false,
 				bool -> wickerWeavingToggle = bool,
-				"Wicker weaving crafting recipe toggle. This applies to all difficulties. Default: False.")
+				"Wicker weaving crafting recipe toggle. This applies to all difficulties.")
 				.register();
 		config.updatePath("WickerWeavingToggle", "synchronized.silly.crafting.wicker-weaving");
 		this.createSynchronizedProperty(config, "synchronized.silly.world.hc-stump", false,
 				bool -> hardcoreStump = bool,
-				"Enabling this allows chisels to make work stumps from tree stumps. This applies to all difficulties. Default: False.")
+				"Enabling this allows chisels to make work stumps from tree stumps. This applies to all difficulties.")
 				.register();
 		config.updatePath("HardcoreStump", "synchronized.silly.world.hc-stump");
-//		config.registerBoolean("synchronized.silly.world.hc-stump", false,"Enabling this allows chisels to make work stumps from tree stumps. This applies to all difficulties. Default: False.");
 	}
 
 	@Override
@@ -660,6 +659,15 @@ public class ClassicAddon extends BTWAddon {
 						"###",
 						"# #",
 						"###", '#', ClassicAddon.anyCobblestoneTag});
+		RecipeManager.addRecipe(new ItemStack(Block.hopperBlock, 1),
+				new Object[]{
+						"#L#",
+						"#C#",
+						" # ",
+						'#', BTWItems.soulforgedSteelIngot,
+						'C', BTWBlocks.chest,
+						'L', BTWItems.redstoneLatch
+				});
 		FurnaceRecipes.smelting().addSmelting(Block.sand.blockID, new ItemStack(Block.glass), 0f, 2);
 	}
 
@@ -772,5 +780,9 @@ public class ClassicAddon extends BTWAddon {
 		BTWItems.unbakedCookies.setMaxStackSize(64);
 		BTWItems.unbakedPumpkinPie.setMaxStackSize(64);
 		Item.cake.setMaxStackSize(64);
+	}
+
+	static {
+		TileEntity.addMapping(TileEntityHopper.class, "IronHopper");
 	}
 }
