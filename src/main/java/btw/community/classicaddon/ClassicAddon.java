@@ -65,6 +65,14 @@ public class ClassicAddon extends BTWAddon {
 			.global()
 			.build();
 
+	public static final DataEntry.WorldDataEntry<Boolean> VANILLA_HOPPERS_IN_WORLD = DataProvider.getBuilder(Boolean.class)
+			.name("vanilla_hoppers_in_world")
+			.defaultSupplier(() -> false)
+			.readNBT(NBTTagCompound::getBoolean)
+			.writeNBT(NBTTagCompound::setBoolean)
+			.global()
+			.build();
+
 	public static int oldPlanksHandChopped;
 	public static int oldPlanksWithStoneAxe;
 	public static int oldPlanksWithIronAxes;

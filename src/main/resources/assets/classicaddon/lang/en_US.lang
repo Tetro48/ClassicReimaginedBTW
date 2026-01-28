@@ -23,6 +23,9 @@ item.enchantedBook.name=Enchanted Book
 item.enchantedBook.languageUnfamiliar=This book is enchanted. Apply it to an item with an anvil!
 
 tile.hopper.name=Soulforged Steel Hopper
+tile.hopper.warning=<!> WARNING <!>
+tile.hopper.warning.detail.enabled=Soulforged Steel Hoppers are now enabled; This world will now perform as intended only on Classic Re-imagined, since those Hoppers are stubbed out in standard Better Than Wolves.
+tile.hopper.warning.detail.placed=A Soulforged Steel Hopper has been placed; This world will now perform as intended only on Classic Re-imagined, since those Hoppers are stubbed out in standard Better Than Wolves.
 container.hopper=Soulforged Steel Hopper
 
 # Achievements stuff

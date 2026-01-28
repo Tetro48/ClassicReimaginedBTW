@@ -23,6 +23,9 @@ item.enchantedBook.name=Зачарованная книга
 item.enchantedBook.languageUnfamiliar=Эта книга зачарована. Примените чары к предмету с помощью наковальни!
 
 tile.hopper.name=Воронка из закалённой стали душ
+tile.hopper.warning=<!> ПРЕДУПРЕЖДЕНИЕ <!>
+tile.hopper.warning.detail.enabled=Воронки из закалённой стали душ включены; Этот мир будет правильно работать только на Classic Re-imagined, так как эти воронки убраны из стандартного Better Than Wolves.
+tile.hopper.warning.detail.placed=Воронка из закалённой стали душ поставлена; Этот мир будет правильно работать только на Classic Re-imagined, так как эти воронки убраны из стандартного Better Than Wolves.
 container.hopper=Воронка из закалённой стали душ
 
 # Достижения

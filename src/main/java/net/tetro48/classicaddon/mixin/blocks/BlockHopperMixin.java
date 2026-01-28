@@ -2,6 +2,7 @@ package net.tetro48.classicaddon.mixin.blocks;
 
 import api.block.ModStepSound;
 import btw.block.BTWBlocks;
+import btw.community.classicaddon.ClassicAddon;
 import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -65,6 +66,17 @@ public abstract class BlockHopperMixin extends BlockContainer {
 			var10 = 0;
 		}
 
+		if (!world.getData(ClassicAddon.VANILLA_HOPPERS_IN_WORLD) && !world.isRemote) {
+			world.setData(ClassicAddon.VANILLA_HOPPERS_IN_WORLD, true);
+			ClassicAddon.sendPacketToAllPlayers(new Packet3Chat(
+					ChatMessageComponent.createFromTranslationKey("tile.hopper.warning")
+							.setColor(EnumChatFormatting.DARK_RED)
+							.setBold(true)));
+			ClassicAddon.sendPacketToAllPlayers(new Packet3Chat(
+					ChatMessageComponent.createFromTranslationKey("tile.hopper.warning.detail.placed")
+							.setColor(EnumChatFormatting.GRAY)));
+			ClassicAddon.sendPacketToAllPlayers(new Packet62LevelSound("mob.wither.spawn", i, j, k, Float.POSITIVE_INFINITY, 0.5f   ));
+		}
 		return var10;
 	}
 
