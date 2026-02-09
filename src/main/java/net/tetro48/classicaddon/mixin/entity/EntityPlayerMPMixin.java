@@ -13,11 +13,16 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 @Mixin(EntityPlayerMP.class)
 public abstract class EntityPlayerMPMixin extends EntityPlayer {
 
 	@Shadow private int exhaustionWithTimeCounter;
 
+	@Shadow public NetServerHandler playerNetServerHandler;
 	@Unique
 	private static double[] visualMoonBrightnessByPhase = new double[]{(double)1.25F, (double)0.875F, (double)0.75F, (double)0.5F, (double)0.25F, (double)0.5F, (double)0.75F, (double)1.25F};
 	public EntityPlayerMPMixin(World par1World, String par2Str) {
@@ -60,5 +65,13 @@ public abstract class EntityPlayerMPMixin extends EntityPlayer {
 		}
 
 		return (float)(dSunBrightness * (1.0d - dMinBrightness) + dMinBrightness);
+	}
+	@Inject(method = "modSpecificOnUpdate", at = @At("HEAD"))
+	private void sendLocalDifficultyInfo(CallbackInfo ci) throws IOException {
+		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+		DataOutputStream dataStream = new DataOutputStream(byteStream);
+		dataStream.writeFloat(this.worldObj.getLocationTensionFactor(posX, posY, posZ));
+		dataStream.writeLong(this.worldObj.getChunkFromBlockCoords((int)posX, (int)posZ).inhabitedTime);
+		this.playerNetServerHandler.sendPacketToPlayer(new Packet250CustomPayload("classicaddon|locDiff", byteStream.toByteArray()));
 	}
 }

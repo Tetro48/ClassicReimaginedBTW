@@ -22,4 +22,11 @@ public abstract class WorldServerMixin extends World {
 	private void setVanillaDifficulty(CallbackInfo ci) {
 		this.difficultySetting = this.mcServer.worldServers[0].getData(ClassicAddon.VANILLA_DIFFICULTY_LEVEL);
 	}
+	@Inject(method = "tick", at = @At(value = "INVOKE", target = "Lapi/world/ChunkTracker;update()V"))
+	private void increaseLoadedChunkTime(CallbackInfo ci) {
+		for (ChunkCoordIntPair chunkCoordIntPair : activeChunksCoordsList) {
+			Chunk var7 = this.getChunkFromChunkCoords(chunkCoordIntPair.chunkXPos, chunkCoordIntPair.chunkZPos);
+			var7.inhabitedTime++;
+		}
+	}
 }

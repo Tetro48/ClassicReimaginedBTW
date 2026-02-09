@@ -1,18 +1,21 @@
 package net.tetro48.classicaddon.mixin.entity;
 
 import net.minecraft.src.EntityLiving;
+import net.minecraft.src.EntityLivingBase;
 import net.minecraft.src.Item;
+import net.minecraft.src.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Random;
+
 @Mixin(EntityLiving.class)
-public abstract class EntityLivingMixin {
+public abstract class EntityLivingMixin extends EntityLivingBase {
 	@Mutable
 	@Shadow @Final private static float[] enchantmentProbability;
 
@@ -22,11 +25,30 @@ public abstract class EntityLivingMixin {
 	@Mutable
 	@Shadow @Final private static float[] armorProbability;
 
+	public EntityLivingMixin(World par1World) {
+		super(par1World);
+	}
+
 	@Inject(method = "<clinit>", at = @At("RETURN"))
 	private static void increaseOddsForHigherDifficulties(CallbackInfo ci) {
-		enchantmentProbability = new float[]{0.05F, 0.05F, 0.05F, 0.1F};
-		armorEnchantmentProbability = new float[]{0.05F, 0.05F, 0.05F, 0.2F};
-		armorProbability = new float[]{0.0025F, 0.0025F, 0.015F, 0.075F};
+		enchantmentProbability = new float[]{0.25F, 0.25F, 0.25F, 0.25F};
+		armorEnchantmentProbability = new float[]{0.25F, 0.25F, 0.25F, 0.5F};
+		armorProbability = new float[]{0.15F, 0.15F, 0.15F, 0.15F};
+	}
+
+	@Redirect(method = "entityLivingAddRandomArmor", at = @At(value = "INVOKE", target = "Ljava/util/Random;nextFloat()F", ordinal = 0))
+	private float makeArmorSpawnRateBasedOnLocalTension(Random instance) {
+		return instance.nextFloat() / this.worldObj.getLocationTensionFactor(posX, posY, posZ);
+	}
+	@Redirect(method = "enchantEquipment", at = @At(value = "INVOKE", target = "Ljava/util/Random;nextFloat()F"))
+	private float makeEnchantmentBasedOnLocalTension(Random instance) {
+		return instance.nextFloat() / this.worldObj.getLocationTensionFactor(posX, posY, posZ);
+	}
+
+	@ModifyVariable(method = "entityLivingAddRandomArmor", at = @At(value = "INVOKE", target = "Ljava/util/Random;nextFloat()F", ordinal = 1))
+	private float lowerArmorSpawnOddsOnLowerDifficulty(float value) {
+		if (this.worldObj.difficultySetting < 3) return 0.25f;
+		return value;
 	}
 
 	@Inject(method = "getArmorItemForSlot", at = @At("HEAD"), cancellable = true)

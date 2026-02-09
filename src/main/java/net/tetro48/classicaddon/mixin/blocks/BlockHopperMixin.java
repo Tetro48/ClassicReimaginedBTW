@@ -31,6 +31,8 @@ public abstract class BlockHopperMixin extends BlockContainer {
 
 	@Shadow private Icon hopperInsideIcon;
 
+	@Shadow protected abstract void updateMetadata(World par1World, int par2, int par3, int par4);
+
 	protected BlockHopperMixin(int i, Material material) {
 		super(i, material);
 	}
@@ -113,17 +115,6 @@ public abstract class BlockHopperMixin extends BlockContainer {
 
 	public void onNeighborBlockChange(World world, int i, int j, int k, int l) {
 		this.updateMetadata(world, i, j, k);
-	}
-
-	private void updateMetadata(World world, int i, int j, int k) {
-		int var5 = world.getBlockMetadata(i, j, k);
-		int var6 = getDirectionFromMetadata(var5);
-		boolean var7 = !world.isBlockIndirectlyGettingPowered(i, j, k);
-		boolean var8 = getIsBlockNotPoweredFromMetadata(var5);
-		if (var7 != var8) {
-			world.setBlockMetadataWithNotify(i, j, k, var6 | (var7 ? 0 : 8), 4);
-		}
-
 	}
 
 	public void breakBlock(World world, int i, int j, int k, int l, int m) {

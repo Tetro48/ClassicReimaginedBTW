@@ -103,6 +103,8 @@ public class ClassicAddon extends BTWAddon {
 	public static boolean modernExhaustionLevels;
 
 	public static boolean isServerRunningThisAddon = false;
+	public static float localDifficulty = 0f;
+	public static long chunkLoadedTime = -1L;
 
 	private static Hashtable<String, ModifiableConfigProperty<?>> modifiableConfigProperties;
 	private static List<String> modifiablePropertyNames;
@@ -328,11 +330,7 @@ public class ClassicAddon extends BTWAddon {
 	}
 
 	public static void sendPacketToAllPlayers(Packet packet) {
-		for (Object player : MinecraftServer.getServer().getConfigurationManager().playerEntityList) {
-			if (player instanceof EntityPlayerMP) {
-				((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(packet);
-			}
-		}
+		MinecraftServer.getServer().getConfigurationManager().sendPacketToAllPlayers(packet);
 	}
 	@Override
 	public void initialize() {
@@ -392,6 +390,14 @@ public class ClassicAddon extends BTWAddon {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			}
+		});
+		registerPacketHandler("classicaddon|locDiff", (payload, entityPlayer) -> {
+			if (payload.length > 0) {
+				ByteArrayInputStream inputStream = new ByteArrayInputStream(payload.data);
+				DataInputStream dataStream = new DataInputStream(inputStream);
+				localDifficulty = dataStream.readFloat();
+				chunkLoadedTime = dataStream.readLong();
 			}
 		});
 		this.registerAddonCommand(new CommandBase() {
@@ -514,6 +520,18 @@ public class ClassicAddon extends BTWAddon {
 		CauldronCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.heartyStew, 5), new ItemStack[]{new ItemStack(BTWItems.boiledPotato), new ItemStack(BTWItems.cookedCarrot), new ItemStack(BTWItems.brownMushroom, 3), new ItemStack(BTWItems.flour), new ItemStack(BTWItems.cookedMysteryMeat), new ItemStack(Item.bowlEmpty, 5)});
 	}
 
+	// Code copied from the Random Things fork.
+	private String ticksToFormattedTime(long ticks) {
+		long total_seconds = ticks / 20;
+		long total_minutes = total_seconds / 60;
+		long total_hours = total_minutes / 60;
+		long total_days = total_hours / 24;
+		if (total_days > 0) return String.format("%d:%02d:%02d:%02d.%02d", total_days, total_hours%24, total_minutes%60, total_seconds%60, ticks%20 * 5);
+		if (total_hours > 0) return String.format("%d:%02d:%02d.%02d", total_hours, total_minutes%60, total_seconds%60, ticks%20 * 5);
+		if (total_minutes > 0) return String.format("%d:%02d.%02d", total_minutes, total_seconds%60, ticks%20 * 5);
+		return String.format("%d.%02d", total_seconds, ticks%20 * 5);
+	}
+
 	@Override
 	public void postInitialize() {
 		super.postInitialize();
@@ -546,6 +564,13 @@ public class ClassicAddon extends BTWAddon {
 					return Optional.of(String.format(Locale.ROOT, "XYZ: %.3f / %.3f / %.3f", mc.thePlayer.posX, mc.thePlayer.boundingBox.minY, mc.thePlayer.posZ) + "\n"
 							+ String.format(Locale.ROOT, "Facing: %s (%s) (%.1f / %.1f)", direction, string4, yaw, MathHelper.wrapAngleTo180_float(mc.thePlayer.rotationPitch)));
 				}
+				return Optional.empty();
+			});
+			DebugInfoSection localDifficultyInfoSection = DebugRegistryUtils.registerSection(loc("tension"), DebugRegistryUtils.Side.RIGHT);
+			localDifficultyInfoSection.orderSection(DebugRegistry.mobCapsSectionID, 1);
+			localDifficultyInfoSection.addEntry((minecraft, isExtendedDebug) -> {
+				if (isExtendedDebug) return Optional.of(String.format("Local Difficulty: %.3f\nActive Chunk Time: %s", localDifficulty,
+						ticksToFormattedTime(chunkLoadedTime)));
 				return Optional.empty();
 			});
 		}
@@ -676,6 +701,13 @@ public class ClassicAddon extends BTWAddon {
 						'C', BTWBlocks.chest,
 						'L', BTWItems.redstoneLatch
 				});
+//		RecipeManager.addRecipe(new ItemStack(Item.minecartHopper, 1),
+//				new Object[]{
+//						"V",
+//						"U",
+//						'V', Block.hopperBlock,
+//						'U', Item.minecartEmpty
+//				});
 		FurnaceRecipes.smelting().addSmelting(Block.sand.blockID, new ItemStack(Block.glass), 0f, 2);
 	}
 
@@ -691,6 +723,7 @@ public class ClassicAddon extends BTWAddon {
 		Item.pickaxeWood.classicReimagined$revealToEMI();
 		Item.shovelWood.classicReimagined$revealToEMI();
 		Item.hoeStone.classicReimagined$revealToEMI();
+//		Item.minecartHopper.classicReimagined$revealToEMI();
 	}
 
 	private static int getMatchingRecipeIndex(List recipes, IRecipe recipe) {
