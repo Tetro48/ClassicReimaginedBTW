@@ -17,6 +17,7 @@ import api.world.data.DataEntry;
 import api.world.data.DataProvider;
 import api.world.difficulty.Difficulty;
 import api.world.difficulty.DifficultyParam;
+import btw.achievement.BTWAchievements;
 import btw.block.BTWBlocks;
 import btw.crafting.manager.CauldronCraftingManager;
 import btw.crafting.manager.SawCraftingManager;
@@ -56,6 +57,7 @@ public class ClassicAddon extends BTWAddon {
 	public static Achievement<ItemStack> GET_GLASS_BOTTLE_ACHIEVEMENT;
 	public static Achievement<ItemStack> GET_STONE_SWORD_ACHIEVEMENT;
 	public static Achievement<ItemStack> GET_BREAD_ACHIEVEMENT;
+	public static Achievement<ItemStack> ANOMALY_ACHIEVEMENT;
 
 	public static final DataEntry.WorldDataEntry<Integer> VANILLA_DIFFICULTY_LEVEL = DataProvider.getBuilder(Integer.class)
 			.name("vanilla_difficulty")
@@ -650,6 +652,13 @@ public class ClassicAddon extends BTWAddon {
 				.parents(GET_LOOSE_COBBLESTONE_ACHIEVEMENT)
 				.build()
 				.registerAchievement(CLASSIC_REIMAGINED_STARTER_GUIDE_ACHIEVEMENT_TAB);
+		ANOMALY_ACHIEVEMENT = builder.name(loc("anomaly"))
+				.icon(Block.hopperBlock)
+				.displayLocation(4, -1)
+				.triggerCondition(itemStack -> itemStack.itemID == Block.hopperBlock.blockID)
+				.parents(BTWAchievements.CRAFT_STEEL)
+				.build()
+				.registerAchievement(BTWAchievements.TAB_END_GAME);
 	}
 
 	public void initializeTags() {
@@ -712,7 +721,7 @@ public class ClassicAddon extends BTWAddon {
 	}
 
 	public void initializeTrades() {
-		TradeProvider.getBuilder().name(loc("buy_iron_blocks")).profession(3).level(5).buy().item(Block.blockIron.blockID).itemCount(4, 6).weight(6f).addToTradeList();
+//		TradeProvider.getBuilder().name(loc("buy_iron_blocks")).profession(3).level(5).buy().item(Block.blockIron.blockID).itemCount(4, 6).weight(6f).addToTradeList();
 
 	}
 

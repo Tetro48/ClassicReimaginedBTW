@@ -55,12 +55,15 @@ achievement.classicaddon.glass_bottle=Glass Bottles
 achievement.classicaddon.glass_bottle.desc=Cook sand in the furnace, then make glass bottles out of them
 achievement.classicaddon.bread=Bake Bread
 achievement.classicaddon.bread.desc=Turn wheat flour and some water into bread dough, and then cook it in the furnace
+achievement.classicaddon.anomaly=Anomaly
+achievement.classicaddon.anomaly.desc=Craft a... Soulforged Steel Hopper???
 
 # EMI stuff
 
 btw.anvil.info=The Anvil can be placed anywhere, and it's used for either repair, or enchantment book application. Note: This bypasses the typical limit of Infernal Enchanters.
 classicAddon.workbench.info=Crafting table can be placed anywhere. This has vanilla hardness levels. Note: This can burn.
 classicAddon.furnace.info=Furnaces can be placed anywhere. This will ignite whenever fuel is supplied, and cooks stuff 4x faster than brick ovens, but also burns fuel 4x faster.
+classicAddon.hopper.info=Soulforged Steel Hoppers can be placed anywhere, though it's rather anomalous in its behavior. This thing not only pushes items into containers in a specific direction, unlike wooden hoppers, but also sucks items from the containers above. It may cause anomalies.
 tag.classicaddon.loose_cobblestones=Loose Cobblestones
 tag.classicaddon.any_cobblestone=Any Cobblestone
 

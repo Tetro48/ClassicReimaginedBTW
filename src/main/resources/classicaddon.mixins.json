@@ -90,6 +90,8 @@
     "blocks.SnowCoverBlockMixin",
     "blocks.StoneBrickStairsBlockMixin",
     "blocks.SugarCaneBlockBaseMixin",
+    "blocks.TileEntityBrewingStandMixin",
+    "blocks.TileEntityFurnaceMixin",
     "blocks.WheatCropBlockMixin",
     "blocks.WorkStumpBlockMixin",
     "entity.EntityAnimalMixin",

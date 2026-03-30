@@ -18,6 +18,7 @@ public abstract class EmiBTWPluginMixin {
 	private void addNewInfo(EmiRegistry registry, CallbackInfo ci) {
 		this.info(registry, BTWBlocks.workbench, "classicAddon.workbench.info");
 		this.info(registry, Block.furnaceIdle, "classicAddon.furnace.info");
+		this.info(registry, Block.hopperBlock, "classicAddon.hopper.info");
 	}
 
 }
