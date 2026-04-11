@@ -31,6 +31,7 @@ import emi.dev.emi.emi.runtime.EmiReloadManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.*;
 import net.tetro48.classicaddon.ConfigPropertyShell;
+import net.tetro48.classicaddon.InterfaceItemEMI;
 import net.tetro48.classicaddon.ModifiableConfigProperty;
 import net.tetro48.classicaddon.gui.ConfigGUI;
 
@@ -732,6 +733,8 @@ public class ClassicAddon extends BTWAddon {
 		Item.pickaxeWood.classicReimagined$revealToEMI();
 		Item.shovelWood.classicReimagined$revealToEMI();
 		Item.hoeStone.classicReimagined$revealToEMI();
+		((InterfaceItemEMI)Block.furnaceIdle).classicReimagined$revealToEMI();
+		((InterfaceItemEMI)Block.hopperBlock).classicReimagined$revealToEMI();
 //		Item.minecartHopper.classicReimagined$revealToEMI();
 	}
 

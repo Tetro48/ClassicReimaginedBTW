@@ -2,7 +2,6 @@ package net.tetro48.classicaddon.mixin;
 
 import btw.community.classicaddon.ClassicAddon;
 import btw.item.BTWItems;
-import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.src.*;
 import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.asm.mixin.Final;
