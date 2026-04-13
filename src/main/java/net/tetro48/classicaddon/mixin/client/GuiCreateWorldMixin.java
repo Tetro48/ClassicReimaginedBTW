@@ -3,6 +3,7 @@ package net.tetro48.classicaddon.mixin.client;
 import btw.client.gui.LockButton;
 import btw.community.classicaddon.ClassicAddon;
 import btw.world.BTWDifficulties;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.src.*;
 import net.tetro48.classicaddon.VanillaDifficultyWorldSetting;
@@ -55,8 +56,8 @@ public abstract class GuiCreateWorldMixin extends GuiScreen {
 			}
 		}
 	}
-	@Inject(method = "actionPerformed", locals = LocalCapture.CAPTURE_FAILHARD, at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Minecraft;launchIntegratedServer(Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/src/WorldSettings;)V"))
-	private void beforeIntegratedServerStart(GuiButton par1GuiButton, CallbackInfo ci, long seed, String var4, EnumGameType gameType, WorldSettings settings) {
+	@Inject(method = "actionPerformed", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Minecraft;launchIntegratedServer(Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/src/WorldSettings;)V"))
+	private void beforeIntegratedServerStart(GuiButton par1GuiButton, CallbackInfo ci, @Local WorldSettings settings) {
 		((VanillaDifficultyWorldSetting)(Object)settings).classicReimagined$setVanillaDifficultyID(this.vanillaDifficultyID);
 	}
 
@@ -64,7 +65,7 @@ public abstract class GuiCreateWorldMixin extends GuiScreen {
 	public void changeDifficultyText(CallbackInfo ci) {
 		if (difficultyID != BTWDifficulties.CLASSIC.index) {
 			this.buttonDifficultyLevel.displayString = I18n.getString("selectWorld.difficulty") + ": " + I18n.getStringParams("classicAddon.selectWorld.cursedDifficulty", BTWDifficulties.DIFFICULTY_LIST.get(this.difficultyID).getLocalizedName());
-			if (FabricLoader.getInstance().isModLoaded("nightmare_mode")) {
+			if (ClassicAddon.isNMInstalled()) {
 				if (difficultyID == BTWDifficulties.HOSTILE.index) {
 					this.buttonDifficultyLevel.displayString = I18n.getString("selectWorld.difficulty") + ": " + I18n.getStringParams("classicAddon.selectWorld.cursedDifficulty", I18n.getString("classicAddon.selectWorld.nmCompat.nightmare"));
 				}
@@ -76,6 +77,18 @@ public abstract class GuiCreateWorldMixin extends GuiScreen {
 		else {
 			this.buttonDifficultyLevel.displayString += "+";
 		}
+	}
+	@ModifyArg(method = "drawScreen", index = 1, at = @At(ordinal = 9, value = "INVOKE", target = "Lnet/minecraft/src/GuiCreateWorld;drawString(Lnet/minecraft/src/FontRenderer;Ljava/lang/String;III)V"))
+	private String changeDiffLine1(String par2) {
+		return par2.substring(0, 19).concat(I18n.getString("difficulty.cursedNM.injLine1"));
+	}
+	@ModifyArg(method = "drawScreen", index = 1, at = @At(ordinal = 10, value = "INVOKE", target = "Lnet/minecraft/src/GuiCreateWorld;drawString(Lnet/minecraft/src/FontRenderer;Ljava/lang/String;III)V"))
+	private String changeDiffLine2(String par2) {
+		return I18n.getString("difficulty.cursedNM.description2");
+	}
+	@ModifyArg(method = "drawScreen", index = 1, at = @At(ordinal = 11, value = "INVOKE", target = "Lnet/minecraft/src/GuiCreateWorld;drawString(Lnet/minecraft/src/FontRenderer;Ljava/lang/String;III)V"))
+	private String changeDiffLine3(String par2) {
+		return I18n.getString("difficulty.cursedNM.description3");
 	}
 	// TODO: fix this for a full 3.0 release
 	@Inject(method = "func_82288_a", at = @At("TAIL"))

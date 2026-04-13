@@ -1,5 +1,7 @@
 package net.tetro48.classicaddon.mixin.entity;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityLivingBase;
 import net.minecraft.src.Item;
@@ -36,13 +38,13 @@ public abstract class EntityLivingMixin extends EntityLivingBase {
 		armorProbability = new float[]{0.15F, 0.15F, 0.15F, 0.15F};
 	}
 
-	@Redirect(method = "entityLivingAddRandomArmor", at = @At(value = "INVOKE", target = "Ljava/util/Random;nextFloat()F", ordinal = 0))
-	private float makeArmorSpawnRateBasedOnLocalTension(Random instance) {
-		return instance.nextFloat() / this.worldObj.getLocationTensionFactor(posX, posY, posZ);
+	@WrapOperation(method = "entityLivingAddRandomArmor", at = @At(value = "INVOKE", target = "Ljava/util/Random;nextFloat()F", ordinal = 0))
+	private float makeArmorSpawnRateBasedOnLocalTension(Random instance, Operation<Float> original) {
+		return original.call(instance) / this.worldObj.getLocationTensionFactor(posX, posY, posZ);
 	}
-	@Redirect(method = "enchantEquipment", at = @At(value = "INVOKE", target = "Ljava/util/Random;nextFloat()F"))
-	private float makeEnchantmentBasedOnLocalTension(Random instance) {
-		return instance.nextFloat() / this.worldObj.getLocationTensionFactor(posX, posY, posZ);
+	@WrapOperation(method = "enchantEquipment", at = @At(value = "INVOKE", target = "Ljava/util/Random;nextFloat()F"))
+	private float makeEnchantmentBasedOnLocalTension(Random instance, Operation<Float> original) {
+		return original.call(instance) / this.worldObj.getLocationTensionFactor(posX, posY, posZ);
 	}
 
 	@ModifyVariable(method = "entityLivingAddRandomArmor", at = @At(value = "INVOKE", target = "Ljava/util/Random;nextFloat()F", ordinal = 1))

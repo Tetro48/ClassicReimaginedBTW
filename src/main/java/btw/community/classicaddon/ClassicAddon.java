@@ -28,6 +28,7 @@ import btw.item.BTWItems;
 import btw.item.BTWTags;
 import btw.world.BTWDifficulties;
 import emi.dev.emi.emi.runtime.EmiReloadManager;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.*;
 import net.tetro48.classicaddon.ConfigPropertyShell;
@@ -108,6 +109,7 @@ public class ClassicAddon extends BTWAddon {
 	public static boolean isServerRunningThisAddon = false;
 	public static float localDifficulty = 0f;
 	public static long chunkLoadedTime = -1L;
+	public static boolean isNightmareModeInstalled;
 
 	private static Hashtable<String, ModifiableConfigProperty<?>> modifiableConfigProperties;
 	private static List<String> modifiablePropertyNames;
@@ -295,10 +297,15 @@ public class ClassicAddon extends BTWAddon {
 
 	@Override
 	public void preInitialize() {
+		isNightmareModeInstalled = FabricLoader.getInstance().isModLoaded("nightmare") || FabricLoader.getInstance().isModLoaded("nightmare_mode");
 		VANILLA_DIFFICULTY_LEVEL.register();
 		modifiableConfigProperties = new Hashtable<>();
 		modifiablePropertyNames = new ArrayList<>(11);
 		BTWDifficulties.CLASSIC.modifyParam(DifficultyParam.HungerIntensiveActionCostMultiplier.class, 1f);
+	}
+
+	public static boolean isNMInstalled() {
+		return isNightmareModeInstalled;
 	}
 
 	public <T> ModifiableConfigProperty<T> createModifiableProperty(AddonConfig config, String propertyName, T defaultValue, Consumer<T> callback, String... comments) {
@@ -657,7 +664,7 @@ public class ClassicAddon extends BTWAddon {
 				.icon(Block.hopperBlock)
 				.displayLocation(4, -1)
 				.triggerCondition(itemStack -> itemStack.itemID == Block.hopperBlock.blockID)
-				.parents(BTWAchievements.CRAFT_STEEL)
+				.parents(isNMInstalled() ? null : BTWAchievements.CRAFT_STEEL)
 				.build()
 				.registerAchievement(BTWAchievements.TAB_END_GAME);
 	}

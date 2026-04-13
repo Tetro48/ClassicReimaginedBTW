@@ -1,5 +1,7 @@
 package net.tetro48.classicaddon.mixin.entity;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.src.EntityEnderman;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.World;
@@ -15,13 +17,13 @@ public abstract class EntityEndermanMixin {
 	private void noAngeringNearbyEndermen(EntityPlayer targetPlayer, CallbackInfo ci) {
 		ci.cancel();
 	}
-	@Redirect(method = "attackEntityFrom", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/EntityEnderman;teleportRandomly()Z"))
-	private boolean doNotTeleport(EntityEnderman instance) {
-		return true;
+	@WrapOperation(method = "attackEntityFrom", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/EntityEnderman;teleportRandomly()Z"))
+	private boolean doNotTeleport(EntityEnderman instance, Operation<Boolean> original) {
+		return false;
 	}
 
-	@Redirect(method = "onLivingUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/World;isDaytime()Z"))
-	private boolean doNotDeaggroInDaytime(World instance) {
+	@WrapOperation(method = "onLivingUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/World;isDaytime()Z"))
+	private boolean doNotDeaggroInDaytime(World instance, Operation<Boolean> original) {
 		return false;
 	}
 }

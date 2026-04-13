@@ -67,6 +67,12 @@ classicAddon.hopper.info=Soulforged Steel Hoppers can be placed anywhere, though
 tag.classicaddon.loose_cobblestones=Loose Cobblestones
 tag.classicaddon.any_cobblestone=Any Cobblestone
 
+# Cursed NM stuff
+
+difficulty.cursedNM.injLine1=- hold on...
+difficulty.cursedNM.description2=This is not right.
+difficulty.cursedNM.description3=Something is cursed here.
+
 # Config stuff
 
 hunger-system.degranularize-hunger-system=De-granularize The Hunger System
