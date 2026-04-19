@@ -28,6 +28,12 @@ tile.hopper.warning.detail.enabled=Воронки из закалённой ст
 tile.hopper.warning.detail.placed=Воронка из закалённой стали душ поставлена; Этот мир будет правильно работать только на Classic Re-imagined, так как эти воронки убраны из стандартного Better Than Wolves.
 container.hopper=Воронка из закалённой стали душ
 
+# Проклятые строки для NM
+
+difficulty.cursedNM.injLine1=- погоди-ка...
+difficulty.cursedNM.description2=Что-то здесь не так.
+difficulty.cursedNM.description3=Здесь что-то проклято.
+
 # Достижения
 
 achievementtab.classic_reimagined_starter_guide=Руководство для начинающих по Classic Re-imagined

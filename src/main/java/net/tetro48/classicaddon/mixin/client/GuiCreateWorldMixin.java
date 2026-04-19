@@ -80,17 +80,19 @@ public abstract class GuiCreateWorldMixin extends GuiScreen {
 	}
 	@ModifyArg(method = "drawScreen", index = 1, at = @At(ordinal = 9, value = "INVOKE", target = "Lnet/minecraft/src/GuiCreateWorld;drawString(Lnet/minecraft/src/FontRenderer;Ljava/lang/String;III)V"))
 	private String changeDiffLine1(String par2) {
+		if (!ClassicAddon.isNMInstalled()) return par2;
 		return par2.substring(0, 19).concat(I18n.getString("difficulty.cursedNM.injLine1"));
 	}
 	@ModifyArg(method = "drawScreen", index = 1, at = @At(ordinal = 10, value = "INVOKE", target = "Lnet/minecraft/src/GuiCreateWorld;drawString(Lnet/minecraft/src/FontRenderer;Ljava/lang/String;III)V"))
 	private String changeDiffLine2(String par2) {
+		if (!ClassicAddon.isNMInstalled()) return par2;
 		return I18n.getString("difficulty.cursedNM.description2");
 	}
 	@ModifyArg(method = "drawScreen", index = 1, at = @At(ordinal = 11, value = "INVOKE", target = "Lnet/minecraft/src/GuiCreateWorld;drawString(Lnet/minecraft/src/FontRenderer;Ljava/lang/String;III)V"))
 	private String changeDiffLine3(String par2) {
+		if (!ClassicAddon.isNMInstalled()) return par2;
 		return I18n.getString("difficulty.cursedNM.description3");
 	}
-	// TODO: fix this for a full 3.0 release
 	@Inject(method = "func_82288_a", at = @At("TAIL"))
 	public void hideDifficultyLock(boolean par1, CallbackInfo ci) {
 		buttonLockDifficulty.drawButton = !par1;
