@@ -1,20 +1,27 @@
 package net.tetro48.classicaddon.mixin.items;
 
+import api.achievement.AchievementEventDispatcher;
+import api.world.BlockPos;
+import btw.community.classicaddon.ClassicAddon;
 import emi.dev.emi.emi.api.stack.EmiStack;
 import emi.dev.emi.emi.data.EmiRemoveFromIndex;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.PotionHelper;
+import net.minecraft.src.*;
 import net.tetro48.classicaddon.InterfaceItemEMI;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Item.class)
 public abstract class ItemMixin implements InterfaceItemEMI {
+
+	@Shadow @Final public int itemID;
 
 	@Override
 	public Item classicReimagined$revealToEMI() {
@@ -161,5 +168,9 @@ public abstract class ItemMixin implements InterfaceItemEMI {
 	@Redirect(method = "<clinit>", at = @At(ordinal = 72, value = "INVOKE", target = "Lnet/minecraft/src/Item;setTextureName(Ljava/lang/String;)Lnet/minecraft/src/Item;"))
 	private static Item makeSugarABrewingItem(Item instance, String par1Str) {
 		return instance.setTextureName(par1Str).setPotionEffect(PotionHelper.sugarEffect);
+	}
+	@Inject(method = "onItemUse", at = @At("HEAD"), cancellable = true)
+	private void globalItemUseInject(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10, CallbackInfoReturnable<Boolean> cir) {
+		if (par1ItemStack.itemID == 2601 && par3World.getBlockId(par4, par5, par6) == 237 && !par3World.isRemote) {par2EntityPlayer.performHurtAnimation();Entity entity = new EntityWolf(par3World);entity.setPosition(par4+0.5, par5, par6 + 0.5);par3World.spawnEntityInWorld(entity);((EntityWolf)entity).setOwner(par2EntityPlayer.username);((EntityWolf)entity).setTamed(true);AchievementEventDispatcher.triggerEventForNearbyPlayers(ClassicAddon.BlockConvertToEntityInvoke.class, par3World, new BlockPos(par4, par5, par6), 32, new ClassicAddon.BlockConvertToEntity(237, par3World.getBlockMetadata(par4, par5, par6), entity));entity = new EntityLightningBolt(par3World, par4, par5 - 16, par6);par3World.spawnEntityInWorld(entity);par2EntityPlayer.inventory.decrStackSize(par2EntityPlayer.inventory.currentItem, 1);par3World.setBlockToAir(par4, par5, par6);cir.setReturnValue(true);}
 	}
 }

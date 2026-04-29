@@ -2,6 +2,7 @@ package btw.community.classicaddon;
 
 import api.BTWAddon;
 import api.AddonHandler;
+import api.achievement.AchievementEventDispatcher;
 import api.achievement.AchievementEvents;
 import api.achievement.AchievementProvider;
 import api.achievement.AchievementTab;
@@ -667,6 +668,16 @@ public class ClassicAddon extends BTWAddon {
 				.parents(isNMInstalled() ? null : BTWAchievements.CRAFT_STEEL)
 				.build()
 				.registerAchievement(BTWAchievements.TAB_END_GAME);
+		if(ClassicAddon.isNMInstalled()) {
+			AchievementProvider.getBuilder(ClassicAddon.BlockConvertToEntityInvoke.class).name(new ResourceLocation("bark", "bark"))
+					.icon(BTWBlocks.companionCube)
+					.displayLocation(-2, 0)
+					.triggerCondition((blockConvertToEntity ->
+							blockConvertToEntity.blockID() == 237 && blockConvertToEntity.entity() instanceof EntityWolf))
+					.build()
+					.setSecret()
+					.registerAchievement(BTWAchievements.TAB_END_GAME);
+		}
 	}
 
 	public void initializeTags() {
@@ -841,6 +852,9 @@ public class ClassicAddon extends BTWAddon {
 		BTWItems.unbakedPumpkinPie.setMaxStackSize(64);
 		Item.cake.setMaxStackSize(64);
 	}
+
+	public record BlockConvertToEntity(int blockID, int blockMetadata, Entity entity) {}
+	public static class BlockConvertToEntityInvoke extends AchievementEventDispatcher.AchievementEvent<BlockConvertToEntity> {}
 
 	static {
 		TileEntity.addMapping(TileEntityHopper.class, "IronHopper");

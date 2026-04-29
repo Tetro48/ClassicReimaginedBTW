@@ -62,6 +62,8 @@ achievement.classicaddon.bread=Хлеб насущный
 achievement.classicaddon.bread.desc=Испечь хлеб из теста сделанная из муки и воды
 achievement.classicaddon.anomaly=Аномалия
 achievement.classicaddon.anomaly.desc=Собрать воронку из... закалённой стали???
+achievement.bark.bark=Верни меня к жизни!
+achievement.bark.bark.desc=Возрождать волка с... кто знает чего.
 
 # Для EMI
 btw.anvil.info=Наковальню можно разместить где угодно, и она используется как для ремонта, так и для применения книги зачарования. Примечание: это обходит типичное ограничение Инферальных Зачаровании.

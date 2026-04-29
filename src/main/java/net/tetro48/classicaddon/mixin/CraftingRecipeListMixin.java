@@ -137,18 +137,14 @@ public abstract class CraftingRecipeListMixin {
 		addMortarRecipe(new ItemStack(BTWBlocks.looseNetherBrickSlab, 1), new ItemStack(Block.stoneSingleSlab, 1, 6));
 		addMortarRecipe(new ItemStack(BTWBlocks.looseNetherBrickStairs, 1), new ItemStack(Block.stairsNetherBrick, 1));
 		addMortarRecipe(new ItemStack(BTWBlocks.idleLooseOven, 1), new ItemStack(BTWBlocks.idleOven, 1));
-		RecipeManager.addShapelessRecipe(new ItemStack(Item.book, 1),
-				new Object[] {
-						Item.paper, Item.paper, Item.paper, Item.leather});
-		RecipeManager.addShapelessRecipe(new ItemStack(Item.book, 1),
-				new Object[] {
-						Item.paper, Item.paper, Item.paper, BTWItems.cutLeather});
-		RecipeManager.addRecipe(new ItemStack(BTWBlocks.chest, 1),
-				new Object[]{
-						"###",
-						"# #",
-						"###",
-						'#', BTWTags.planks});
+//		RecipeManager.addShapelessRecipe(new ItemStack(Item.book, 1),
+//				new Object[] {
+//						Item.paper, Item.paper, Item.paper, Item.leather});
+		RecipeManager.addRecipe(new ItemStack(BTWBlocks.chest), new Object[]{
+				"###",
+				"# #",
+				"###",
+				'#', BTWTags.highEfficiencyWoodSidings});
 		RecipeManager.addRecipe(new ItemStack(Item.pickaxeWood, 1),
 				new Object[]{
 						"###",
@@ -248,15 +244,6 @@ public abstract class CraftingRecipeListMixin {
 					new ItemStack(Item.enderPearl),
 					new ItemStack(Item.blazePowder)});
 		}
-		RecipeManager.addShapelessRecipe(new ItemStack(Item.nameTag), new Object[] {
-			new ItemStack(Item.leather),
-			new ItemStack(Item.ingotIron)
-		});
-
-		RecipeManager.addShapelessRecipe(new ItemStack(Item.nameTag), new Object[] {
-			new ItemStack(BTWItems.cutLeather),
-			new ItemStack(Item.ingotIron)
-		});
 		RecipeManager.addShapelessRecipe(new ItemStack(BTWBlocks.planterWithSoil), new Object[]{
 				new ItemStack(BTWBlocks.planter),
 				new ItemStack(Block.dirt)});
@@ -280,21 +267,21 @@ public abstract class CraftingRecipeListMixin {
 				"XRX",
 				'X', BTWItems.ironNugget,
 				'R', Item.redstone,
-				'#', Block.pressurePlatePlanks});
+				'#', BTWTags.woodenPressurePlates});
 		RecipeManager.removeVanillaRecipe(new ItemStack(Block.railDetector, 6), new Object[]{
 				"X X",
 				"X#X",
 				"XRX",
 				'X', BTWItems.ironNugget,
 				'R', Item.redstone,
-				'#', Block.pressurePlateStone});
+				'#', BTWTags.stonePressurePlates});
 		RecipeManager.removeVanillaRecipe(new ItemStack(BTWBlocks.steelDetectorRail, 6), new Object[]{
 				"X X",
 				"X#X",
 				"XRX",
 				'X', BTWItems.ironNugget,
 				'R', Item.redstone,
-				'#', BTWBlocks.steelPressurePlate});
+				'#', BTWTags.metalPressurePlates});
 
 		RecipeManager.addRecipe(new ItemStack(Block.rail, 16), new Object[]{
 				"X X",
@@ -315,21 +302,21 @@ public abstract class CraftingRecipeListMixin {
 				"XRX",
 				'X', Item.ingotIron,
 				'R', Item.redstone,
-				'#', Block.pressurePlatePlanks});
+				'#', BTWTags.woodenPressurePlates});
 		RecipeManager.addRecipe(new ItemStack(Block.railDetector, 6), new Object[]{
 				"X X",
 				"X#X",
 				"XRX",
 				'X', Item.ingotIron,
 				'R', Item.redstone,
-				'#', Block.pressurePlateStone});
+				'#', BTWTags.stonePressurePlates});
 		RecipeManager.addRecipe(new ItemStack(BTWBlocks.steelDetectorRail, 6), new Object[]{
 				"X X",
 				"X#X",
 				"XRX",
 				'X', Item.ingotIron,
 				'R', Item.redstone,
-				'#', BTWBlocks.steelPressurePlate});
+				'#', BTWTags.metalPressurePlates});
 		RecipeManager.removeVanillaRecipe(new ItemStack(Block.cloth), new Object[]{
 				" # ",
 				"#W#",
@@ -357,11 +344,6 @@ public abstract class CraftingRecipeListMixin {
 				"###",
 				'#', BTWTags.woodenSidings,
 				'I', Item.ingotIron});
-		RecipeManager.addRecipe(new ItemStack(BTWBlocks.chest), new Object[]{
-				"###",
-				"# #",
-				"###",
-				'#', BTWTags.woodenSidings});
 
 	}
 }

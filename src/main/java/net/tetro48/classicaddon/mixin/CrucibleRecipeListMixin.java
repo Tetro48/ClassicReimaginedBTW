@@ -55,8 +55,8 @@ public abstract class CrucibleRecipeListMixin {
 		//removes plenty of recipes that may result in deviation of 100% return
 		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(Item.goldNugget, 7), new ItemStack[]{new ItemStack(BTWItems.ocularOfEnder)});
 		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(Item.ingotGold, 1), new ItemStack[]{new ItemStack(BTWItems.goldenDung)});
-		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack[]{new ItemStack(Item.goldNugget, 1), new ItemStack(BTWItems.ironNugget, 3)}, new ItemStack[]{new ItemStack(Block.railPowered, 2)});
-		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack[]{new ItemStack(BTWItems.ironNugget, 1), new ItemStack(BTWItems.steelNugget, 3)}, new ItemStack[]{new ItemStack(BTWBlocks.steelDetectorRail, 1)});
+		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack[]{new ItemStack(Item.goldNugget, 1), new ItemStack(BTWItems.ironNugget, 3)}, new ItemStack[]{new ItemStack(Block.railPowered, 3)});
+		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack[]{new ItemStack(BTWItems.ironNugget, 3), new ItemStack(BTWItems.soulforgedSteelIngot, 1)}, new ItemStack[]{new ItemStack(BTWBlocks.steelDetectorRail, 3)});
 		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(Item.goldNugget, 12), new ItemStack[]{new ItemStack(BTWBlocks.lightningRod)});
 		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 12), new ItemStack[]{new ItemStack(BTWBlocks.ironSpike)});
 		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 3), new ItemStack[]{new ItemStack(BTWItems.mail)});
@@ -66,9 +66,9 @@ public abstract class CrucibleRecipeListMixin {
 		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 3), new ItemStack[]{new ItemStack(BTWItems.ironChisel, 1, 32767)});
 		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(Item.ingotIron, 7), new ItemStack[]{new ItemStack(Block.anvil)});
 		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 4), new ItemStack[]{new ItemStack(Item.compass)});
-		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 1), new ItemStack[]{new ItemStack(BTWBlocks.woodenDetectorRail)});
-		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 1), new ItemStack[]{new ItemStack(Block.railDetector)});
-		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 1), new ItemStack[]{new ItemStack(Block.rail, 2)});
+		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 3), new ItemStack[]{new ItemStack(BTWBlocks.woodenDetectorRail, 3)});
+		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 3), new ItemStack[]{new ItemStack(Block.railDetector, 3)});
+		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 1), new ItemStack[]{new ItemStack(Block.rail, 3)});
 		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 7), new ItemStack[]{new ItemStack(Item.bucketEmpty)});
 		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 7), new ItemStack[]{new ItemStack(Item.bucketLava)});
 		CrucibleStokedCraftingManager.getInstance().removeRecipe(new ItemStack(BTWItems.ironNugget, 7), new ItemStack[]{new ItemStack(Item.bucketWater)});
