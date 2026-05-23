@@ -13,7 +13,7 @@ public abstract class CuredFoodItemMixin extends Item {
 		super(par1);
 	}
 
-	@Inject(method = "<init>", at = @At("TAIL"), remap = false)
+	@Inject(method = "<init>", at = @At("TAIL"))
 	public void changeStackSize(CallbackInfo ci) {
 		this.maxStackSize = 64;
 	}
