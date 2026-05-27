@@ -1,13 +1,16 @@
-classicAddon.selectWorld.cursedDifficulty=Bizarres %s
+classicAddon.configTitle=Classic Re-imagined Konfig
+classicAddon.selectWorld.cursedDifficulty=Merkwürdiges %s
 classicAddon.selectWorld.vanillaDifficulty=Monster-Schwierigkeit: %s
-classicAddon.serverCheck.doesServerHaveCR1=Schaut nach Anzeichen das dieser server mit Classic Re-imagined läuft...
-classicAddon.serverCheck.doesServerHaveCR2=Wenn der Server mit einer alten Version von CR läuft, wird das nicht funktionieren.
+classicAddon.serverCheck.doesServerHaveCR1=Schaut nach Anzeichen das dieser Server mit Classic Re-imagined läuft...
+classicAddon.serverCheck.doesServerHaveCR2=Wenn der Server mit einer alten Version von CR-i läuft, wird dies fehlschlagen.
 classicAddon.serverCheck.kickTimer=Wenn der Server nicht innerhalb %ss damit Antwortet das es dieses Addon hat, wirst du gekickt.
 classicAddon.selectWorld.nmCompat.nightmare=Albtraum
-classicAddon.selectWorld.nmCompat.baddream=Traum
-classicAddon.synchronizedConfigsI18n=Synchronisierte Configs von Classic Re-imagined:
-classicAddon.synchronizedConfigsCommandHint=Gib "/classicreimagined configs" ein um Synchronisierte Configs anzuzeigen
+classicAddon.selectWorld.nmCompat.baddream=Schlaf
+classicAddon.synchronizedConfigsI18n=Synchronisierte Konfig von Classic Re-imagined:
+classicAddon.configsI18n=Konfigs von Classic Re-imagined
+classicAddon.synchronizedConfigsCommandHint=Gib "/classicreimagined configs" ein um alle Konfigs anzuzeigen
 classicAddon.holdCompassForCoordinates=Halte einen Kompass um Koordinaten anzuzeigen.
+classicAddon.synchronizedConfigIndicator=[%s] ist eine synchronisierte Konfig
 
 difficulty.btw.classic.description=Die vanillafizierte BTW-Erfahrung.
 difficulty.btw.classic.description2=Dessen Herausforderungsniveau enspricht
@@ -19,11 +22,18 @@ item.fireworks.name=Feuerwerksrakete
 item.enchantedBook.name=Verzaubertes Buch
 item.enchantedBook.languageUnfamiliar=Dieses Buch ist Verzaubert. Wende es mit einem Amboss auf einem Gegenstand an!
 
+tile.hopper.name=Stahltrichter
+tile.hopper.warning=<!> WARNING <!>
+tile.hopper.warning.detail.enabled=Stahltrichter sind jetzt aktiviert; Diese Welt wird von jetzt an nur mit Classic Re-imagined korrekt funktionieren, da diese Trichter nicht in Standard-BTW existieren.
+tile.hopper.warning.detail.placed=Ein Stahltrichter wurde platziert; Diese Welt wird von jetzt an nur mit Classic Re-imagined korrekt funktionieren, da diese Trichter nicht in Standard-BTW existieren.
+container.hopper=Stahltrichter
+
 # Achievements stuff
 
 achievementtab.classic_reimagined_starter_guide=Anfängerleitfaden zu Classic Re-imagined
 
 achievement.btw.craft_stone_pickaxe=Technischer Fortschritt
+achievement.btw.make_work_stump=Werkstumpf
 
 achievement.classicaddon.mine_wood=Dreimal auf Holz geklopft!
 achievement.classicaddon.mine_wood.desc=Schlage einem Baum bis ein stück Holz herausfällt
@@ -43,13 +53,81 @@ achievement.classicaddon.stone_sword=Zu den Waffen!
 achievement.classicaddon.stone_sword.desc=Fertige ein Steinschwert aus lockeren Bruchsteinblöcken und Stielen
 achievement.classicaddon.glass_bottle=Glasflaschen
 achievement.classicaddon.glass_bottle.desc=Schmelze Sand im Ofen, dann stelle Glasflaschen damit her
-achievement.classicaddon.bread=Backe Brot
-achievement.classicaddon.bread.desc=Mache Brotteig aus Weizenmehl und etwas Wasser, und backe diesen danach im Ofen
+achievement.classicaddon.bread=Bäckerei
+achievement.classicaddon.bread.desc=Stelle Brotteig aus Weizenmehl und etwas Wasser her, und backe diesen danach im Ofen
+achievement.classicaddon.anomaly=Anomalie
+achievement.classicaddon.anomaly.desc=Baue einen... Stahltrichter???
+achievement.bark.bark=Bring me to life!
+achievement.bark.bark.desc=Belebe deinen Begleiter auf Mysteriöse Art und Weise wieder.
 
 # EMI stuff
 
 btw.anvil.info=Der Amboss kann überall platziert werden, und wird entweder für Reparaturen oder die Anwendung von Verzauberten Büchern verwendet. Beachte: Dies umgeht das typische Limit von Höllischen Zaubertischen.
 classicAddon.workbench.info=Werkbänke können überall platziert werden. Diese haben Vanilla-Härte. Beachte: Sie sind Brennbar.
 classicAddon.furnace.info=Öfen können überall platziert werden. Diese werden sich selbst entzünden wenn Brennstoff zugeführt wird, und schmelzt Gegenstände 4x schneller wie Ziegelstein-Backöfen, aber verbrennt auch Brennstoff 4x schneller.
+classicAddon.hopper.info=Stahltrichter können überall platziert werden, jedoch ist deren verhalten etwas merkwürdig. Dieser Block zwängt nicht nur Gegenstände in Containern in einer spezifischen Richtung hinein im gegensatz zu Holztrichtern, sondern nimmt auch Gegenstände von Containern über ihm auf. Dies könnte sich merkwürdig verhalten.
 tag.classicaddon.loose_cobblestones=Lockere Bruchsteine
 tag.classicaddon.any_cobblestone=Beliebiger Bruchstein
+
+# Cursed NM stuff
+
+difficulty.cursedNM.injLine1=- warte mal...
+difficulty.cursedNM.description2=Das hier stimmt so nicht.
+difficulty.cursedNM.description3=Irgendetwas ist hier Merkwürdig.
+
+# Config stuff
+
+hunger-system.degranularize-hunger-system=Entgranularisierung des Hungersystems
+hunger-system.degranularize-hunger-system.desc=Lässt BTW's Granulares Hungersystem sich wie da Vanilla Hungersystem verhalten. Standard: False.
+hunger-system.modern-exhaustion-values=Moderne Erschöpfungswerte
+hunger-system.modern-exhaustion-values.desc=Ob stattdessen Modernes-Minecrafts Erschöpfungswerte genutzt werden sollen. Nützlich für Addons wie BTWG. Standard: False.
+hunger-system.quick-heal-toggle=Modernes Regenerationssystem
+hunger-system.quick-heal-toggle.desc=Aktiviert vMC 1.9+ Gesundheits-Regenerationssystem. Standard: False.
+hunger-system.quick-heal-ticks=Moderne Regen. Geschwindigkeit
+hunger-system.quick-heal-ticks.desc=Wie schnell die Regeneration geschieht. 20 Ticks = 1 Sekunde. 10 Ticks ist Vanilla, 40 Ticks ist Tetro48's empfohlener Wert.
+hunger-system.hunger-regen-offset-toggle=Versetzung des Gesundheitsregen.-Stopps durch Hunger
+hunger-system.hunger-regen-offset-toggle.desc=Verschiebt die Regen.-Stopp Region zu unter 8.6 Hungerkeulen statt unter 9 Hungerkeulen, was es sich viel mehr wie Vanilla anfühlen lässt, auch wenn es Intern nicht ganz übereinstimmt. Standard: True.
+difficulty.cursed-difficulty-mode=Merkwürdige Schwierigkeit
+difficulty.cursed-difficulty-mode.desc=Entfesselt BTW's Schwierigkeitseinstellungen, markiert diese jedoch als Merkwürdig. BEACHTE: Diese Option benötigt Beständigkeit uber Welten hinweg, und muss daher Manuell in der Konfig Datei geändert werden statt über Befehle oder dem Menü.
+client.new-moon-brightness-level=Neumond Helligkeitsstufe
+client.new-moon-brightness-level.desc=Eine rein Visuelle Einstellung... 0: Komplette dunkelheit. 1: Ein winziges bisschen Licht. BEACHTE: Falls du dies siehst, bist du entweder auf LAN oder Einzelspieler. Wenn du dies ändern kannst, kannst du dem Host-Spieler damit auf die nerven gehen! ;P
+world.gloom-toggle=Angst-Effekt
+world.gloom-toggle.desc=Ob Spieler anfällig für den Angst-Statuseffekt sein sollen. Standard: False.
+world.guaranteed-seed-drop=Garantierte Nutzpflanzen-Samen
+world.guaranteed-seed-drop.desc=Lässt Nutzpflanzen unabhängig deren Wachstumsstufe immer Samen fallenlassen, wie in Modern-Vanilla. Standard: True.
+world.hemp-seed-drop=Hanfsamen Chance von hohem Gras
+world.hemp-seed-drop.desc=Gibt hohem Gras eine 1% Chance Hanfsamen fallenzulassen. Standard: True.
+world.expandable-hcs=Erweiterbarer Hardcore-Wiederbelebung
+world.expandable-hcs.desc=Aktiviert Hardcore-Wiederbelebungs Reichweitenerweiterung basierend auf Spielfortschritt. Standard: False.
+world.bed-spawn-point-toggle=Bett-Wiederbelebungspunkt
+world.bed-spawn-point-toggle.desc=Erlaubt es dir Betten zu nutzen um deinen Wiederbelebungspunkt zu setzen. Jedoch ist dies auf etwas Notdürftige weise implementiert, mittels festgesetztem /setspawn. Standard: False.
+mobs.animageddon=Animageddon
+mobs.animageddon.desc=Kontrolliert alles von BTW's Animageddon. Standard: False.
+mobs.do-baby-animals-eat-loose-food=Fressen von herumliegendem Futter von Babytieren
+mobs.do-baby-animals-eat-loose-food.desc=Wiedereinführung des fressens von auf dem boden herumliegendem liegenden Futters durch Babytiere. Kann Probleme verursachen. Standard: False.
+mobs.chicken-jockey=Hühnerreiter
+mobs.chicken-jockey.desc=Aktiviert die Fehleranfälligen Hühnerreiter. Standard: False.
+mobs.hoofsies-toggle=Hardcore-Hufe
+mobs.hoofsies-toggle.desc=Lässt Pferde/Kühe dich treten! Dies beeinflusst nur die Classic+ Schwierigkeit. Standard: False.
+mobs.hoofsies-strength=Hufstärke
+mobs.hoofsies-strength.desc=Ein Stärkemultiplikator von 1 (Standard) lässt tretende Tiere 7 HP Schaden anrichten während bei einem Stärkemultiplikator von 0.5 diese stattdessen nur 3 HP (abgerundet) an Schaden anrichten können. Dies beeinflusst nur die Classic+ Schwierigkeit. Standard: 1.0.
+synchronized.world.passable-leaves=Durchgehbares Laub
+synchronized.world.passable-leaves.desc=Die Fähigkeit durch Laub hindurchzufallen- und laufen zu können. Standard: False.
+synchronized.world.hcs-toggle=Hardcore-Wiederbelebung in Classic+
+synchronized.world.hcs-toggle.desc=Dies beinflusst nur die Classic+ Schwierigkeit. Standard: False.
+synchronized.world.vanilla-buckets=Vanillafizierte Eimer
+synchronized.world.vanilla-buckets.desc=Macht Schraubenpumpen nutzlos. Standard: True.
+synchronized.anvil.yeet-too-expensive=Entfernung des 'Zu teuer!' Ambosslimits
+synchronized.anvil.yeet-too-expensive.desc=Entfernt das 'Zu teuer!' Ambosslimit. Standard: True.
+synchronized.crafting.hand-planks=Bretter durch Handspaltung von Holzstämmen
+synchronized.crafting.hand-planks.desc=Die Menge von Brettern die du bekommst wenn du einfach nur Stämme in das Handwerksfeld platzierst. Standard: 2. Mögliche Werte: 1-64
+synchronized.crafting.stone-axe-planks=Bretter durch Spaltung mit Steinaxt
+synchronized.crafting.stone-axe-planks.desc=Die Menge von Brettern die du mit einer Steinaxt bekommst. Standard: 3. Mögliche Werte: 1-64
+synchronized.crafting.iron-axe-planks=Bretter durch Spaltung mit Eisenaxt
+synchronized.crafting.iron-axe-planks.desc=Die Menge von Brettern die du mit einer Eisen- oder besserer Axt bekommst. Standard: 4. Mögliche Werte: 1-64
+synchronized.crafting.saw-planks=Bretter durch Zersägen von Stämmen
+synchronized.crafting.saw-planks.desc=Die Menge von Brettern die du durch das Zersägen von Holzstämmen bekommst. Standard: 6. Mögliche Werte: 1-64
+synchronized.silly.crafting.wicker-weaving=Weidenflechterei-Mechanik
+synchronized.silly.crafting.wicker-weaving.desc=Dies beeinflusst alle Schwierigkeiten. Standard: False.
+synchronized.silly.world.hc-stump=Hardcore-Stumpf
+synchronized.silly.world.hc-stump.desc=Steuert die Fähigkeit mit Meißeln Werkstümpfe aus Baumstümpfen zu kreieren. Dies beeinflusst alle Schwierigkeiten. Standard: False.
