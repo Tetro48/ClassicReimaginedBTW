@@ -240,7 +240,6 @@ public class ClassicAddon extends BTWAddon {
 				floatValue -> BTWDifficulties.CLASSIC.modifyParam(DifficultyParam.AnimalKickStrengthMultiplier.class, (float)(double)floatValue),
 				"Strength multiplier of 1 makes kicking animals deal 7 HP. Strength multiplier of 0.5 makes kicking animals deal 3 HP (rounded down). This only affects the Classic+ difficulty.")
 				.setMinMax(0.1d, 10d).register();
-		config.updatePath("StrongerHoofsies", "mobs.hoofsies-strength");
 
 		config.registerCategoryComment("synchronized", "*** SYNCHRONIZED CONFIGS ***");
 		this.createSynchronizedProperty(config, "synchronized.world.passable-leaves", false,
