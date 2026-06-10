@@ -1,5 +1,6 @@
 package net.tetro48.classicaddon.mixin.entity;
 
+import btw.community.classicaddon.ClassicAddon;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.src.EntityLiving;
@@ -40,6 +41,9 @@ public abstract class EntityLivingMixin extends EntityLivingBase {
 
 	@WrapOperation(method = "entityLivingAddRandomArmor", at = @At(value = "INVOKE", target = "Ljava/util/Random;nextFloat()F", ordinal = 0))
 	private float makeArmorSpawnRateBasedOnLocalTension(Random instance, Operation<Float> original) {
+		if (ClassicAddon.equipmentArmageddon) {
+			return 0;
+		}
 		return original.call(instance) / this.worldObj.getLocationTensionFactor(posX, posY, posZ);
 	}
 	@WrapOperation(method = "enchantEquipment", at = @At(value = "INVOKE", target = "Ljava/util/Random;nextFloat()F"))

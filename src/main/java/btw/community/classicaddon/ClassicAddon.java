@@ -106,6 +106,7 @@ public class ClassicAddon extends BTWAddon {
 	public static boolean hardcoreStump;
 	public static boolean degranularizeHungerSystem;
 	public static boolean modernExhaustionLevels;
+	public static boolean equipmentArmageddon;
 
 	public static boolean isServerRunningThisAddon = false;
 	public static float localDifficulty = 0f;
@@ -240,6 +241,10 @@ public class ClassicAddon extends BTWAddon {
 				floatValue -> BTWDifficulties.CLASSIC.modifyParam(DifficultyParam.AnimalKickStrengthMultiplier.class, (float)(double)floatValue),
 				"Strength multiplier of 1 makes kicking animals deal 7 HP. Strength multiplier of 0.5 makes kicking animals deal 3 HP (rounded down). This only affects the Classic+ difficulty.")
 				.setMinMax(0.1d, 10d).register();
+		this.createModifiableProperty(config, "mobs.equipment-armageddon", false,
+				bool -> equipmentArmageddon = bool,
+				"Makes mobs always spawn with tools and armor.")
+				.register();
 
 		config.registerCategoryComment("synchronized", "*** SYNCHRONIZED CONFIGS ***");
 		this.createSynchronizedProperty(config, "synchronized.world.passable-leaves", false,
