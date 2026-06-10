@@ -123,6 +123,7 @@
     "items.BucketItemMilkMixin",
     "items.BucketItemWaterMixin",
     "items.CocoaBeanItemMixin",
+    "items.CompositeBowItemMixin",
     "items.CreeperOysterItemMixin",
     "items.CuredFoodItemMixin",
     "items.DoorItemMixin",
