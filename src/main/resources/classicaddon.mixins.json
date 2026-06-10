@@ -135,6 +135,7 @@
     "items.HardBoiledEggItemMixin",
     "items.HoeItemMixin",
     "items.ItemBookMixin",
+    "items.ItemBowMixin",
     "items.ItemDoorMixin",
     "items.ItemDyeMixin",
     "items.ItemEnchantedBookMixin",
