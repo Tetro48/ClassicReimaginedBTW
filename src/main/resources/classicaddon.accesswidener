@@ -19,4 +19,3 @@ accessible field net/minecraft/src/GuiTextField yPos I
 accessible method net/minecraft/src/FontRenderer trimStringNewline (Ljava/lang/String;)Ljava/lang/String;
 accessible method net/minecraft/src/RenderBlocks renderBlockHopper (Lnet/minecraft/src/BlockHopper;III)Z
 accessible method net/minecraft/src/Tessellator <init> (I)V
-accessible field emi/dev/emi/emi/data/EmiData hiddenStacks Ljava/util/List;

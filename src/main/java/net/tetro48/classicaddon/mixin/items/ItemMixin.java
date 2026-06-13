@@ -4,7 +4,6 @@ import api.achievement.AchievementEventDispatcher;
 import api.world.BlockPos;
 import btw.community.classicaddon.ClassicAddon;
 import emi.dev.emi.emi.api.stack.EmiStack;
-import emi.dev.emi.emi.data.EmiData;
 import emi.dev.emi.emi.data.EmiRemoveFromIndex;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
@@ -28,9 +27,7 @@ public abstract class ItemMixin implements InterfaceItemEMI {
 	public Item classicReimagined$revealToEMI() {
 		if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.CLIENT)) {
 			for (int i = 0; i < 16; ++i) {
-				EmiStack ingredient = EmiStack.of(new ItemStack((Item)(Object)this, 1, i));
-				EmiRemoveFromIndex.removed.remove(ingredient);
-				EmiData.hiddenStacks.remove(ingredient);
+				EmiRemoveFromIndex.removed.remove(EmiStack.of(new ItemStack((Item)(Object)this, 1, i)));
 			}
 		}
 		return (Item)(Object)this;
