@@ -1,4 +1,4 @@
-package net.tetro48.classicaddon.mixin;
+package net.tetro48.classicaddon.mixin.accessors;
 
 import emi.dev.emi.emi.api.stack.EmiIngredient;
 import emi.dev.emi.emi.data.EmiData;

@@ -1,6 +1,4 @@
 accessWidener v1 named
-accessible field api/item/items/ArmorItem armorWeight I
-accessible field net/minecraft/src/Enchantment canBeAppliedByVanillaEnchanter Z
 accessible field net/minecraft/src/GuiSlot left I
 accessible field net/minecraft/src/GuiSlot right I
 accessible field net/minecraft/src/GuiSlot initialClickY F
@@ -15,7 +13,4 @@ accessible field net/minecraft/src/GuiSlot mc Lnet/minecraft/src/Minecraft;
 accessible method net/minecraft/src/GuiSlot bindAmountScrolled ()V
 accessible field net/minecraft/src/GuiSlot field_77243_s Z
 accessible field net/minecraft/src/GuiSlot showSelectionBox Z
-accessible field net/minecraft/src/GuiTextField yPos I
-accessible method net/minecraft/src/FontRenderer trimStringNewline (Ljava/lang/String;)Ljava/lang/String;
-accessible method net/minecraft/src/RenderBlocks renderBlockHopper (Lnet/minecraft/src/BlockHopper;III)Z
 accessible method net/minecraft/src/Tessellator <init> (I)V

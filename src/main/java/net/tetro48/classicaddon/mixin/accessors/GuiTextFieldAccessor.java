@@ -1,4 +1,4 @@
-package net.tetro48.classicaddon.mixin;
+package net.tetro48.classicaddon.mixin.accessors;
 
 import net.minecraft.src.GuiTextField;
 import org.spongepowered.asm.mixin.Mixin;

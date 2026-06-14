@@ -4,6 +4,7 @@ import api.block.ModStepSound;
 import btw.block.BTWBlocks;
 import btw.community.classicaddon.ClassicAddon;
 import net.minecraft.src.*;
+import net.tetro48.classicaddon.mixin.accessors.RenderBlocksAccessor;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -184,7 +185,7 @@ public abstract class BlockHopperMixin extends BlockContainer {
 	public boolean renderBlock(RenderBlocks renderer, int i, int j, int k) {
 		renderer.setRenderBounds(getBlockBoundsFromPoolBasedOnState(renderer.blockAccess, i, j, k));
 
-		return renderer.renderBlockHopper((BlockHopper)(Object)this, i, j, k);
+		return ((RenderBlocksAccessor)renderer).callRenderBlockHopper((BlockHopper)(Object)this, i, j, k);
 	}
 
 	@Environment(EnvType.CLIENT)

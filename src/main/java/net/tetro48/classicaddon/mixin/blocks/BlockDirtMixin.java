@@ -6,6 +6,7 @@ import api.world.BlockPos;
 import btw.block.BTWBlocks;
 import btw.block.blocks.FarmlandBlock;
 import net.minecraft.src.*;
+import net.tetro48.classicaddon.mixin.accessors.FarmlandBlockBaseInvoker;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;

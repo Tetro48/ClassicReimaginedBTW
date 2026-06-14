@@ -1,13 +1,12 @@
 package net.tetro48.classicaddon.mixin.blocks;
 
-import btw.block.BTWBlocks;
 import emi.dev.emi.emi.api.stack.EmiStack;
 import emi.dev.emi.emi.data.EmiRemoveFromIndex;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.src.*;
 import net.tetro48.classicaddon.InterfaceItemEMI;
-import net.tetro48.classicaddon.mixin.EmiDataAccessor;
+import net.tetro48.classicaddon.mixin.accessors.EmiDataAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;

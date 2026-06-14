@@ -6,7 +6,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.*;
 import net.tetro48.classicaddon.ConfigPropertyShell;
 import net.tetro48.classicaddon.gui.widget.entries.EntryListWidget;
-import net.tetro48.classicaddon.mixin.GuiTextFieldAccessor;
+import net.tetro48.classicaddon.mixin.accessors.GuiTextFieldAccessor;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.opengl.GL11;
 

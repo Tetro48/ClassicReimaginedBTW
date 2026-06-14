@@ -1,4 +1,4 @@
-package net.tetro48.classicaddon.mixin.blocks;
+package net.tetro48.classicaddon.mixin.accessors;
 
 import btw.block.blocks.FarmlandBlockBase;
 import net.minecraft.src.World;
