@@ -11,6 +11,7 @@
     "CrucibleRecipeListMixin",
     "DamageSourceMixin",
     "EmiBTWPluginMixin",
+    "EmiDataAccessor",
     "EmiFoodRecipeMixin",
     "EmiVanillaPluginMixin",
     "EnchantmentHelperMixin",

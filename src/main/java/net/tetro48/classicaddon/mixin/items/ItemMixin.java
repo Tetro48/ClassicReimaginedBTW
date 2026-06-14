@@ -4,11 +4,13 @@ import api.achievement.AchievementEventDispatcher;
 import api.world.BlockPos;
 import btw.community.classicaddon.ClassicAddon;
 import emi.dev.emi.emi.api.stack.EmiStack;
+import emi.dev.emi.emi.data.EmiData;
 import emi.dev.emi.emi.data.EmiRemoveFromIndex;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.src.*;
 import net.tetro48.classicaddon.InterfaceItemEMI;
+import net.tetro48.classicaddon.mixin.EmiDataAccessor;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -27,7 +29,9 @@ public abstract class ItemMixin implements InterfaceItemEMI {
 	public Item classicReimagined$revealToEMI() {
 		if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.CLIENT)) {
 			for (int i = 0; i < 16; ++i) {
-				EmiRemoveFromIndex.removed.remove(EmiStack.of(new ItemStack((Item)(Object)this, 1, i)));
+				EmiStack ingredient = EmiStack.of(new ItemStack((Item)(Object)this, 1, i));
+				EmiRemoveFromIndex.removed.remove(ingredient);
+				EmiDataAccessor.getHiddenStacks().remove(ingredient);
 			}
 		}
 		return (Item)(Object)this;
